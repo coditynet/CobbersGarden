@@ -35,15 +35,23 @@ const Services = () => {
           {services.map((service, index) => (
             <div 
               key={service.title}
-              className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-garden-background p-1 transition-all duration-300 hover:-translate-y-2"
+              className="group relative overflow-hidden rounded-xl bg-white p-1"
             >
-              <div className="relative h-full backdrop-blur-sm rounded-xl p-8 border border-white/20 shadow-xl">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-garden-primary/10 to-garden-accent/10 rounded-bl-[4rem] -z-10 transition-transform duration-300 group-hover:scale-110" />
-                <service.icon className="h-14 w-14 text-garden-primary mb-6 transition-all duration-300 group-hover:scale-110 group-hover:text-garden-accent" />
-                <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-3">
+              <div className="absolute inset-0 bg-gradient-to-br from-garden-primary to-garden-accent opacity-20 group-hover:opacity-30 transition-opacity duration-300" />
+              <div className="relative h-full bg-white rounded-lg p-8">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-garden-primary/10 to-garden-accent/10 rounded-bl-[6rem] -z-10" />
+                <div className="flex items-center justify-center mb-6">
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-garden-primary to-garden-accent rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
+                    <div className="relative bg-white rounded-xl p-4">
+                      <service.icon className="h-12 w-12 text-garden-primary group-hover:text-garden-accent transition-colors duration-300" />
+                    </div>
+                  </div>
+                </div>
+                <h3 className="text-xl font-playfair font-bold text-garden-primary text-center mb-4 group-hover:text-garden-accent transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-garden-secondary font-inter leading-relaxed">
+                <p className="text-garden-secondary text-center">
                   {service.description}
                 </p>
               </div>
