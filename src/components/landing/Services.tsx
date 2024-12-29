@@ -32,7 +32,7 @@ const Services = () => {
           <div className="absolute w-24 h-2 bg-garden-accent bottom-0 left-1/2 transform -translate-x-1/2" />
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div 
               key={service.title}
               className="group relative overflow-hidden rounded-xl bg-white p-1"
