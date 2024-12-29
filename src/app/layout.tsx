@@ -34,7 +34,10 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          <div className="min-h-screen bg-garden-background">{children}</div>
+          <div className="min-h-screen bg-garden-background">
+            <Navigation />
+            {children}
+            </div>
         </ThemeProvider>
       </body>
     </html>
