@@ -1,38 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import Navigation from "@/components/global/Navigation";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
   title: "Cobbers Garden",
-  description: "Cobbers Garden",
+  description: "Professionelle Gartenpflege",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <div className="min-h-screen bg-garden-background">
-            <Navigation />
-            {children}
-          </div>
+    <html lang="de">
+      <body className={`${inter.variable} ${playfair.variable} font-inter`}>
+        {children}
       </body>
     </html>
   );

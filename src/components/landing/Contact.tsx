@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
 
 const contactInfo = [
   {
