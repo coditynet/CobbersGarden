@@ -8,18 +8,6 @@ const services = [
     features: ["Rasenmähen", "Vertikutieren", "Düngen & Pflegen", "Unkrautbekämpfung"]
   },
   {
-    title: "Baumpflege",
-    description: "Fachgerechte Baumpflege und Gehölzschnitt für Ihre Bäume",
-    icon: Trees,
-    features: ["Baumschnitt", "Kronenpflege", "Totholzentfernung", "Sturmschadenbeseitigung"]
-  },
-  {
-    title: "Gartengestaltung",
-    description: "Kreative Gestaltung und Neuanlage von Gartenflächen",
-    icon: Shovel,
-    features: ["Neuanlagen", "Umgestaltung", "Pflanzplanung", "Steingärten"]
-  },
-  {
     title: "Pflanzenpflege",
     description: "Umfassende Pflege Ihrer Pflanzen und Beete",
     icon: Sprout,
@@ -32,23 +20,11 @@ const services = [
     features: ["Laubentfernung", "Unkrautbeseitigung", "Reinigung", "Winterdienst"]
   },
   {
-    title: "Bewässerung",
-    description: "Installation und Wartung von Bewässerungssystemen",
-    icon: Droplets,
-    features: ["Automatische Systeme", "Tropfbewässerung", "Wartung", "Reparatur"]
-  },
-  {
     title: "Gartenprojekte",
     description: "Umsetzung spezieller Gartenprojekte nach Ihren Wünschen",
     icon: Warehouse,
     features: ["Teichbau", "Zaunbau", "Terrassenbau", "Weggestaltung"]
   },
-  {
-    title: "Saisonarbeiten",
-    description: "Saisonale Pflege und Gestaltung Ihres Gartens",
-    icon: Flower2,
-    features: ["Frühjahrsputz", "Herbstservice", "Winterschutz", "Saisonbepflanzung"]
-  }
 ];
 
 const Services = () => {
