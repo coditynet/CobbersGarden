@@ -1,59 +1,89 @@
-import { Scissors, Sun, Clock, Calendar } from "lucide-react";
+import { Scissors, Trees, Shovel, Sprout, PenTool, Droplets, Warehouse, Flower2 } from "lucide-react";
 
 const services = [
   {
-    title: "Rasenmähen",
-    description: "Präzises Mähen für einen perfekt gepflegten Rasen",
-    icon: Scissors,
-  },
-  {
     title: "Rasenpflege",
-    description: "Umfassende Pflege für gesundes Wachstum",
-    icon: Sun,
+    description: "Professionelle Pflege für einen gesunden und schönen Rasen",
+    icon: Scissors,
+    features: ["Rasenmähen", "Vertikutieren", "Düngen & Pflegen", "Unkrautbekämpfung"]
   },
   {
-    title: "Flexible Termine",
-    description: "Terminplanung nach Ihren Wünschen",
-    icon: Clock,
+    title: "Baumpflege",
+    description: "Fachgerechte Baumpflege und Gehölzschnitt für Ihre Bäume",
+    icon: Trees,
+    features: ["Baumschnitt", "Kronenpflege", "Totholzentfernung", "Sturmschadenbeseitigung"]
   },
   {
-    title: "Regelmäßiger Service",
-    description: "Wöchentliche oder monatliche Pflege",
-    icon: Calendar,
+    title: "Gartengestaltung",
+    description: "Kreative Gestaltung und Neuanlage von Gartenflächen",
+    icon: Shovel,
+    features: ["Neuanlagen", "Umgestaltung", "Pflanzplanung", "Steingärten"]
   },
+  {
+    title: "Pflanzenpflege",
+    description: "Umfassende Pflege Ihrer Pflanzen und Beete",
+    icon: Sprout,
+    features: ["Heckenschnitt", "Staudenpflege", "Beetpflege", "Rosenpflege"]
+  },
+  {
+    title: "Grundstückspflege",
+    description: "Professionelle Pflege des gesamten Grundstücks",
+    icon: PenTool,
+    features: ["Laubentfernung", "Unkrautbeseitigung", "Reinigung", "Winterdienst"]
+  },
+  {
+    title: "Bewässerung",
+    description: "Installation und Wartung von Bewässerungssystemen",
+    icon: Droplets,
+    features: ["Automatische Systeme", "Tropfbewässerung", "Wartung", "Reparatur"]
+  },
+  {
+    title: "Gartenprojekte",
+    description: "Umsetzung spezieller Gartenprojekte nach Ihren Wünschen",
+    icon: Warehouse,
+    features: ["Teichbau", "Zaunbau", "Terrassenbau", "Weggestaltung"]
+  },
+  {
+    title: "Saisonarbeiten",
+    description: "Saisonale Pflege und Gestaltung Ihres Gartens",
+    icon: Flower2,
+    features: ["Frühjahrsputz", "Herbstservice", "Winterschutz", "Saisonbepflanzung"]
+  }
 ];
 
 const Services = () => {
   return (
-    <section id="services" className="py-24 bg-gradient-to-b from-white to-garden-background">
+    <section id="services" className="py-24 relative bg-white">
       <div className="container mx-auto px-4">
-        <h2 className="text-5xl font-playfair font-bold text-garden-primary text-center mb-16 relative">
-          <span className="relative z-10">Unsere Leistungen</span>
-          <div className="absolute w-24 h-2 bg-garden-accent bottom-0 left-1/2 transform -translate-x-1/2" />
+        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
+          Unsere Leistungen
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {services.map((service) => (
             <div 
               key={service.title}
-              className="group relative overflow-hidden rounded-xl bg-white p-1"
+              className="group bg-garden-background rounded-2xl p-8 transition-all duration-300 hover:shadow-xl"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-garden-primary to-garden-accent opacity-20 group-hover:opacity-30 transition-opacity duration-300" />
-              <div className="relative h-full bg-white rounded-lg p-8">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-garden-primary/10 to-garden-accent/10 rounded-bl-[6rem] -z-10" />
-                <div className="flex items-center justify-center mb-6">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-garden-primary to-garden-accent rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                    <div className="relative bg-white rounded-xl p-4">
-                      <service.icon className="h-12 w-12 text-garden-primary group-hover:text-garden-accent transition-colors duration-300" />
-                    </div>
-                  </div>
+              <div className="flex items-start gap-6">
+                <div className="w-14 h-14 rounded-xl bg-garden-primary/10 flex items-center justify-center flex-shrink-0">
+                  <service.icon className="h-7 w-7 text-garden-primary" />
                 </div>
-                <h3 className="text-xl font-playfair font-bold text-garden-primary text-center mb-4 group-hover:text-garden-accent transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-garden-secondary text-center">
-                  {service.description}
-                </p>
+                <div>
+                  <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-garden-secondary/80 mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
+                  <ul className="space-y-2">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-garden-secondary">
+                        <div className="w-1.5 h-1.5 rounded-full bg-garden-accent" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           ))}

@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -26,6 +26,30 @@ const Hero = () => {
             Jetzt Termin buchen
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
+          
+          <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 text-white/90">
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-4">
+                {[1,2,3].map((i) => (
+                  <img 
+                    key={i}
+                    src={`https://i.pravatar.cc/40?img=${i}`}
+                    alt="Customer"
+                    className="w-10 h-10 rounded-full border-2 border-white"
+                  />
+                ))}
+              </div>
+              <span>+500 zufriedene Kunden</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex text-yellow-400">
+                {[1,2,3,4,5].map((i) => (
+                  <Star key={i} className="h-5 w-5 fill-current" />
+                ))}
+              </div>
+              <span>4.9/5 Bewertung</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
