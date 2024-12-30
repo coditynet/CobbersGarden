@@ -29,16 +29,10 @@ export default function RootLayout({
       <head />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange>
           <div className="min-h-screen bg-garden-background">
             <Navigation />
             {children}
           </div>
-        </ThemeProvider>
       </body>
     </html>
   );
