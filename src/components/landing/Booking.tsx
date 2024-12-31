@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import LoadingDots from "@/components/ui/LoadingDots";
 import { saveToLocalStorage, loadFromLocalStorage, clearSavedData } from "@/hooks/useAutosave";
+import posthog from "posthog-js";
 
 const bookingSchema = z.object({
   service: z.string({
@@ -170,6 +171,11 @@ const Booking = () => {
       if (!response.ok) {
         throw new Error(data.message || 'Ein Fehler ist aufgetreten');
       }
+
+      posthog.capture('booking_submitted', {
+        service: selectedService,
+        hasPhone: !!formData.phone
+      });
 
       clearSavedData('booking-form');
       setIsSubmitted(true);

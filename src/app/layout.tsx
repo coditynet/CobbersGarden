@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display, Caveat } from "next/font/google";
 import "./globals.css";
+import { CSPostHogProvider } from '@/providers/posthog'
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -19,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} font-inter`}>
-        <main>{children}</main>
+        <CSPostHogProvider>
+          <main>{children}</main>
+          <Toaster />
+        </CSPostHogProvider>
       </body>
     </html>
   );
