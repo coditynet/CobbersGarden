@@ -6,50 +6,60 @@ import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="bg-garden-primary text-white">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Company Info */}
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/assets/img/logo.png"
-                alt="Cobbers Garden Logo"
-                width={40}
-                height={40}
-                className="w-10 h-10 brightness-200"
-              />
-              <span className="text-xl font-bold">Cobbers Garden</span>
+          <div className="space-y-6">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="overflow-hidden">
+                <Image
+                  src="/assets/img/logo.png"
+                  alt="Cobbers Garden Logo"
+                  width={48}
+                  height={48}
+                  className="[filter:drop-shadow(0_100px_0_rgb(255,255,255))] -translate-y-[100px]"
+                />
+              </div>
+              <span className="text-2xl font-bold">Cobbers Garden</span>
             </Link>
-            <p className="text-sm text-white/80">
+            <p className="text-lg text-white/90">
               Professionelle Gartenpflege und Rasenmähen in Ihrer Region.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+            <h3 className="text-xl font-bold mb-6">Quick Links</h3>
+            <ul className="space-y-4">
               <li>
-                <button onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="hover:text-garden-accent transition-colors">
+                <button 
+                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} 
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                >
                   Services
                 </button>
               </li>
               <li>
-                <button onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="hover:text-garden-accent transition-colors">
+                <button 
+                  onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })} 
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                >
                   Team
                 </button>
               </li>
               <li>
-                <button onClick={() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="hover:text-garden-accent transition-colors">
+                <button 
+                  onClick={() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' })} 
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                >
                   Referenzen
                 </button>
               </li>
               <li>
-                <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="hover:text-garden-accent transition-colors">
+                <button 
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                >
                   Kontakt
                 </button>
               </li>
@@ -58,67 +68,60 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-bold mb-4">Kontakt</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center space-x-2">
-                <Phone className="w-4 h-4" />
-                <a href="tel:+49123456789" className="hover:text-garden-accent transition-colors">
-                  +49 123 456789
+            <h3 className="text-xl font-bold mb-6">Kontakt</h3>
+            <ul className="space-y-4">
+              <li className="text-white/90 text-lg">
+                <a href="tel:+491234567890" className="hover:text-garden-accent transition-colors">
+                  +49 123 456 7890
                 </a>
               </li>
-              <li className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <a href="mailto:info@cobbers-garden.de" className="hover:text-garden-accent transition-colors">
-                  info@cobbers-garden.de
+              <li className="text-white/90 text-lg">
+                <a href="mailto:info@cobbersgarden.de" className="hover:text-garden-accent transition-colors">
+                  info@cobbersgarden.de
                 </a>
+              </li>
+              <li className="text-white/90 text-lg">
+                Musterstraße 123<br />
+                12345 Musterstadt
               </li>
             </ul>
           </div>
 
-          {/* Social Media */}
+          {/* Opening Hours */}
           <div>
-            <h3 className="font-bold mb-4">Social Media</h3>
-            <div className="flex space-x-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                className="hover:text-garden-accent transition-colors">
-                <Facebook className="w-6 h-6" />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="hover:text-garden-accent transition-colors">
-                <Instagram className="w-6 h-6" />
-              </a>
-            </div>
+            <h3 className="text-xl font-bold mb-6">Öffnungszeiten</h3>
+            <ul className="space-y-4">
+              <li className="text-white/90 text-lg">
+                Mo - Fr: 8:00 - 18:00
+              </li>
+              <li className="text-white/90 text-lg">
+                Sa: 9:00 - 14:00
+              </li>
+              <li className="text-white/90 text-lg">
+                So: Geschlossen
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/60">
-            <div className="space-x-4">
-              <Link href="/impressum" className="hover:text-white transition-colors">
+        {/* Credits Section */}
+        <div className="mt-16 pt-8 border-t border-white/20">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
+              <p className="text-white/90 text-lg">
+                © {new Date().getFullYear()} Cobbers Garden. Alle Rechte vorbehalten.
+              </p>
+              <p className="text-white/70 text-lg">
+                Created with ♥ by <a href="https://github.com/yourusername" className="hover:text-garden-accent transition-colors">Your Name</a>
+              </p>
+            </div>
+            <div className="flex gap-6">
+              <Link href="/impressum" className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                 Impressum
               </Link>
-              <Link href="/datenschutz" className="hover:text-white transition-colors">
+              <Link href="/datenschutz" className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                 Datenschutz
               </Link>
-              <Link href="/agb" className="hover:text-white transition-colors">
-                AGB
-              </Link>
-            </div>
-            <div className="text-right md:text-right">
-              <p>© {new Date().getFullYear()} Cobbers Garden. Alle Rechte vorbehalten.</p>
-              <p className="mt-2 text-xs">
-                Entwickelt von{" "}
-                <a href="https://github.com/maxcobbers" target="_blank" rel="noopener noreferrer" 
-                  className="hover:text-garden-accent transition-colors">
-                  Max Cobbers
-                </a>
-                {" "}und{" "}
-                <a href="https://github.com/juliuszlioba" target="_blank" rel="noopener noreferrer"
-                  className="hover:text-garden-accent transition-colors">
-                  Julius Zlioba
-                </a>
-              </p>
             </div>
           </div>
         </div>
