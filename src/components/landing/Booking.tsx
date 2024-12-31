@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import LoadingDots from "@/components/ui/LoadingDots";
+import { saveToLocalStorage, loadFromLocalStorage, clearSavedData } from "@/hooks/useAutosave";
 
 const bookingSchema = z.object({
   service: z.string({
@@ -70,6 +71,40 @@ const Booking = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof BookingFormData, string>>>({});
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
+
+  // Initialize form with saved data
+  useEffect(() => {
+    const initializeForm = async () => {
+      const savedData = loadFromLocalStorage('booking-form');
+      if (savedData) {
+        setFormData(savedData);
+        if (savedData.service) {
+          setSelectedService(savedData.service);
+          setStep(2);
+        }
+        
+        toast({
+          title: "Formular wiederhergestellt",
+          description: "Ihre vorherigen Eingaben wurden geladen.",
+        });
+      }
+      // Add small delay to ensure smooth transition
+      await new Promise(resolve => setTimeout(resolve, 300));
+      setIsInitializing(false);
+    };
+
+    initializeForm();
+  }, []);
+
+  // Autosave form data
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      saveToLocalStorage('booking-form', formData);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [formData]);
 
   const validateStep = (stepNumber: number) => {
     if (stepNumber === 1) {
@@ -116,19 +151,38 @@ const Booking = () => {
 
   const handleSubmit = async () => {
     if (!validateStep(2)) return;
-    
     setIsLoading(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log("Form data:", { ...formData, service: selectedService });
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          service: selectedService
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Ein Fehler ist aufgetreten');
+      }
+
+      clearSavedData('booking-form');
       setIsSubmitted(true);
+      
+      toast({
+        title: "Erfolg!",
+        description: data.message,
+      });
+
     } catch (error) {
       toast({
         title: "Fehler",
-        description: "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
+        description: error instanceof Error ? error.message : "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
         variant: "destructive",
       });
     } finally {
@@ -139,6 +193,35 @@ const Booking = () => {
   const selectedServiceDetails = serviceTypes
     .flatMap(cat => cat.options)
     .find(service => service.value === selectedService);
+
+  if (isInitializing) {
+    return (
+      <section id="booking" className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
+              <span className="relative">
+                Jetzt Termin buchen
+                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent" />
+              </span>
+            </h2>
+            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div className="p-16 flex justify-center items-center">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_infinite]" />
+                    <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_0.1s_infinite]" />
+                    <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_0.2s_infinite]" />
+                  </div>
+                  <p className="text-garden-secondary">Formular wird geladen...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="booking" className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">

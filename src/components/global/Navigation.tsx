@@ -17,7 +17,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 2);
 
       // Calculate scroll progress
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -76,7 +76,7 @@ const Navigation = () => {
               className="object-contain"
               priority
             />
-            <span className="text-5xl font-caveat text-[#333333]">
+            <span className="text-3xl font-caveat text-[#333333]">
               Cobbers Garden
             </span>
           </div>
@@ -86,7 +86,7 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`lg:text-2xl sm:text-xl font-caveat font-medium transition-all relative ${
+                className={`text-xl font-caveat font-medium transition-all relative ${
                   isScrolled 
                     ? 'text-garden-primary hover:text-garden-accent' 
                     : 'text-white hover:text-garden-accent'
