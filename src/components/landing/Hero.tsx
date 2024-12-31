@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import { ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import posthog from 'posthog-js';
 
 const Hero = () => {
   const scrollToBooking = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    posthog.capture('hero_cta_clicked');
     const bookingSection = document.getElementById('booking');
     if (bookingSection) {
       bookingSection.scrollIntoView({ behavior: 'smooth' });
@@ -18,7 +20,7 @@ const Hero = () => {
       id="home" 
       className="pt-24 pb-16 min-h-screen flex items-center relative"
       style={{ 
-        backgroundImage: "url('/assets/img/hero_bg.jpeg')",
+        backgroundImage: "url('/assets/img/hero_bg.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed"
@@ -26,9 +28,9 @@ const Hero = () => {
     >
       <div className="absolute inset-0 bg-black/40" />
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-3xl backdrop-blur-sm bg-white/10 p-8 rounded-lg">
-          <h1 className="text-5xl md:text-7xl font-playfair font-bold text-[#F2FCE2] mb-6 animate-grass-wave">
-            Ihr Garten verdient das Beste
+        <div className="max-w-3xl backdrop-blur-sm bg-white/10 p-8 rounded-lg mr-4 sm:mr-0">
+          <h1 className="text-5xl md:text-7xl font-playfair font-bold text-[#F2FCE2] mb-6 ">
+            Votre jardin. <br /> Notre passion.
           </h1>
           <p className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
             Professionelle Rasenpflege von Cobbers Garden - Wir machen Ihren Rasen zum Schmuckstück
@@ -41,8 +43,8 @@ const Hero = () => {
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
           
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 text-white/90">
-            <div className="flex items-center gap-2">
+          <div className="mt-8 flex flex-col sm:flex-row items-center gap-6 text-white/90 mr-4 sm:mr-0">
+            <div className="flex items-center gap-1">
               <div className="flex -space-x-4">
                 {[1,2,3].map((i) => (
                   <img
@@ -53,7 +55,7 @@ const Hero = () => {
                   />
                 ))}
               </div>
-              <span>+∞ zufriedene Kunden</span>
+              <span className="ml-2">+∞ zufriedene Kunden</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="flex text-yellow-400">

@@ -71,10 +71,7 @@ body {
   }
 }
 
-.animate-grass-wave {
-  animation: grass-wave 3s ease-in-out infinite;
-  transform-origin: bottom center;
-}
+
 
 html {
   scroll-behavior: smooth;

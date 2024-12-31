@@ -60,22 +60,18 @@ export default {
         },
       },
       keyframes: {
-        "grass-wave": {
-          "0%, 100%": { transform: "rotate(0deg)" },
-          "50%": { transform: "rotate(2deg)" },
-        },
         bounce: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-4px)' }
         }
       },
       animation: {
-        "grass-wave": "grass-wave 3s ease-in-out infinite",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],
         inter: ["var(--font-inter)", "sans-serif"],
         caveat: ["var(--font-caveat)", "cursive"],
+        opensans: ['var(--font-opensans)'],
       },
     },
   },

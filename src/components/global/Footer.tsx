@@ -112,7 +112,7 @@ const Footer = () => {
                 © {new Date().getFullYear()} Cobbers Garden. Alle Rechte vorbehalten.
               </p>
               <p className="text-white/70 text-lg">
-                Created with ♥ by <a href="https://github.com/yourusername" className="hover:text-garden-accent transition-colors">Your Name</a>
+                Created by Elias & Timothée
               </p>
             </div>
             <div className="flex gap-6">

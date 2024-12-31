@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import posthog from "posthog-js";
 
 const SECTIONS = [
   { id: 'home', label: 'Home' },
@@ -47,9 +48,15 @@ const Navigation = () => {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
+    posthog.capture('navigation_clicked', { section: sectionId });
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      const offset = 100;
+      const sectionTop = section.offsetTop - offset;
+      window.scrollTo({
+        top: sectionTop,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -67,26 +74,26 @@ const Navigation = () => {
       )}
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image 
-              src="/assets/img/logo.png"
+          <div className="transition-all duration-300 overflow-hidden">
+            <Image
+              src="/assets/img/logo_full.png"
               alt="Cobbers Garden Logo"
-              width={50}
-              height={50}
-              className="object-contain"
-              priority
+              width={isScrolled ? 220 : 280}
+              height={isScrolled ? 48 : 72}
+              className={` ${
+                isScrolled 
+                  ? 'brightness-100' 
+                  : '[filter:drop-shadow(0_100px_0_rgb(255,255,255))] -translate-y-[100px]'
+              }`}
             />
-            <span className="text-3xl font-caveat text-[#333333]">
-              Cobbers Garden
-            </span>
           </div>
-          
+
           <div className="hidden md:flex items-center gap-8">
             {SECTIONS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`text-xl font-caveat font-medium transition-all relative ${
+                className={`text-base font-medium font-opensans transition-all relative py-1 ${
                   isScrolled 
                     ? 'text-garden-primary hover:text-garden-accent' 
                     : 'text-white hover:text-garden-accent'
@@ -100,17 +107,6 @@ const Navigation = () => {
               </button>
             ))}
           </div>
-
-          <Button
-            onClick={() => scrollToSection('booking')}
-            className={`${
-              activeSection === 'booking'
-                ? 'bg-garden-primary hover:bg-garden-accent'
-                : 'bg-garden-primary hover:bg-garden-accent'
-            } text-white px-6 py-2 rounded-full transition-colors`}
-          >
-            Termin buchen
-          </Button>
         </div>
       </div>
     </nav>
