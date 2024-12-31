@@ -73,6 +73,7 @@ const Booking = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [startTime, setStartTime] = useState<number | null>(null);
 
   // Initialize form with saved data
   useEffect(() => {
@@ -107,10 +108,42 @@ const Booking = () => {
     return () => clearTimeout(timeoutId);
   }, [formData]);
 
+  const handleServiceSelect = (service: string) => {
+    setSelectedService(service);
+    posthog.capture('service_selected', { 
+      service,
+      category: selectedCategory,
+      timeToSelect: startTime ? Math.floor((Date.now() - startTime) / 1000) : 0
+    });
+  };
+
+  const handleContinue = () => {
+    if (step === 1 && validateStep(1)) {
+      posthog.capture('booking_step_completed', {
+        step: 1,
+        service: selectedService,
+        category: selectedCategory
+      });
+      setFormData(prev => ({ ...prev, service: selectedService }));
+      setStep(2);
+    } else if (step === 2 && validateStep(2)) {
+      handleSubmit();
+    }
+  };
+
+  const handleFormError = (errors: any) => {
+    posthog.capture('booking_form_error', {
+      step,
+      errors: Object.keys(errors),
+      service: selectedService
+    });
+  };
+
   const validateStep = (stepNumber: number) => {
     if (stepNumber === 1) {
       if (!selectedService) {
         setErrors({ service: "Bitte wählen Sie einen Service aus" });
+        handleFormError({ service: "Missing service" });
         return false;
       }
       return true;
@@ -133,21 +166,12 @@ const Booking = () => {
             }
           });
           setErrors(newErrors);
+          handleFormError(newErrors);
         }
         return false;
       }
     }
-
     return false;
-  };
-
-  const handleContinue = () => {
-    if (step === 1 && validateStep(1)) {
-      setFormData(prev => ({ ...prev, service: selectedService }));
-      setStep(2);
-    } else if (step === 2 && validateStep(2)) {
-      handleSubmit();
-    }
   };
 
   const handleSubmit = async () => {
@@ -172,13 +196,33 @@ const Booking = () => {
         throw new Error(data.message || 'Ein Fehler ist aufgetreten');
       }
 
+      // Calculate time spent
+      const timeSpent = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+
+      posthog.people.set({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        $initial_service: selectedService,
+      });
+
       posthog.capture('booking_submitted', {
         service: selectedService,
-        hasPhone: !!formData.phone
+        hasPhone: !!formData.phone,
+        timeToComplete: timeSpent,
+        stepsCompleted: step,
+        formStarted: !!startTime
+      });
+
+      // Track conversion
+      posthog.capture('$convert', {
+        service: selectedService,
+        timeToConvert: timeSpent
       });
 
       clearSavedData('booking-form');
       setIsSubmitted(true);
+      setStartTime(null);
       
       toast({
         title: "Erfolg!",

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Caveat } from "next/font/google";
+import { Open_Sans, Playfair_Display, Caveat } from "next/font/google";
 import "./globals.css";
 import { CSPostHogProvider } from '@/providers/posthog'
 import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <body className={`${inter.variable} ${playfair.variable} ${caveat.variable} font-inter`}>
+      <body className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
         <CSPostHogProvider>
           <main>{children}</main>
           <Toaster />

@@ -1,4 +1,5 @@
 import { Scissors, Trees, Shovel, Sprout, PenTool, Droplets, Warehouse, Flower2 } from "lucide-react";
+import posthog from "posthog-js";
 
 const services = [
   {
@@ -26,6 +27,14 @@ const services = [
     features: ["Teichbau", "Zaunbau", "Terrassenbau", "Weggestaltung"]
   },
 ];
+
+const handleServiceClick = (service: string) => {
+  posthog.capture('service_card_clicked', { service });
+  const bookingSection = document.getElementById('booking');
+  if (bookingSection) {
+    bookingSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const Services = () => {
   return (
