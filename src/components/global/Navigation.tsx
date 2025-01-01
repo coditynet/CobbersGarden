@@ -54,10 +54,17 @@ const Navigation = () => {
     if (section) {
       const offset = 100;
       const sectionTop = section.offsetTop - offset;
+      
+      // First scroll to the section
       window.scrollTo({
         top: sectionTop,
         behavior: "smooth",
       });
+      
+      // Close menu after scroll animation completes
+      setTimeout(() => {
+        setIsMobileMenuOpen(false);
+      }, 500); // Increased delay to match scroll animation
     }
   };
 
@@ -79,12 +86,12 @@ const Navigation = () => {
             <Image
               src="/assets/img/logo_full.png"
               alt="Cobbers Garden Logo"
-              width={isScrolled ? 220 : 280}
-              height={isScrolled ? 48 : 72}
-              className={` ${
-                isScrolled 
+              width={isScrolled || isMobileMenuOpen ? 220 : 280}
+              height={isScrolled || isMobileMenuOpen ? 48 : 72}
+              className={`${
+                isScrolled || isMobileMenuOpen
                   ? 'brightness-100' 
-                  : '[filter:drop-shadow(0_100px_0_rgb(255,255,255))] -translate-y-[100px]'
+                  : 'brightness-0 invert'
               }`}
             />
           </div>
@@ -95,9 +102,9 @@ const Navigation = () => {
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`font-medium font-opensans transition-all duration-300 relative py-1 
-                  ${isScrolled ? 'text-sm' : 'text-base'} 
+                  ${isScrolled || isMobileMenuOpen ? 'text-sm' : 'text-base'} 
                   ${
-                    isScrolled 
+                    isScrolled || isMobileMenuOpen
                       ? 'text-garden-primary hover:text-garden-accent' 
                       : 'text-white hover:text-garden-accent'
                   } 
@@ -106,7 +113,7 @@ const Navigation = () => {
                       ? `after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 
                          after:bg-garden-accent after:transition-transform after:duration-300 
                          after:transform-gpu after:scale-x-100 
-                         ${isScrolled ? 'text-garden-accent' : 'text-garden-accent brightness-125'}`
+                         ${isScrolled || isMobileMenuOpen ? 'text-garden-accent' : 'text-garden-accent brightness-125'}`
                       : 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-garden-accent after:transition-transform after:duration-300 after:transform-gpu after:scale-x-0 hover:after:scale-x-100'
                   }`}
               >
