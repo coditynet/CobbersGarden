@@ -22,7 +22,7 @@ const testimonials = [
     name: "Thibault Cauche",
     location: "München",
     image: "/assets/img/reviews/review3.png",
-    text: "Herr BELS Jérémy ist ein hilfsbereiter, reaktionsschneller und seriöser Mensch, ... wir können dieses Unternehmen wärmstens empfehlen!!",
+    text: "Monsieur BELS Jérémy est une personne disponible, réactive, sérieuse, ... nous recommandons vivement cette entreprise !!",
     rating: 5,
   },
 ];
