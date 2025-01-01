@@ -1,1 +1,3 @@
+#!/bin/sh
+npm audit || (echo "Security vulnerabilities detected. Fix them before pushing." && exit 1)
 npx lint-staged
