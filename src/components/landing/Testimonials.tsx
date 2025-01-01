@@ -5,26 +5,26 @@ import { Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Michael Schmidt",
+    name: "Charline Knobloch",
     location: "Berlin",
-    image: "https://i.pravatar.cc/100?img=1",
-    text: "Absolut professioneller Service. Mein Rasen sieht jetzt besser aus als je zuvor!",
-    rating: 5
+    image: "/assets/img/reviews/review1.png",
+    text: "Jeremy et son équipe ont réalisés notre terrasse, notre palissade et notre jardin. Il a réussi à être à l'écoute de nos envies et nous a apporté de bons conseils. Nous sommes ravis de notre extérieur et du travail effectué. Merci pour ta sympathie et ta disponibilité. Je recommande les yeux fermés !!",
+    rating: 5,
   },
   {
-    name: "Sandra Weber",
+    name: "Frederic Ferreira",
     location: "Hamburg",
-    image: "https://i.pravatar.cc/100?img=2",
-    text: "Zuverlässig, pünktlich und sehr kompetent. Kann ich nur weiterempfehlen.",
-    rating: 5
+    image: "/assets/img/reviews/review2.png",
+    text: "Je recommande vivement COBBERS GARDEN et Jeremy Bels. Cobbers Garden est une société sérieuse, ponctuelle, professionnelle, appliquée dont les réalisations sont impeccables.",
+    rating: 5,
   },
   {
-    name: "Thomas Müller",
+    name: "Thibault Cauche",
     location: "München",
-    image: "https://i.pravatar.cc/100?img=3",
-    text: "Endlich muss ich mich nicht mehr selbst um den Rasen kümmern. Super Service!",
-    rating: 5
-  }
+    image: "/assets/img/reviews/review3.png",
+    text: "Monsieur BELS Jérémy est une personne disponible, réactive, sérieuse, ... nous recommandons vivement cette entreprise !!",
+    rating: 5,
+  },
 ];
 
 const Testimonials = () => {
@@ -37,31 +37,34 @@ const Testimonials = () => {
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent" />
           </span>
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial) => (
-            <div 
+            <div
               key={testimonial.name}
-              className="bg-garden-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
-            >
+              className="bg-garden-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center gap-4 mb-6">
-                <img 
+                <img
                   src={testimonial.image}
                   alt={testimonial.name}
                   className="w-16 h-16 rounded-full"
                 />
                 <div>
-                  <h3 className="font-bold text-garden-primary">{testimonial.name}</h3>
-                  <p className="text-garden-secondary/80 text-sm">{testimonial.location}</p>
+                  <h3 className="font-bold text-garden-primary">
+                    {testimonial.name}
+                  </h3>
+                  <p className="text-garden-secondary/80 text-sm">
+                    {testimonial.location}
+                  </p>
                 </div>
               </div>
-              
+
               <div className="flex text-yellow-400 mb-4">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-current" />
                 ))}
               </div>
-              
+
               <p className="text-garden-secondary leading-relaxed">
                 "{testimonial.text}"
               </p>
@@ -73,4 +76,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials; 
+export default Testimonials;
