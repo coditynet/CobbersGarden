@@ -3,29 +3,41 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Upload, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import LoadingDots from "@/components/ui/LoadingDots";
-import { saveToLocalStorage, loadFromLocalStorage, clearSavedData } from "@/hooks/useAutosave";
+import {
+  saveToLocalStorage,
+  loadFromLocalStorage,
+  clearSavedData,
+} from "@/hooks/useAutosave";
 import posthog from "posthog-js";
+import Image from "next/image";
 
 const bookingSchema = z.object({
   service: z.string({
     required_error: "Bitte wählen Sie einen Service aus",
   }),
-  name: z.string()
+  name: z
+    .string()
     .min(2, "Name muss mindestens 2 Zeichen lang sein")
     .max(50, "Name darf maximal 50 Zeichen lang sein"),
-  email: z.string()
-    .email("Bitte geben Sie eine gültige E-Mail-Adresse ein"),
-  phone: z.string()
-    .optional(),
-  message: z.string()
+  email: z.string().email("Bitte geben Sie eine gültige E-Mail-Adresse ein"),
+  phone: z.string().optional(),
+  message: z
+    .string()
     .min(10, "Nachricht muss mindestens 10 Zeichen lang sein")
     .max(1000, "Nachricht darf maximal 1000 Zeichen lang sein"),
+  images: z.array(z.custom<File>()).optional(),
 });
 
 type BookingFormData = z.infer<typeof bookingSchema>;
@@ -34,27 +46,39 @@ const serviceTypes = [
   {
     category: "Rasenpflege",
     options: [
-      { value: "rasen-standard", label: "Standard Rasenmähen", price: "ab 35€" },
-      { value: "rasen-premium", label: "Premium Rasenpflege (inkl. Düngen)", price: "ab 55€" },
-      { value: "vertikutieren", label: "Vertikutieren", price: "ab 45€" }
-    ]
+      {
+        value: "rasen-standard",
+        label: "Standard Rasenmähen",
+        price: "",
+      },
+      {
+        value: "rasen-premium",
+        label: "Premium Rasenpflege (inkl. Düngen)",
+        price: "",
+      },
+      { value: "vertikutieren", label: "Vertikutieren", price: "" },
+    ],
   },
   {
     category: "Baumpflege",
     options: [
-      { value: "baum-schnitt", label: "Baumschnitt", price: "ab 80€" },
-      { value: "totholz", label: "Totholzentfernung", price: "ab 95€" },
-      { value: "sturmschaden", label: "Sturmschadenbeseitigung", price: "nach Aufwand" }
-    ]
+      { value: "baum-schnitt", label: "Baumschnitt", price: "" },
+      { value: "totholz", label: "Totholzentfernung", price: "" },
+      {
+        value: "sturmschaden",
+        label: "Sturmschadenbeseitigung",
+        price: "",
+      },
+    ],
   },
   {
     category: "Gartengestaltung",
     options: [
-      { value: "neuanlage", label: "Neuanlage Garten", price: "nach Aufwand" },
-      { value: "umgestaltung", label: "Umgestaltung", price: "nach Aufwand" },
-      { value: "pflanzplan", label: "Pflanzplanung", price: "ab 120€" }
-    ]
-  }
+      { value: "neuanlage", label: "Neuanlage Garten", price: "" },
+      { value: "umgestaltung", label: "Umgestaltung", price: "" },
+      { value: "pflanzplan", label: "Pflanzplanung", price: "" },
+    ],
+  },
 ];
 
 const Booking = () => {
@@ -67,32 +91,35 @@ const Booking = () => {
     name: "",
     email: "",
     phone: "",
-    message: ""
+    message: "",
   });
-  const [errors, setErrors] = useState<Partial<Record<keyof BookingFormData, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof BookingFormData, string>>
+  >({});
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [images, setImages] = useState<File[]>([]);
 
   // Initialize form with saved data
   useEffect(() => {
     const initializeForm = async () => {
-      const savedData = loadFromLocalStorage('booking-form');
+      const savedData = loadFromLocalStorage("booking-form");
       if (savedData) {
         setFormData(savedData);
         if (savedData.service) {
           setSelectedService(savedData.service);
           setStep(2);
         }
-        
+
         toast({
           title: "Formular wiederhergestellt",
           description: "Ihre vorherigen Eingaben wurden geladen.",
         });
       }
       // Add small delay to ensure smooth transition
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 300));
       setIsInitializing(false);
     };
 
@@ -102,7 +129,7 @@ const Booking = () => {
   // Autosave form data
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      saveToLocalStorage('booking-form', formData);
+      saveToLocalStorage("booking-form", formData);
     }, 1000);
 
     return () => clearTimeout(timeoutId);
@@ -110,21 +137,21 @@ const Booking = () => {
 
   const handleServiceSelect = (service: string) => {
     setSelectedService(service);
-    posthog.capture('service_selected', { 
+    posthog.capture("service_selected", {
       service,
       category: selectedCategory,
-      timeToSelect: startTime ? Math.floor((Date.now() - startTime) / 1000) : 0
+      timeToSelect: startTime ? Math.floor((Date.now() - startTime) / 1000) : 0,
     });
   };
 
   const handleContinue = () => {
     if (step === 1 && validateStep(1)) {
-      posthog.capture('booking_step_completed', {
+      posthog.capture("booking_step_completed", {
         step: 1,
         service: selectedService,
-        category: selectedCategory
+        category: selectedCategory,
       });
-      setFormData(prev => ({ ...prev, service: selectedService }));
+      setFormData((prev) => ({ ...prev, service: selectedService }));
       setStep(2);
     } else if (step === 2 && validateStep(2)) {
       handleSubmit();
@@ -132,10 +159,10 @@ const Booking = () => {
   };
 
   const handleFormError = (errors: any) => {
-    posthog.capture('booking_form_error', {
+    posthog.capture("booking_form_error", {
       step,
       errors: Object.keys(errors),
-      service: selectedService
+      service: selectedService,
     });
   };
 
@@ -153,7 +180,7 @@ const Booking = () => {
       try {
         bookingSchema.parse({
           ...formData,
-          service: selectedService
+          service: selectedService,
         });
         setErrors({});
         return true;
@@ -177,27 +204,29 @@ const Booking = () => {
   const handleSubmit = async () => {
     if (!validateStep(2)) return;
     setIsLoading(true);
-    
+
     try {
-      const response = await fetch('/api/booking', {
-        method: 'POST',
+      const response = await fetch("/api/booking", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
-          service: selectedService
+          service: selectedService,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Ein Fehler ist aufgetreten');
+        throw new Error(data.message || "Ein Fehler ist aufgetreten");
       }
 
       // Calculate time spent
-      const timeSpent = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
+      const timeSpent = startTime
+        ? Math.floor((Date.now() - startTime) / 1000)
+        : 0;
 
       posthog.people.set({
         name: formData.name,
@@ -206,33 +235,35 @@ const Booking = () => {
         $initial_service: selectedService,
       });
 
-      posthog.capture('booking_submitted', {
+      posthog.capture("booking_submitted", {
         service: selectedService,
         hasPhone: !!formData.phone,
         timeToComplete: timeSpent,
         stepsCompleted: step,
-        formStarted: !!startTime
+        formStarted: !!startTime,
       });
 
       // Track conversion
-      posthog.capture('$convert', {
+      posthog.capture("$convert", {
         service: selectedService,
-        timeToConvert: timeSpent
+        timeToConvert: timeSpent,
       });
 
-      clearSavedData('booking-form');
+      clearSavedData("booking-form");
       setIsSubmitted(true);
       setStartTime(null);
-      
+
       toast({
         title: "Erfolg!",
         description: data.message,
       });
-
     } catch (error) {
       toast({
         title: "Fehler",
-        description: error instanceof Error ? error.message : "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
         variant: "destructive",
       });
     } finally {
@@ -241,12 +272,14 @@ const Booking = () => {
   };
 
   const selectedServiceDetails = serviceTypes
-    .flatMap(cat => cat.options)
-    .find(service => service.value === selectedService);
+    .flatMap((cat) => cat.options)
+    .find((service) => service.value === selectedService);
 
   if (isInitializing) {
     return (
-      <section id="booking" className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
+      <section
+        id="booking"
+        className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
@@ -263,7 +296,9 @@ const Booking = () => {
                     <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_0.1s_infinite]" />
                     <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_0.2s_infinite]" />
                   </div>
-                  <p className="text-garden-secondary">Formular wird geladen...</p>
+                  <p className="text-garden-secondary">
+                    Formular wird geladen...
+                  </p>
                 </div>
               </div>
             </div>
@@ -274,7 +309,9 @@ const Booking = () => {
   }
 
   return (
-    <section id="booking" className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
+    <section
+      id="booking"
+      className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
@@ -288,19 +325,29 @@ const Booking = () => {
             <div className="flex border-b">
               <div className="flex-1 p-4 text-center text-garden-primary">
                 <div className="flex items-center justify-center gap-2">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    step > 1 || isSubmitted ? 'bg-garden-primary text-white' : 'bg-gray-200'
-                  }`}>
-                    {step > 1 || isSubmitted ? <Check className="w-5 h-5" /> : "1"}
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      step > 1 || isSubmitted
+                        ? "bg-garden-primary text-white"
+                        : "bg-gray-200"
+                    }`}>
+                    {step > 1 || isSubmitted ? (
+                      <Check className="w-5 h-5" />
+                    ) : (
+                      "1"
+                    )}
                   </div>
                   <span>Service wählen</span>
                 </div>
               </div>
               <div className="flex-1 p-4 text-center text-garden-primary">
                 <div className="flex items-center justify-center gap-2">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    isSubmitted ? 'bg-garden-primary text-white' : 'bg-gray-200'
-                  }`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      isSubmitted
+                        ? "bg-garden-primary text-white"
+                        : "bg-gray-200"
+                    }`}>
                     {isSubmitted ? <Check className="w-5 h-5" /> : "2"}
                   </div>
                   <span>Kontakt</span>
@@ -318,7 +365,8 @@ const Booking = () => {
                     Ihre Anfrage wurde erfolgreich gesendet
                   </h3>
                   <p className="text-garden-secondary mb-8">
-                    Wir werden uns in Kürze bei Ihnen melden, um einen passenden Termin zu vereinbaren.
+                    Wir werden uns in Kürze bei Ihnen melden, um einen passenden
+                    Termin zu vereinbaren.
                   </p>
                   <Button
                     onClick={() => {
@@ -331,11 +379,10 @@ const Booking = () => {
                         name: "",
                         email: "",
                         phone: "",
-                        message: ""
+                        message: "",
                       });
                     }}
-                    className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-4 rounded-xl transition-all duration-300"
-                  >
+                    className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-4 rounded-xl transition-all duration-300">
                     Neue Anfrage
                   </Button>
                 </div>
@@ -347,13 +394,17 @@ const Booking = () => {
                         <Label className="text-lg font-playfair text-garden-primary">
                           Kategorie
                         </Label>
-                        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                        <Select
+                          value={selectedCategory}
+                          onValueChange={setSelectedCategory}>
                           <SelectTrigger className="w-full text-lg p-6">
                             <SelectValue placeholder="Wählen Sie eine Kategorie" />
                           </SelectTrigger>
                           <SelectContent>
                             {serviceTypes.map((category) => (
-                              <SelectItem key={category.category} value={category.category}>
+                              <SelectItem
+                                key={category.category}
+                                value={category.category}>
                                 {category.category}
                               </SelectItem>
                             ))}
@@ -368,20 +419,25 @@ const Booking = () => {
                           </Label>
                           <div className="grid gap-4">
                             {serviceTypes
-                              .find(cat => cat.category === selectedCategory)
+                              .find((cat) => cat.category === selectedCategory)
                               ?.options.map((service) => (
                                 <div
                                   key={service.value}
                                   className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                                    selectedService === service.value 
-                                      ? 'border-garden-primary bg-garden-primary/5' 
-                                      : 'border-transparent bg-gray-50 hover:bg-gray-100'
+                                    selectedService === service.value
+                                      ? "border-garden-primary bg-garden-primary/5"
+                                      : "border-transparent bg-gray-50 hover:bg-gray-100"
                                   }`}
-                                  onClick={() => setSelectedService(service.value)}
-                                >
+                                  onClick={() =>
+                                    setSelectedService(service.value)
+                                  }>
                                   <div className="flex justify-between items-center">
-                                    <span className="font-medium">{service.label}</span>
-                                    <span className="text-garden-primary font-medium">{service.price}</span>
+                                    <span className="font-medium">
+                                      {service.label}
+                                    </span>
+                                    <span className="text-garden-primary font-medium">
+                                      {service.price}
+                                    </span>
                                   </div>
                                 </div>
                               ))}
@@ -393,32 +449,45 @@ const Booking = () => {
                     <div className="space-y-6">
                       <div className="bg-garden-background/20 p-4 rounded-lg">
                         <p className="font-medium">Gewählter Service:</p>
-                        <p className="text-garden-primary">{selectedServiceDetails?.label}</p>
-                        <p className="text-sm text-garden-secondary">{selectedServiceDetails?.price}</p>
+                        <p className="text-garden-primary">
+                          {selectedServiceDetails?.label}
+                        </p>
+                        <p className="text-sm text-garden-secondary">
+                          {selectedServiceDetails?.price}
+                        </p>
                       </div>
-                      
+
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-3">
-                          <Label htmlFor="name" className="text-lg font-playfair text-garden-primary">
+                          <Label
+                            htmlFor="name"
+                            className="text-lg font-playfair text-garden-primary">
                             Name
                           </Label>
                           <Input
                             id="name"
                             value={formData.name}
                             onChange={(e) => {
-                              setFormData({...formData, name: e.target.value});
+                              setFormData({
+                                ...formData,
+                                name: e.target.value,
+                              });
                               if (errors.name) validateStep(2);
                             }}
                             placeholder="Max Mustermann"
-                            className={`text-lg p-6 ${errors.name ? 'border-red-500' : ''}`}
+                            className={`text-lg p-6 ${errors.name ? "border-red-500" : ""}`}
                             required
                           />
                           {errors.name && (
-                            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.name}
+                            </p>
                           )}
                         </div>
                         <div className="space-y-3">
-                          <Label htmlFor="email" className="text-lg font-playfair text-garden-primary">
+                          <Label
+                            htmlFor="email"
+                            className="text-lg font-playfair text-garden-primary">
                             E-Mail
                           </Label>
                           <Input
@@ -426,80 +495,184 @@ const Booking = () => {
                             type="email"
                             value={formData.email}
                             onChange={(e) => {
-                              setFormData({...formData, email: e.target.value});
+                              setFormData({
+                                ...formData,
+                                email: e.target.value,
+                              });
                               if (errors.email) validateStep(2);
                             }}
                             placeholder="max@beispiel.de"
-                            className={`text-lg p-6 ${errors.email ? 'border-red-500' : ''}`}
+                            className={`text-lg p-6 ${errors.email ? "border-red-500" : ""}`}
                             required
                           />
                           {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.email}
+                            </p>
                           )}
                         </div>
                       </div>
 
                       <div className="space-y-3">
-                        <Label htmlFor="phone" className="text-lg font-playfair text-garden-primary">
+                        <Label
+                          htmlFor="phone"
+                          className="text-lg font-playfair text-garden-primary">
                           Telefon (optional)
                         </Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
-                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          onChange={(e) =>
+                            setFormData({ ...formData, phone: e.target.value })
+                          }
                           placeholder="+49 123 456789"
                           className="text-lg p-6"
                         />
                       </div>
 
                       <div className="space-y-3">
-                        <Label htmlFor="message" className="text-lg font-playfair text-garden-primary">
+                        <Label
+                          htmlFor="message"
+                          className="text-lg font-playfair text-garden-primary">
                           Ihre Nachricht
                         </Label>
                         <Textarea
                           id="message"
                           value={formData.message}
                           onChange={(e) => {
-                            setFormData({...formData, message: e.target.value});
+                            setFormData({
+                              ...formData,
+                              message: e.target.value,
+                            });
                             if (errors.message) validateStep(2);
                           }}
                           placeholder="Beschreiben Sie Ihr Anliegen..."
-                          className={`min-h-[120px] text-lg p-6 ${errors.message ? 'border-red-500' : ''}`}
+                          className={`min-h-[120px] text-lg p-6 ${errors.message ? "border-red-500" : ""}`}
                           required
                         />
                         {errors.message && (
-                          <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.message}
+                          </p>
                         )}
                       </div>
-                    </div>
-                  )}
-                  
-                  <Button
-                    onClick={step === 1 ? handleContinue : handleSubmit}
-                    disabled={isLoading || (step === 1 ? !selectedService : Object.keys(errors).length > 0)}
-                    className={`w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed`}
-                  >
-                    {step === 1 ? (
-                      <>
-                        Weiter
-                        <ArrowRight className="w-5 h-5" />
-                      </>
-                    ) : (
-                      <>
-                        {isLoading ? (
-                          <div className="flex items-center gap-2">
-                            <LoadingDots />
+
+                      <div className="space-y-3">
+                        <Label className="block">Bilder (optional)</Label>
+                        <div
+                          className={`border-2 border-dashed rounded-xl p-6 transition-colors
+                          ${images.length < 10 ? "cursor-pointer hover:border-garden-accent" : ""}
+                          ${errors.images ? "border-red-500" : "border-gray-300"}`}>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            id="image-upload"
+                            onChange={(e) => {
+                              if (e.target.files) {
+                                const newFiles = Array.from(e.target.files);
+                                const totalImages =
+                                  images.length + newFiles.length;
+                                if (totalImages > 10) {
+                                  toast({
+                                    title: "Zu viele Bilder",
+                                    description:
+                                      "Sie können maximal 10 Bilder hochladen",
+                                    variant: "destructive",
+                                  });
+                                  return;
+                                }
+                                setImages((prev) => [...prev, ...newFiles]);
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  images: [...(prev.images || []), ...newFiles],
+                                }));
+                              }
+                            }}
+                          />
+                          <label
+                            htmlFor="image-upload"
+                            className="flex flex-col items-center gap-2">
+                            <Upload
+                              className={`w-8 h-8 ${images.length < 10 ? "text-garden-primary" : "text-gray-400"}`}
+                            />
+                            <div className="text-center">
+                              <p className="text-sm font-medium text-garden-primary">
+                                {images.length < 10 ? (
+                                  <>Klicken Sie hier, um Bilder hochzuladen</>
+                                ) : (
+                                  <span className="text-gray-400">
+                                    Maximale Anzahl an Bildern erreicht
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-xs text-garden-secondary mt-1">
+                                JPG, PNG oder GIF (max. 10 Bilder)
+                              </p>
+                            </div>
+                          </label>
+                        </div>
+
+                        {/* Image Preview Grid */}
+                        {images.length > 0 && (
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+                            {images.map((image, index) => (
+                              <div
+                                key={index}
+                                className="relative aspect-square group">
+                                <div className="w-full h-full rounded-lg overflow-hidden border border-gray-200">
+                                  <Image
+                                    src={URL.createObjectURL(image)}
+                                    alt={`Vorschau ${index + 1}`}
+                                    fill
+                                    className="object-cover"
+                                  />
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setImages((prev) =>
+                                      prev.filter((_, i) => i !== index)
+                                    );
+                                    setFormData((prev) => ({
+                                      ...prev,
+                                      images: (prev.images || []).filter(
+                                        (_, i) => i !== index
+                                      ),
+                                    }));
+                                  }}
+                                  className="absolute -top-2 -right-2 bg-white rounded-full p-1.5 shadow-md hover:bg-red-50 transition-colors">
+                                  <X className="w-4 h-4 text-red-500" />
+                                </button>
+                              </div>
+                            ))}
                           </div>
+                        )}
+
+                        {images.length > 0 && (
+                          <p className="text-sm text-garden-secondary">
+                            {images.length} von 10 Bildern ausgewählt
+                          </p>
+                        )}
+                      </div>
+
+                      <Button
+                        onClick={handleContinue}
+                        disabled={isLoading}
+                        className="w-full bg-garden-primary hover:bg-garden-accent text-white">
+                        {isLoading ? (
+                          <LoadingDots />
                         ) : (
                           <>
-                            Anfrage senden
-                            <ArrowRight className="w-5 h-5" />
+                            Absenden
+                            <ArrowRight className="ml-2 h-5 w-5" />
                           </>
                         )}
-                      </>
-                    )}
-                  </Button>
+                      </Button>
+                    </div>
+                  )}
                 </>
               )}
             </div>
