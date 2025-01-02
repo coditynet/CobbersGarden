@@ -39,7 +39,7 @@ export default function LegalNoticePage() {
         <section className="mb-8">
           <h2 className="text-2xl font-playfair font-bold text-garden-primary mb-4">
             Hébergement
-          </h2>
+          </h2> 
           <p>Ce site est hébergé par :</p>
           <p>Vercel Inc.</p>
           <p>440 N Barranca Ave #4133</p>
