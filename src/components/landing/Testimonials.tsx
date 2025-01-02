@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 const testimonials = [
   {
@@ -44,7 +45,7 @@ const Testimonials = () => {
               key={testimonial.name}
               className="bg-garden-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center gap-4 mb-6">
-                <img
+                <Image
                   src={testimonial.image}
                   alt={testimonial.name}
                   className="w-16 h-16 rounded-full"
