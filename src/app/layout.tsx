@@ -4,6 +4,7 @@ import "./globals.css";
 import { CSPostHogProvider } from '@/providers/posthog'
 import { Toaster } from "@/components/ui/toaster";
 import JsonLd from "@/components/global/JsonLd";
+import { ErrorBoundary } from '@/components/global/ErrorBoundary';
 import { CookieBanner } from '@/components/global/CookieBanner';
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
@@ -47,11 +48,13 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
-        <CSPostHogProvider>
-          <main>{children}</main>
-          <Toaster />
-          <CookieBanner />
-        </CSPostHogProvider>
+        <ErrorBoundary>
+          <CSPostHogProvider>
+            <main>{children}</main>
+            <Toaster />
+            <CookieBanner />
+          </CSPostHogProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
