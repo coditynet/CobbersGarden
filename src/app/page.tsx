@@ -12,6 +12,7 @@ import BackToTop from "@/components/ui/BackToTop";
 import Navigation from "@/components/global/Navigation";
 import Footer from "@/components/global/Footer";
 import Testimonials from "@/components/landing/Testimonials";
+import Team from "@/components/landing/Team";
 
 export default function Home() {
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
+        <Team />
         <Booking />
         <Testimonials />
         <Contact />
