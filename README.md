@@ -82,7 +82,7 @@ Please make sure to update tests as appropriate and adhere to our code style gui
 
 ## ⚖️ License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License - see the [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) for details.
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License - see the [LICENSE.md](LICENSE.md) file for details.
 
 This means you are free to:
 - Share — copy and redistribute the material in any medium or format
