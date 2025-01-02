@@ -17,12 +17,9 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="pt-24 pb-16 min-h-screen flex items-center relative"
+      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-scroll md:bg-fixed"
       style={{
         backgroundImage: "url('/assets/img/hero_bg3.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
       }}>
       <div className="absolute inset-0 bg-black/40" />
       <div className="container mx-auto px-4 relative z-10">
