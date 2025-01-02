@@ -22,21 +22,27 @@ import {
 } from "@/hooks/useAutosave";
 import posthog from "posthog-js";
 import Image from "next/image";
+import validator from 'validator';
 
 const bookingSchema = z.object({
   service: z.string({
-    required_error: "Bitte wählen Sie einen Service aus",
+    required_error: "Veuillez sélectionner un service",
   }),
   name: z
     .string()
-    .min(2, "Name muss mindestens 2 Zeichen lang sein")
-    .max(50, "Name darf maximal 50 Zeichen lang sein"),
-  email: z.string().email("Bitte geben Sie eine gültige E-Mail-Adresse ein"),
-  phone: z.string().optional(),
+    .min(2, "Le nom doit contenir au moins 2 caractères")
+    .max(50, "Le nom ne peut pas dépasser 50 caractères"),
+  email: z.string().email("Veuillez entrer une adresse e-mail valide"),
+  phone: z.string()
+    .optional()
+    .refine(
+      (value) => !value || validator.isMobilePhone(value),
+      "Veuillez entrer un numéro de téléphone français valide"
+    ),
   message: z
     .string()
-    .min(10, "Nachricht muss mindestens 10 Zeichen lang sein")
-    .max(1000, "Nachricht darf maximal 1000 Zeichen lang sein"),
+    .min(10, "Le message doit contenir au moins 10 caractères")
+    .max(1000, "Le message ne peut pas dépasser 1000 caractères"),
   images: z.array(z.custom<File>()).optional(),
 });
 
@@ -124,7 +130,7 @@ const Booking = () => {
     };
 
     initializeForm();
-  }, []);
+  }, [toast]);
 
   // Autosave form data
   useEffect(() => {
@@ -135,6 +141,7 @@ const Booking = () => {
     return () => clearTimeout(timeoutId);
   }, [formData]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleServiceSelect = (service: string) => {
     setSelectedService(service);
     posthog.capture("service_selected", {
@@ -158,7 +165,7 @@ const Booking = () => {
     }
   };
 
-  const handleFormError = (errors: any) => {
+  const handleFormError = (errors: Record<string, string>) => {
     posthog.capture("booking_form_error", {
       step,
       errors: Object.keys(errors),
@@ -525,7 +532,7 @@ const Booking = () => {
                         <Label
                           htmlFor="phone"
                           className="text-lg font-playfair text-garden-primary">
-                          Telefon (optional)
+                          Téléphone (optionnel)
                         </Label>
                         <Input
                           id="phone"
@@ -534,9 +541,12 @@ const Booking = () => {
                           onChange={(e) =>
                             setFormData({ ...formData, phone: e.target.value })
                           }
-                          placeholder="+49 123 456789"
+                          placeholder="06 12 34 56 78"
                           className="text-lg p-6"
                         />
+                        {errors.phone && (
+                          <p className="text-red-500 text-sm">{errors.phone}</p>
+                        )}
                       </div>
 
                       <div className="space-y-3">
