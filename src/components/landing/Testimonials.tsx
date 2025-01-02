@@ -47,7 +47,9 @@ const Testimonials = () => {
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-16 h-16 rounded-full"
+                  className="w-16 h-16 rounded-full select-none"
+                  draggable="false"
+                  onDragStart={(e) => e.preventDefault()}
                 />
                 <div>
                   <h3 className="font-bold text-garden-primary">
