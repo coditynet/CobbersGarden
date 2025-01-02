@@ -286,7 +286,7 @@ const Booking = () => {
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
               <span className="relative">
                 Jetzt Termin buchen
-                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent" />
+                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
               </span>
             </h2>
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -318,7 +318,7 @@ const Booking = () => {
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
             <span className="relative">
               {isSubmitted ? "Vielen Dank!" : "Jetzt Termin buchen"}
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent" />
+              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
             </span>
           </h2>
 
@@ -445,6 +445,14 @@ const Booking = () => {
                           </div>
                         </div>
                       )}
+
+                      <Button
+                        onClick={handleContinue}
+                        disabled={!selectedService}
+                        className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                        Weiter
+                        <ArrowRight className="w-5 h-5" />
+                      </Button>
                     </div>
                   ) : (
                     <div className="space-y-6">
@@ -660,15 +668,17 @@ const Booking = () => {
                       </div>
 
                       <Button
-                        onClick={handleContinue}
-                        disabled={isLoading}
-                        className="w-full bg-garden-primary hover:bg-garden-accent text-white">
+                        onClick={handleSubmit}
+                        disabled={isLoading || Object.keys(errors).length > 0}
+                        className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
                         {isLoading ? (
-                          <LoadingDots />
+                          <div className="flex items-center gap-2">
+                            <LoadingDots />
+                          </div>
                         ) : (
                           <>
-                            Absenden
-                            <ArrowRight className="ml-2 h-5 w-5" />
+                            Anfrage senden
+                            <ArrowRight className="w-5 h-5" />
                           </>
                         )}
                       </Button>
