@@ -45,13 +45,15 @@ const Testimonials = () => {
               key={testimonial.name}
               className="bg-garden-background rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center gap-4 mb-6">
-              <Image
+                <div className="relative w-16 h-16">
+                  <Image
                     src={testimonial.image}
                     alt={testimonial.name}
                     fill
                     draggable={false}
                     className="rounded-full object-cover select-none"
                   />
+                </div>
                 <div>
                   <h3 className="font-bold text-garden-primary">
                     {testimonial.name}
