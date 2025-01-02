@@ -22,7 +22,7 @@ import {
 } from "@/hooks/useAutosave";
 import posthog from "posthog-js";
 import Image from "next/image";
-import validator from 'validator';
+import validator from "validator";
 
 const bookingSchema = z.object({
   service: z.string({
@@ -33,7 +33,8 @@ const bookingSchema = z.object({
     .min(2, "Le nom doit contenir au moins 2 caractères")
     .max(50, "Le nom ne peut pas dépasser 50 caractères"),
   email: z.string().email("Veuillez entrer une adresse e-mail valide"),
-  phone: z.string()
+  phone: z
+    .string()
     .optional()
     .refine(
       (value) => !value || validator.isMobilePhone(value),
@@ -120,8 +121,8 @@ const Booking = () => {
         }
 
         toast({
-          title: "Formular wiederhergestellt",
-          description: "Ihre vorherigen Eingaben wurden geladen.",
+          title: "Formulaire restauré.",
+          description: "Vos précédentes saisies ont été chargées.",
         });
       }
       // Add small delay to ensure smooth transition
@@ -176,8 +177,8 @@ const Booking = () => {
   const validateStep = (stepNumber: number) => {
     if (stepNumber === 1) {
       if (!selectedService) {
-        setErrors({ service: "Bitte wählen Sie einen Service aus" });
-        handleFormError({ service: "Missing service" });
+        setErrors({ service: "Veuillez sélectionner un service." });
+        handleFormError({ service: "Service manquant." });
         return false;
       }
       return true;
@@ -261,16 +262,16 @@ const Booking = () => {
       setStartTime(null);
 
       toast({
-        title: "Erfolg!",
+        title: "Succès!",
         description: data.message,
       });
     } catch (error) {
       toast({
-        title: "Fehler",
+        title: "Erreur",
         description:
           error instanceof Error
             ? error.message
-            : "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
+            : "Une erreur s'est produite. Veuillez réessayer plus tard.",
         variant: "destructive",
       });
     } finally {
@@ -291,7 +292,7 @@ const Booking = () => {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
               <span className="relative">
-                Jetzt Termin buchen
+                Réserver un rendez-vous maintenant.
                 <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
               </span>
             </h2>
@@ -304,7 +305,7 @@ const Booking = () => {
                     <div className="w-3 h-3 bg-garden-primary rounded-full animate-[bounce_0.7s_0.2s_infinite]" />
                   </div>
                   <p className="text-garden-secondary">
-                    Formular wird geladen...
+                    Le formulaire est en cours de chargement...
                   </p>
                 </div>
               </div>
@@ -344,7 +345,7 @@ const Booking = () => {
                       "1"
                     )}
                   </div>
-                  <span>Service wählen</span>
+                  <span>Choisir un service.</span>
                 </div>
               </div>
               <div className="flex-1 p-4 text-center text-garden-primary">
@@ -357,7 +358,7 @@ const Booking = () => {
                     }`}>
                     {isSubmitted ? <Check className="w-5 h-5" /> : "2"}
                   </div>
-                  <span>Kontakt</span>
+                  <span>Contact</span>
                 </div>
               </div>
             </div>
@@ -369,11 +370,11 @@ const Booking = () => {
                     <Check className="w-10 h-10 text-garden-primary" />
                   </div>
                   <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-4">
-                    Ihre Anfrage wurde erfolgreich gesendet
+                    Votre demande a été envoyée avec succès.
                   </h3>
                   <p className="text-garden-secondary mb-8">
-                    Wir werden uns in Kürze bei Ihnen melden, um einen passenden
-                    Termin zu vereinbaren.
+                    Nous vous contacterons bientôt pour convenir d&apos;un
+                    rendez-vous.
                   </p>
                   <Button
                     onClick={() => {
@@ -390,7 +391,7 @@ const Booking = () => {
                       });
                     }}
                     className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-4 rounded-xl transition-all duration-300">
-                    Neue Anfrage
+                    Nouvelle demande
                   </Button>
                 </div>
               ) : (
@@ -456,14 +457,14 @@ const Booking = () => {
                         onClick={handleContinue}
                         disabled={!selectedService}
                         className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
-                        Weiter
+                        Continuer
                         <ArrowRight className="w-5 h-5" />
                       </Button>
                     </div>
                   ) : (
                     <div className="space-y-6">
                       <div className="bg-garden-background/20 p-4 rounded-lg">
-                        <p className="font-medium">Gewählter Service:</p>
+                        <p className="font-medium">Service choisi :</p>
                         <p className="text-garden-primary">
                           {selectedServiceDetails?.label}
                         </p>
@@ -477,7 +478,7 @@ const Booking = () => {
                           <Label
                             htmlFor="name"
                             className="text-lg font-playfair text-garden-primary">
-                            Name
+                            Nom
                           </Label>
                           <Input
                             id="name"
@@ -553,7 +554,7 @@ const Booking = () => {
                         <Label
                           htmlFor="message"
                           className="text-lg font-playfair text-garden-primary">
-                          Ihre Nachricht
+                          Votre message
                         </Label>
                         <Textarea
                           id="message"
@@ -577,7 +578,7 @@ const Booking = () => {
                       </div>
 
                       <div className="space-y-3">
-                        <Label className="block">Bilder (optional)</Label>
+                        <Label className="block">Images (optional)</Label>
                         <div
                           className={`border-2 border-dashed rounded-xl p-6 transition-colors
                           ${images.length < 10 ? "cursor-pointer hover:border-garden-accent" : ""}
@@ -619,15 +620,15 @@ const Booking = () => {
                             <div className="text-center">
                               <p className="text-sm font-medium text-garden-primary">
                                 {images.length < 10 ? (
-                                  <>Klicken Sie hier, um Bilder hochzuladen</>
+                                  <>Cliquez ici pour importer des images.</>
                                 ) : (
                                   <span className="text-gray-400">
-                                    Maximale Anzahl an Bildern erreicht
+                                    Nombre maximal d&apos;images atteint.
                                   </span>
                                 )}
                               </p>
                               <p className="text-xs text-garden-secondary mt-1">
-                                JPG, PNG oder GIF (max. 10 Bilder)
+                                JPG, PNG oder GIF (max. 10 images)
                               </p>
                             </div>
                           </label>
@@ -671,7 +672,7 @@ const Booking = () => {
 
                         {images.length > 0 && (
                           <p className="text-sm text-garden-secondary">
-                            {images.length} von 10 Bildern ausgewählt
+                            {images.length} sélectionné parmi 10 images.
                           </p>
                         )}
                       </div>
@@ -681,7 +682,7 @@ const Booking = () => {
                           onClick={handleContinue}
                           disabled={!selectedService}
                           className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
-                          Weiter
+                          Continuer
                           <ArrowRight className="w-5 h-5" />
                         </Button>
                       ) : (
@@ -695,7 +696,7 @@ const Booking = () => {
                             </div>
                           ) : (
                             <>
-                              Anfrage senden
+                              Envoyer la demande.
                               <ArrowRight className="w-5 h-5" />
                             </>
                           )}
