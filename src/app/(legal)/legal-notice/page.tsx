@@ -11,7 +11,7 @@ export default function LegalNoticePage() {
             Informations légales
           </h2>
           <p>
-            Conformément aux dispositions des articles 6-III et 19 de la Loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l'économie numérique, dite L.C.E.N.
+            Conformément aux dispositions des articles 6-III et 19 de la Loi n° 2004-575 du 21 juin 2004 pour la Confiance dans l&apos;économie numérique, dite L.C.E.N.
           </p>
         </section>
 
@@ -20,18 +20,18 @@ export default function LegalNoticePage() {
             Propriétaire du site
           </h2>
           <p>Cobbers Garden</p>
-          <p>123 Rue Example</p>
-          <p>75000 Paris</p>
+          <p>25 rue de lommeries</p>
+          <p>59249 Fromelles</p>
           <p>France</p>
-          <p>Email: contact@cobbersgarden.fr</p>
-          <p>Téléphone: [Votre numéro]</p>
+          <p>Email: cobbersgarden@gmail.com</p>
+          <p>Téléphone: +33660335399</p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-playfair font-bold text-garden-primary mb-4">
             Représentant légal
           </h2>
-          <p>Directeur de la publication : [Nom du directeur]</p>
+          <p>Directeur de la publication : Timothée Bels</p>
           <p>SIRET : [Numéro SIRET]</p>
           <p>TVA Intracommunautaire : [Numéro TVA]</p>
         </section>
@@ -52,8 +52,8 @@ export default function LegalNoticePage() {
             Propriété intellectuelle
           </h2>
           <p>
-            L'ensemble de ce site relève de la législation française et internationale 
-            sur le droit d'auteur et la propriété intellectuelle. Tous les droits de 
+            L&apos;ensemble de ce site relève de la législation française et internationale 
+            sur le droit d&apos;auteur et la propriété intellectuelle. Tous les droits de 
             reproduction sont réservés, y compris pour les documents téléchargeables 
             et les représentations iconographiques et photographiques.
           </p>

@@ -31,7 +31,7 @@ export default function PrivacyPage() {
             aident à fournir une meilleure expérience utilisateur.
           </p>
           <p>
-            Nous utilisons PostHog Analytics pour analyser l'utilisation de notre site. 
+            Nous utilisons PostHog Analytics pour analyser l&apos;utilisation de notre site. 
             Ces données sont collectées de manière anonyme et nous aident à améliorer nos services.
           </p>
         </section>
@@ -45,12 +45,12 @@ export default function PrivacyPage() {
             vous disposez des droits suivants :
           </p>
           <ul>
-            <li>Droit d'accès à vos données personnelles</li>
+            <li>Droit d&apos;accès à vos données personnelles</li>
             <li>Droit de rectification</li>
-            <li>Droit à l'effacement</li>
+            <li>Droit à l&apos;effacement</li>
             <li>Droit à la limitation du traitement</li>
             <li>Droit à la portabilité des données</li>
-            <li>Droit d'opposition</li>
+            <li>Droit d&apos;opposition</li>
           </ul>
         </section>
 
@@ -72,7 +72,7 @@ export default function PrivacyPage() {
             Pour toute question concernant cette politique de confidentialité ou pour 
             exercer vos droits, vous pouvez nous contacter à :
           </p>
-          <p>Email: privacy@cobbersgarden.fr</p>
+          <p>Email: cobbersgarden@gmail.com</p>
         </section>
       </div>
     </div>

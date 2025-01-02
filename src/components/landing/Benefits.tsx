@@ -1,26 +1,26 @@
-import { Shield, Star, Clock, ThumbsUp } from "lucide-react";
+import { MessageCircle, NotepadText, Users, Truck } from "lucide-react";
 
 const benefits = [
   {
-    icon: Shield,
-    title: "Versichert & Zuverlässig",
-    description: "Alle unsere Gärtner sind versichert und sorgfältig ausgewählt"
+    icon: MessageCircle,
+    title: "Prise de contact",
+    description: "Visite des des lieux pour évaluer les besoins",
   },
   {
-    icon: Star,
-    title: "Qualitätsgarantie",
-    description: "Professionelle Ausrüstung und geschultes Personal"
+    icon: NotepadText,
+    title: "Devis",
+    description: "Un devis détaillé et transparent",
   },
   {
-    icon: Clock,
-    title: "Flexible Termine",
-    description: "Wählen Sie Ihren Wunschtermin - auch kurzfristig möglich"
+    icon: Users,
+    title: "Equipe",
+    description: "Des professionnels de qualité dans un esprit familial",
   },
   {
-    icon: ThumbsUp,
-    title: "100% Zufriedenheit",
-    description: "Über 1.000 zufriedene Kunden in Ihrer Region"
-  }
+    icon: Truck,
+    title: "Intervention",
+    description: "Des interventions soignées et sécurisées",
+  },
 ];
 
 const Benefits = () => {
@@ -33,7 +33,9 @@ const Benefits = () => {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white shadow-md flex items-center justify-center">
                 <benefit.icon className="h-8 w-8 text-garden-primary" />
               </div>
-              <h3 className="text-xl font-bold text-garden-primary mb-2">{benefit.title}</h3>
+              <h3 className="text-xl font-bold text-garden-primary mb-2">
+                {benefit.title}
+              </h3>
               <p className="text-garden-secondary/80">{benefit.description}</p>
             </div>
           ))}
@@ -43,4 +45,4 @@ const Benefits = () => {
   );
 };
 
-export default Benefits; 
+export default Benefits;
