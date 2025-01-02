@@ -124,7 +124,7 @@ const Booking = () => {
     };
 
     initializeForm();
-  }, []);
+  }, [toast]);
 
   // Autosave form data
   useEffect(() => {
@@ -135,6 +135,7 @@ const Booking = () => {
     return () => clearTimeout(timeoutId);
   }, [formData]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleServiceSelect = (service: string) => {
     setSelectedService(service);
     posthog.capture("service_selected", {
@@ -158,7 +159,7 @@ const Booking = () => {
     }
   };
 
-  const handleFormError = (errors: any) => {
+  const handleFormError = (errors: Record<string, string>) => {
     posthog.capture("booking_form_error", {
       step,
       errors: Object.keys(errors),
