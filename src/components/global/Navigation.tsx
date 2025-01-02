@@ -146,7 +146,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           <div className="transition-all duration-300 overflow-hidden">
             <Image
-              src="/assets/img/logo_full.png"
+              src="/assets/img/cobbers_logo_full.png"
               alt="Cobbers Garden Logo"
               width={isScrolled || isMobileMenuOpen ? 220 : 280}
               height={isScrolled || isMobileMenuOpen ? 48 : 72}
