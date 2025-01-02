@@ -1,8 +1,20 @@
 "use client";
-import { useState, useRef } from "react";
-//import posthog from "posthog-js";
+import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
+import { Scissors, Trees, PenTool, Droplets } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
-const services = [
+// Define the service type
+type Service = {
+  title: string;
+  description: string;
+  mediaFiles: string[];
+  fallbackImage: string;
+  icon: LucideIcon;
+  features: string[];
+};
+
+const services: Service[] = [
   {
     title: "Rasenpflege",
     description:
@@ -12,6 +24,7 @@ const services = [
       // Add more video paths here
     ],
     fallbackImage: "/assets/img/FallbackImage.png",
+    icon: Scissors,
     features: [
       "Präzises Rasenmähen",
       "Professionelles Vertikutieren",
@@ -29,6 +42,7 @@ const services = [
       "/assets/videos/working/workvideo3.mp4",
     ],
     fallbackImage: "/assets/img/FallbackImage.png",
+    icon: Trees,
     features: [
       "Formschnitt & Pflege",
       "Totholzentfernung",
@@ -43,6 +57,7 @@ const services = [
       // Add more video paths here
     ],
     fallbackImage: "/assets/img/FallbackImage.png",
+    icon: PenTool,
     features: [
       "Individuelle Planung",
       "Naturnahe Gestaltung",
@@ -56,16 +71,12 @@ const services = [
       "Professionelle Anlage und Pflege von Wassergärten und Teichen",
     mediaFiles: [],
     fallbackImage: "/assets/img/FallbackImage.png",
-    features: [
-      "Teichplanung",
-      "Filteranlagen",
-      "Wasserpflanzen",
-      "Teichpflege",
-    ],
+    icon: Droplets,
+    features: ["Teichplanung", "Filteranlagen", "Teichpflege"],
   },
 ];
 
-const ServiceCard = ({ service }: { service: (typeof services)[0] }) => {
+const ServiceCard = ({ service }: { service: Service }) => {
   const [, setIsMediaLoaded] = useState(false);
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
   const [isHighQualityLoaded, setIsHighQualityLoaded] = useState(false);
@@ -79,17 +90,41 @@ const ServiceCard = ({ service }: { service: (typeof services)[0] }) => {
     }
   };
 
-  // Get low quality version of video URL
-  const getLowQualityUrl = (url: string) => {
-    return url.replace(".mp4", "-low.mp4");
-  };
+  // Preload next videos
+  useEffect(() => {
+    if (service.mediaFiles && service.mediaFiles.length > 1) {
+      // Start from next index
+      const nextIndex = (currentMediaIndex + 1) % service.mediaFiles.length;
+      const preloadVideos = [];
+
+      // Create preload elements for next videos
+      for (let i = 0; i < 2; i++) {
+        const index = (nextIndex + i) % service.mediaFiles.length;
+        const video = document.createElement("video");
+        video.src = service.mediaFiles[index];
+        video.preload = "auto";
+        preloadVideos.push(video);
+      }
+    }
+  }, [currentMediaIndex, service.mediaFiles]);
 
   return (
     <div className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
-      <div className="relative aspect-video w-full overflow-hidden">
-        {service.mediaFiles?.[currentMediaIndex]?.endsWith(".mp4") ? (
+      <div className="relative aspect-video w-full overflow-hidden bg-garden-background/20">
+        {/* Always show fallback image first */}
+        {service.fallbackImage && (
+          <Image
+            src={service.fallbackImage}
+            alt={service.title}
+            fill
+            className="object-cover"
+            priority // This ensures the image loads immediately
+          />
+        )}
+
+        {/* Show video on top of fallback image if available */}
+        {service.mediaFiles?.[currentMediaIndex]?.endsWith(".mp4") && (
           <>
-            {/* Low quality video that plays immediately */}
             <video
               ref={videoRef}
               key={`low-${service.mediaFiles[currentMediaIndex]}`}
@@ -102,12 +137,11 @@ const ServiceCard = ({ service }: { service: (typeof services)[0] }) => {
                 isHighQualityLoaded ? "opacity-0" : "opacity-100"
               } transition-opacity duration-300`}>
               <source
-                src={getLowQualityUrl(service.mediaFiles[currentMediaIndex])}
+                src={service.mediaFiles[currentMediaIndex]}
                 type="video/mp4"
               />
             </video>
 
-            {/* High quality video that loads in the background */}
             <video
               ref={highQualityVideoRef}
               key={`high-${service.mediaFiles[currentMediaIndex]}`}
@@ -129,18 +163,17 @@ const ServiceCard = ({ service }: { service: (typeof services)[0] }) => {
               />
             </video>
           </>
-        ) : service.fallbackImage ? (
-          <div className="w-full h-full bg-garden-background/20" >
-          
-             </div>  // Placeholder while image loads
-        ) : (
-          <div className="w-full h-full bg-garden-background/20" /> // Default placeholder
         )}
+
+        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
 
       <div className="p-6">
         <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-garden-primary/10 flex items-center justify-center flex-shrink-0">
+            <service.icon className="h-6 w-6 text-garden-primary" />
+          </div>
           <div>
             <h3 className="text-xl font-playfair font-bold text-garden-primary mb-2">
               {service.title}
