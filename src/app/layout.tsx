@@ -4,6 +4,7 @@ import "./globals.css";
 import { CSPostHogProvider } from '@/providers/posthog'
 import { Toaster } from "@/components/ui/toaster";
 import JsonLd from "@/components/global/JsonLd";
+import { CookieBanner } from '@/components/global/CookieBanner';
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -49,6 +50,7 @@ export default function RootLayout({
         <CSPostHogProvider>
           <main>{children}</main>
           <Toaster />
+          <CookieBanner />
         </CSPostHogProvider>
       </body>
     </html>
