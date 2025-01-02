@@ -19,7 +19,7 @@ const Hero = () => {
       id="home"
       className="pt-24 pb-16 min-h-screen flex items-center relative"
       style={{
-        backgroundImage: "url('/assets/img/hero_bg.jpg')",
+        backgroundImage: "url('/assets/img/hero_bg3.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
