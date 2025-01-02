@@ -676,21 +676,31 @@ const Booking = () => {
                         )}
                       </div>
 
-                      <Button
-                        onClick={handleSubmit}
-                        disabled={isLoading || Object.keys(errors).length > 0}
-                        className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
-                        {isLoading ? (
-                          <div className="flex items-center gap-2">
-                            <LoadingDots />
-                          </div>
-                        ) : (
-                          <>
-                            Anfrage senden
-                            <ArrowRight className="w-5 h-5" />
-                          </>
-                        )}
-                      </Button>
+                      {step === 1 ? (
+                        <Button
+                          onClick={handleContinue}
+                          disabled={!selectedService}
+                          className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                          Weiter
+                          <ArrowRight className="w-5 h-5" />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={handleSubmit}
+                          disabled={isLoading || Object.keys(errors).length > 0}
+                          className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                          {isLoading ? (
+                            <div className="flex items-center gap-2">
+                              <LoadingDots />
+                            </div>
+                          ) : (
+                            <>
+                              Anfrage senden
+                              <ArrowRight className="w-5 h-5" />
+                            </>
+                          )}
+                        </Button>
+                      )}
                     </div>
                   )}
                 </>
