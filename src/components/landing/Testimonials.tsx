@@ -35,7 +35,7 @@ const Testimonials = () => {
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
           <span className="relative">
             Das sagen unsere Kunden
-            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent" />
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
           </span>
         </h2>
 
