@@ -1,31 +1,44 @@
-"use client";
+'use client';
 
-import * as Sentry from "@sentry/nextjs";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Home, RefreshCcw } from "lucide-react";
-import Link from "next/link";
+import { Component, ReactNode } from 'react';
+import * as Sentry from '@sentry/nextjs';
+import { Button } from '@/components/ui/button';
+import { Home, RefreshCcw } from 'lucide-react';
+import Link from 'next/link';
 
-export default function GlobalError({
-  error,
-}: {
-  error: Error & { digest?: string };
-}) {
-  useEffect(() => {
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  public state: State = {
+    hasError: false
+  };
+
+  public static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error) {
     Sentry.captureException(error);
-  }, [error]);
+  }
 
-  return (
-    <html>
-      <body>
+  public render() {
+    if (this.state.hasError) {
+      return (
         <div className="min-h-screen bg-garden-background flex items-center">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 text-center">
               <h1 className="text-3xl font-playfair font-bold text-garden-primary mb-4">
-                500 - Serverfehler
+                Oops! Etwas ist schief gelaufen
               </h1>
               <p className="text-garden-secondary mb-8">
-                Es tut uns leid, aber etwas ist auf unserer Seite schief gelaufen.
+                Es tut uns leid, aber es ist ein unerwarteter Fehler aufgetreten. 
                 Unser Team wurde automatisch benachrichtigt.
               </p>
               <div className="flex justify-center gap-4">
@@ -47,7 +60,9 @@ export default function GlobalError({
             </div>
           </div>
         </div>
-      </body>
-    </html>
-  );
+      );
+    }
+
+    return this.props.children;
+  }
 }

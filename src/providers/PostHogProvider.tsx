@@ -32,4 +32,4 @@ export function CSPostHogProvider({ children }: { children: React.ReactNode }) {
   }, [analytics, hasInteracted]);
 
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
-}
+} 

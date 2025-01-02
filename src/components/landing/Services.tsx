@@ -203,7 +203,10 @@ const Services = () => {
     <section id="services" className="py-24 relative bg-garden-background/30">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
-          Unsere Leistungen
+          <span className="relative">
+            Unsere Leistungen
+            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
+          </span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {services.map((service) => (
