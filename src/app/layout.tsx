@@ -4,6 +4,7 @@ import "./globals.css";
 import { CSPostHogProvider } from '@/providers/posthog'
 import { Toaster } from "@/components/ui/toaster";
 import JsonLd from "@/components/global/JsonLd";
+import { ErrorBoundary } from '@/components/global/ErrorBoundary';
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -46,10 +47,12 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
-        <CSPostHogProvider>
-          <main>{children}</main>
-          <Toaster />
-        </CSPostHogProvider>
+        <ErrorBoundary>
+          <CSPostHogProvider>
+            <main>{children}</main>
+            <Toaster />
+          </CSPostHogProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
