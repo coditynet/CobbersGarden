@@ -38,7 +38,6 @@ export default function Home() {
         <Services />
         <Team />
         <Booking />
-        <Testimonials />
         <Contact />
         <BackToTop />
       </div>
