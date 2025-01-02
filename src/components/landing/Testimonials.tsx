@@ -7,21 +7,18 @@ import Image from "next/image";
 const testimonials = [
   {
     name: "Charline Knobloch",
-    location: "Berlin",
     image: "/assets/img/reviews/review1.png",
     text: "Jeremy et son équipe ont réalisés notre terrasse, notre palissade et notre jardin. Il a réussi à être à l'écoute de nos envies et nous a apporté de bons conseils. Nous sommes ravis de notre extérieur et du travail effectué. Merci pour ta sympathie et ta disponibilité. Je recommande les yeux fermés !!",
     rating: 5,
   },
   {
     name: "Frederic Ferreira",
-    location: "Hamburg",
     image: "/assets/img/reviews/review2.png",
     text: "Je recommande vivement COBBERS GARDEN et Jeremy Bels. Cobbers Garden est une société sérieuse, ponctuelle, professionnelle, appliquée dont les réalisations sont impeccables.",
     rating: 5,
   },
   {
     name: "Thibault Cauche",
-    location: "München",
     image: "/assets/img/reviews/review3.png",
     text: "Monsieur BELS Jérémy est une personne disponible, réactive, sérieuse, ... nous recommandons vivement cette entreprise !!",
     rating: 5,
@@ -34,7 +31,7 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
           <span className="relative">
-            Das sagen unsere Kunden
+          Voici ce que disent nos clients
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
           </span>
         </h2>
@@ -58,16 +55,12 @@ const Testimonials = () => {
                   <h3 className="font-bold text-garden-primary">
                     {testimonial.name}
                   </h3>
-                  <p className="text-garden-secondary/80 text-sm">
-                    {testimonial.location}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex text-yellow-400 mb-4">
+                  <div className="flex text-yellow-400 mt-2">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star key={i} className="h-5 w-5 fill-current" />
                 ))}
+              </div>
+                </div>
               </div>
 
               <p className="text-garden-secondary leading-relaxed">

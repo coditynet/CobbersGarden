@@ -1,7 +1,6 @@
-"use client"
+"use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -23,44 +22,57 @@ const Footer = () => {
               <span className="text-2xl font-bold">Cobbers Garden</span>
             </Link>
             <p className="text-lg text-white/90">
-              Professionelle Gartenpflege und Rasenmähen in Ihrer Region.
+              Entretien professionnel de jardin et tonte de pelouse dans votre
+              région.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6">Quick Links</h3>
+            <h3 className="text-xl font-bold mb-6">Liens rapides</h3>
             <ul className="space-y-4">
               <li>
-                <button 
-                  onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-                >
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("services")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                   Services
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => document.getElementById('team')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-                >
-                  Team
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("team")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg">
+                  Équipe
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => document.getElementById('testimonials')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-                >
-                  Referenzen
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("testimonials")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg">
+                  Références
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} 
-                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-                >
-                  Kontakt
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg">
+                  Contact
                 </button>
               </li>
             </ul>
@@ -68,38 +80,23 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-bold mb-6">Kontakt</h3>
+            <h3 className="text-xl font-bold mb-6">Contact</h3>
             <ul className="space-y-4">
               <li className="text-white/90 text-lg">
-                <a href="tel:+491234567890" className="hover:text-garden-accent transition-colors">
-                  +49 123 456 7890
+                <a
+                  href="tel:+491234567890"
+                  className="hover:text-garden-accent transition-colors">
+                  +33660335399
                 </a>
               </li>
               <li className="text-white/90 text-lg">
-                <a href="mailto:info@cobbersgarden.de" className="hover:text-garden-accent transition-colors">
-                  info@cobbersgarden.de
+                <a
+                  href="mailto:info@cobbersgarden.de"
+                  className="hover:text-garden-accent transition-colors">
+                  cobbersgarden@gmail.com
                 </a>
               </li>
-              <li className="text-white/90 text-lg">
-                Musterstraße 123<br />
-                12345 Musterstadt
-              </li>
-            </ul>
-          </div>
-
-          {/* Opening Hours */}
-          <div>
-            <h3 className="text-xl font-bold mb-6">Öffnungszeiten</h3>
-            <ul className="space-y-4">
-              <li className="text-white/90 text-lg">
-                Mo - Fr: 8:00 - 18:00
-              </li>
-              <li className="text-white/90 text-lg">
-                Sa: 9:00 - 14:00
-              </li>
-              <li className="text-white/90 text-lg">
-                So: Geschlossen
-              </li>
+              <li className="text-white/90 text-lg">59249 Fromelles</li>
             </ul>
           </div>
         </div>
@@ -109,29 +106,27 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6">
               <p className="text-white/90 text-lg">
-                © {new Date().getFullYear()} Cobbers Garden. Alle Rechte vorbehalten.
+                © {new Date().getFullYear()} Cobbers Garden. Tous droits
+                réservés.
               </p>
               <p className="text-white/70 text-lg">
                 Created by Elias & Timothée
               </p>
             </div>
             <div className="flex gap-6">
-              <Link 
-                href="/legal-notice" 
-                className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-              >
+              <Link
+                href="/legal-notice"
+                className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                 Mentions Légales
               </Link>
-              <Link 
-                href="/privacy" 
-                className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-              >
+              <Link
+                href="/privacy"
+                className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                 Confidentialité
               </Link>
-              <Link 
-                href="/terms" 
-                className="text-white/90 hover:text-garden-accent transition-colors text-lg"
-              >
+              <Link
+                href="/terms"
+                className="text-white/90 hover:text-garden-accent transition-colors text-lg">
                 CGV
               </Link>
             </div>
@@ -142,4 +137,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;

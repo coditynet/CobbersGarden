@@ -5,10 +5,10 @@ import Image from "next/image";
 import posthog from "posthog-js";
 
 const SECTIONS = [
-  { id: "home", label: "Home" },
-  { id: "services", label: "Leistungen" },
-  { id: "booking", label: "Termin buchen" },
-  { id: "contact", label: "Kontakt" },
+  { id: "home", label: "Accueil" },
+  { id: "services", label: "Nos Réalisations" },
+  { id: "booking", label: "Devis" },
+  { id: "contact", label: "Contact" },
 ] as const;
 
 const Navigation = () => {

@@ -24,10 +24,14 @@ import posthog from "posthog-js";
 import Image from "next/image";
 import validator from "validator";
 
+type ServiceOption = {
+  value: string;
+  label: string;
+  price: string;
+};
+
 const bookingSchema = z.object({
-  service: z.string({
-    required_error: "Veuillez sélectionner un service",
-  }),
+  service: z.string().optional(),
   name: z
     .string()
     .min(2, "Le nom doit contenir au moins 2 caractères")
@@ -51,40 +55,24 @@ type BookingFormData = z.infer<typeof bookingSchema>;
 
 const serviceTypes = [
   {
-    category: "Rasenpflege",
-    options: [
-      {
-        value: "rasen-standard",
-        label: "Standard Rasenmähen",
-        price: "",
-      },
-      {
-        value: "rasen-premium",
-        label: "Premium Rasenpflege (inkl. Düngen)",
-        price: "",
-      },
-      { value: "vertikutieren", label: "Vertikutieren", price: "" },
-    ],
+    category: "Élagage",
+    options: [],
   },
   {
-    category: "Baumpflege",
-    options: [
-      { value: "baum-schnitt", label: "Baumschnitt", price: "" },
-      { value: "totholz", label: "Totholzentfernung", price: "" },
-      {
-        value: "sturmschaden",
-        label: "Sturmschadenbeseitigung",
-        price: "",
-      },
-    ],
+    category: "Abattage",
+    options: [],
   },
   {
-    category: "Gartengestaltung",
-    options: [
-      { value: "neuanlage", label: "Neuanlage Garten", price: "" },
-      { value: "umgestaltung", label: "Umgestaltung", price: "" },
-      { value: "pflanzplan", label: "Pflanzplanung", price: "" },
-    ],
+    category: "Entretien du jardin",
+    options: [],
+  },
+  {
+    category: "Conseil",
+    options: [],
+  },
+  {
+    category: "Autres",
+    options: [],
   },
 ];
 
@@ -176,11 +164,6 @@ const Booking = () => {
 
   const validateStep = (stepNumber: number) => {
     if (stepNumber === 1) {
-      if (!selectedService) {
-        setErrors({ service: "Veuillez sélectionner un service." });
-        handleFormError({ service: "Service manquant." });
-        return false;
-      }
       return true;
     }
 
@@ -188,7 +171,7 @@ const Booking = () => {
       try {
         bookingSchema.parse({
           ...formData,
-          service: selectedService,
+          service: selectedService || undefined,
         });
         setErrors({});
         return true;
@@ -279,9 +262,14 @@ const Booking = () => {
     }
   };
 
-  const selectedServiceDetails = serviceTypes
-    .flatMap((cat) => cat.options)
-    .find((service) => service.value === selectedService);
+  const selectedServiceDetails = selectedService
+    ? serviceTypes
+        .flatMap((cat) => cat.options)
+        .find(
+          (service) =>
+            service && (service as { value: string }).value === selectedService
+        )
+    : null;
 
   if (isInitializing) {
     return (
@@ -324,7 +312,7 @@ const Booking = () => {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
             <span className="relative">
-              {isSubmitted ? "Vielen Dank!" : "Jetzt Termin buchen"}
+              {isSubmitted ? "Merci!" : "Demande de devi"}
               <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
             </span>
           </h2>
@@ -400,13 +388,13 @@ const Booking = () => {
                     <div className="space-y-6">
                       <div className="space-y-3">
                         <Label className="text-lg font-playfair text-garden-primary">
-                          Kategorie
+                          Catégorie
                         </Label>
                         <Select
                           value={selectedCategory}
                           onValueChange={setSelectedCategory}>
                           <SelectTrigger className="w-full text-lg p-6">
-                            <SelectValue placeholder="Wählen Sie eine Kategorie" />
+                            <SelectValue placeholder="Choissisez une catégorie" />
                           </SelectTrigger>
                           <SelectContent>
                             {serviceTypes.map((category) => (
@@ -419,59 +407,66 @@ const Booking = () => {
                           </SelectContent>
                         </Select>
                       </div>
-
-                      {selectedCategory && (
-                        <div className="space-y-3">
-                          <Label className="text-lg font-playfair text-garden-primary">
-                            Service
-                          </Label>
-                          <div className="grid gap-4">
-                            {serviceTypes
-                              .find((cat) => cat.category === selectedCategory)
-                              ?.options.map((service) => (
-                                <div
-                                  key={service.value}
-                                  className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                                    selectedService === service.value
-                                      ? "border-garden-primary bg-garden-primary/5"
-                                      : "border-transparent bg-gray-50 hover:bg-gray-100"
-                                  }`}
-                                  onClick={() =>
-                                    setSelectedService(service.value)
-                                  }>
-                                  <div className="flex justify-between items-center">
-                                    <span className="font-medium">
-                                      {service.label}
-                                    </span>
-                                    <span className="text-garden-primary font-medium">
-                                      {service.price}
-                                    </span>
+                      {selectedCategory &&
+                        (
+                          serviceTypes.find(
+                            (cat) => cat.category === selectedCategory
+                          )?.options ?? []
+                        ).length > 0 && (
+                          <div className="space-y-3">
+                            <Label className="text-lg font-playfair text-garden-primary">
+                              Service
+                            </Label>
+                            <div className="grid gap-4">
+                              {serviceTypes
+                                .find(
+                                  (cat) => cat.category === selectedCategory
+                                )
+                                ?.options.map((service: ServiceOption) => (
+                                  <div
+                                    key={service.value}
+                                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
+                                      selectedService === service.value
+                                        ? "border-garden-primary bg-garden-primary/5"
+                                        : "border-transparent bg-gray-50 hover:bg-gray-100"
+                                    }`}
+                                    onClick={() =>
+                                      setSelectedService(service.value)
+                                    }>
+                                    <div className="flex justify-between items-center">
+                                      <span className="font-medium">
+                                        {service.label}
+                                      </span>
+                                      <span className="text-garden-primary font-medium">
+                                        {service.price}
+                                      </span>
+                                    </div>
                                   </div>
-                                </div>
-                              ))}
+                                ))}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
                       <Button
                         onClick={handleContinue}
-                        disabled={!selectedService}
-                        className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                        className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                         Continuer
                         <ArrowRight className="w-5 h-5" />
                       </Button>
                     </div>
                   ) : (
                     <div className="space-y-6">
-                      <div className="bg-garden-background/20 p-4 rounded-lg">
-                        <p className="font-medium">Service choisi :</p>
-                        <p className="text-garden-primary">
-                          {selectedServiceDetails?.label}
-                        </p>
-                        <p className="text-sm text-garden-secondary">
-                          {selectedServiceDetails?.price}
-                        </p>
-                      </div>
+                      {step === 2 && selectedServiceDetails && (
+                        <div className="bg-garden-background/20 p-4 rounded-lg">
+                          <p className="font-medium">Service choisi :</p>
+                          <p className="text-garden-primary">
+                            {(selectedServiceDetails as ServiceOption)?.label}
+                          </p>
+                          <p className="text-sm text-garden-secondary">
+                            {(selectedServiceDetails as ServiceOption)?.price}
+                          </p>
+                        </div>
+                      )}
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-3">
@@ -517,7 +512,7 @@ const Booking = () => {
                               });
                               if (errors.email) validateStep(2);
                             }}
-                            placeholder="max@beispiel.de"
+                            placeholder="max.payne@exemple.fr"
                             className={`text-lg p-6 ${errors.email ? "border-red-500" : ""}`}
                             required
                           />
@@ -566,7 +561,7 @@ const Booking = () => {
                             });
                             if (errors.message) validateStep(2);
                           }}
-                          placeholder="Beschreiben Sie Ihr Anliegen..."
+                          placeholder="Décrivez votre demande..."
                           className={`min-h-[120px] text-lg p-6 ${errors.message ? "border-red-500" : ""}`}
                           required
                         />
@@ -680,8 +675,7 @@ const Booking = () => {
                       {step === 1 ? (
                         <Button
                           onClick={handleContinue}
-                          disabled={!selectedService}
-                          className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
+                          className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                           Continuer
                           <ArrowRight className="w-5 h-5" />
                         </Button>
@@ -696,7 +690,7 @@ const Booking = () => {
                             </div>
                           ) : (
                             <>
-                              Envoyer la demande.
+                              Envoyer la demande
                               <ArrowRight className="w-5 h-5" />
                             </>
                           )}
