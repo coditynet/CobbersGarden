@@ -312,7 +312,7 @@ const Booking = () => {
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
             <span className="relative">
-              {isSubmitted ? "Merci!" : "Demande de devi"}
+              {isSubmitted ? "Merci!" : "Demande de devis"}
               <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
             </span>
           </h2>
