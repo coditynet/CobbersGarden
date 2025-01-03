@@ -32,10 +32,17 @@ const Navigation = () => {
     };
   }, [isMobileMenuOpen]);
 
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   // Handle clicks outside of menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setIsMobileMenuOpen(false);
       }
     };
@@ -184,7 +191,11 @@ const Navigation = () => {
           </div>
 
           <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            ref={buttonRef}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsMobileMenuOpen((prev) => !prev);
+            }}
             className="md:hidden p-2 relative w-10 h-10 flex items-center justify-center"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
             <div className="relative w-6 h-6">
