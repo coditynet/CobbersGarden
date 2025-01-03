@@ -16,7 +16,7 @@ const services: Service[] = [
     title: "Conseil & diagnostics",
     description:
       "Grâce à nos connaissances approfondies des arbres, nous assurons la santé et la longévité de votre patrimoine arboricole. Ainsi qu'un suivci sanitaire.",
-    mediaFiles: [],
+    mediaFiles: ["/assets/videos/working/Conseil.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
   },
@@ -24,18 +24,15 @@ const services: Service[] = [
     title: "Taille de soin",
     description:
       "Une taille raisonnée visant à éliminer les branches mortes ou malades pour favoriser la santé et la croissance de l'arbre. ",
-    mediaFiles: ["/assets/videos/working/workvideo3.mp4"],
+    mediaFiles: ["/assets/videos/working/Taille_soins.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
   },
   {
-    title: "Abattage",
+    title: "Abattage ou demontage",
     description:
       "Pour des raisons de sécurité, l'abattage peut être nécessaire si l'arbre présente des risques de chute, de maladies ou de dégradation.",
-    mediaFiles: [
-      "/assets/videos/working/workvideo1.mp4",
-      "/assets/videos/working/workvideo2.mp4",
-    ],
+    mediaFiles: ["/assets/videos/working/Abattage.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
   },
@@ -50,12 +47,27 @@ const services: Service[] = [
   {
     title: "Plantation",
     description: "Couper c'est bien, planter c'est mieux!",
-    mediaFiles: [],
+    mediaFiles: ["/assets/videos/working/Plantation.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
   },
   {
     title: "Entretien du jardin",
+    description:
+      "Taille de haies, débrousaillage, rabattage et contrat annuel de votre jardin!",
+    mediaFiles: ["/assets/videos/working/Entretien.mp4"],
+    fallbackImage: "/assets/img/FallBackImage.png",
+    features: [],
+  },
+  {
+    title: "Urgence 7/7",
+    description: "Nous sauvons vos animaux ou drones coincés dans un arbre.",
+    mediaFiles: ["/assets/videos/working/Urgence.mp4"],
+    fallbackImage: "/assets/img/FallBackImage.png",
+    features: [],
+  },
+  {
+    title: "50% off",
     description:
       "Pour tout vos travaux de petit jardinage profitez de 50% via notre coopérative.",
     mediaFiles: [],
