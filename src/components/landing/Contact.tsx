@@ -11,7 +11,7 @@ import {
 const contactInfo = [
   {
     icon: Phone,
-    title: "Appellez nous",
+    title: "Appelez-nous",
     content: "06 60 33 53 99",
     description: "Lun - Ven: 8:00-18:00",
     action: "tel:+33660335399",
@@ -27,7 +27,7 @@ const contactInfo = [
   },
   {
     icon: MapPin,
-    title: "Intervention",
+    title: "Interventions",
     content: "Haut de France Côte d'opale",
     description: "",
     action: "https://maps.app.goo.gl/uPdRFUdKCe9BTRMg9",
@@ -89,7 +89,7 @@ const Contact = () => {
           {/* Social Media */}
           <div className="text-center bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-8">
-              Suivez nous sur les reseau
+            Suivez-nous sur les réseaux
             </h3>
             <div className="flex justify-center gap-8">
               {socialMedia.map((social) => (

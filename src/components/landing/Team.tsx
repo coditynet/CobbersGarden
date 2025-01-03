@@ -21,7 +21,7 @@ const teamMembers = [
   },
   {
     name: "Tristan Damie",
-    role: "Aprenti élageur",
+    role: "Apprenti élagueur",
     image: "/assets/img/team/Tristan.jpg",
     description: "Homme de pied",
     social: {},
