@@ -1,4 +1,10 @@
-import { TreePine, Axe, Flower2, HelpCircle, MoreHorizontal } from "lucide-react";
+import {
+  TreePine,
+  Axe,
+  Flower2,
+  HelpCircle,
+  MoreHorizontal,
+} from "lucide-react";
 
 type CategoryOption = {
   category: string;
@@ -15,7 +21,7 @@ const categories: CategoryOption[] = [
   {
     category: "Abattage",
     icon: Axe,
-    description: "Abattage d'arbres et dessouchage",
+    description: "Abattage d'arbres et déssouchage",
   },
   {
     category: "Entretien du jardin",
@@ -97,4 +103,4 @@ const CategorySelector = ({
   );
 };
 
-export default CategorySelector; 
+export default CategorySelector;
