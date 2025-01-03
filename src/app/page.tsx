@@ -36,8 +36,8 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-        <Team />
         <Booking />
+        <Team />
         <Testimonials />
         <Contact />
         <BackToTop />
