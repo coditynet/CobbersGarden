@@ -16,14 +16,14 @@ const teamMembers = [
   {
     name: "Jonathan Pruvost",
     role: "Arboriste grimpeur",
-    image: "/assets/img/team/jonathan.jpg",
+    image: "/assets/img/team/Jonathan.jpg",
     description: "Expert en élagage",
     social: {},
   },
   {
     name: "Tristan Damie",
     role: "Expert Cordiste",
-    image: "/assets/img/team/tristan.jpg",
+    image: "/assets/img/team/Tristan.jpg",
     description: "Homme de pied",
     social: {},
   },
