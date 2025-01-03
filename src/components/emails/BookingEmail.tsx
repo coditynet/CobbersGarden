@@ -16,7 +16,6 @@ import {
 interface BookingEmailProps {
   name: string;
   category: string;
-  service: string;
   email: string;
   phone?: string;
   message: string;
@@ -28,7 +27,6 @@ interface BookingEmailProps {
 export const BookingEmail = ({
   name,
   category,
-  service,
   email,
   phone,
   message,
@@ -58,8 +56,8 @@ export const BookingEmail = ({
           <Section style={header}>
             <Img
               src="https://cobbers-garden.de/logo.png"
-              width="120"
-              height="50"
+              width="140"
+              height="60"
               alt="Cobbers Garden"
               style={logo}
             />
@@ -79,49 +77,53 @@ export const BookingEmail = ({
 
             {isCustomer && (
               <Text style={text}>
-                Nous avons bien reçu votre demande pour nos services. Voici un récapitulatif des détails :
+                Nous avons bien reçu votre demande pour nos services. Notre équipe l'examinera dans les plus brefs délais.
               </Text>
             )}
 
-            {/* Service Details Card */}
-            <Section style={card}>
-              <Row>
-                <Column>
-                  <Text style={cardTitle}>Détails de la demande</Text>
-                  <Text style={detailItem}>
-                    <strong>📁 Catégorie:</strong> {category}
-                  </Text>
-                  <Text style={detailItem}>
-                    <strong>🔧 Service:</strong> {service}
-                  </Text>
-                  <Text style={detailItem}>
-                    <strong>👤 Nom:</strong> {name}
-                  </Text>
-                  <Text style={detailItem}>
-                    <strong>📧 Email:</strong> {email}
-                  </Text>
-                  {phone && (
-                    <Text style={detailItem}>
-                      <strong>📞 Téléphone:</strong> {phone}
-                    </Text>
-                  )}
-                  <Text style={detailItem}>
-                    <strong>📅 Date:</strong> {date}
-                  </Text>
-                </Column>
-              </Row>
+            {/* Updated Service Type Section */}
+            <Section style={serviceCard}>
+              <div style={serviceBadge}>{category}</div>
+              <Text style={serviceDescription}>
+                Demande envoyée le {date}
+              </Text>
+            </Section>
+            
+            {/* Updated Contact Details Card */}
+            <Section style={infoCard}>
+              <Text style={cardTitle}>Informations de contact</Text>
+              <div style={infoList}>
+                <div style={infoItem}>
+                  <Text style={infoLabel}>Nom</Text>
+                  <Text style={infoValue}>{name}</Text>
+                </div>
+                <Hr style={infoSeparator} />
+                <div style={infoItem}>
+                  <Text style={infoLabel}>Email</Text>
+                  <Text style={infoValue}>{email}</Text>
+                </div>
+                {phone && (
+                  <>
+                    <Hr style={infoSeparator} />
+                    <div style={infoItem}>
+                      <Text style={infoLabel}>Téléphone</Text>
+                      <Text style={infoValue}>{phone}</Text>
+                    </div>
+                  </>
+                )}
+              </div>
             </Section>
 
             {/* Message Section */}
-            <Section style={messageCard}>
+            <Section style={infoCard}>
               <Text style={cardTitle}>Message</Text>
               <Text style={messageText}>{message}</Text>
             </Section>
 
             {/* Images Section */}
             {imageUrls && imageUrls.length > 0 && (
-              <Section style={card}>
-                <Text style={cardTitle}>Images jointes ({imageUrls.length})</Text>
+              <Section style={infoCard}>
+                <Text style={cardTitle}>Photos jointes ({imageUrls.length})</Text>
                 <Section style={imageGrid}>
                   {imageUrls.map((url, index) => (
                     <Img
@@ -137,34 +139,25 @@ export const BookingEmail = ({
 
             <Hr style={hr} />
 
-            {/* Call to Action */}
-            {isCustomer ? (
-              <Section style={ctaSection}>
-                <Text style={text}>
-                  Notre équipe examinera votre demande et vous contactera dans les 24 heures pour discuter des détails et planifier une intervention.
-                </Text>
-                <Text style={text}>
-                  Pour toute question, n'hésitez pas à nous contacter :
-                </Text>
-                <Section style={contactInfo}>
-                  <Text style={contactItem}>
-                    📞 <Link href="tel:+33123456789" style={link}>+33 1 23 45 67 89</Link>
-                  </Text>
-                  <Text style={contactItem}>
-                    📧 <Link href="mailto:contact@cobbers-garden.fr" style={link}>contact@cobbers-garden.fr</Link>
-                  </Text>
-                </Section>
-              </Section>
-            ) : (
-              <Section style={ctaSection}>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_APP_URL}/admin/bookings`}
-                  style={button}
-                >
-                  Voir dans le dashboard →
+            {/* Updated Footer Section */}
+            <Section style={ctaSection}>
+              <Text style={text}>
+                Notre équipe vous contactera dans les 24 heures pour discuter des détails et planifier une intervention.
+              </Text>
+              <Section style={contactCard}>
+                <Text style={contactTitle}>Besoin d'aide ?</Text>
+                <Link href="tel:+33123456789" style={contactLink}>
+                  +33 1 23 45 67 89
+                </Link>
+                <Link href="mailto:contact@cobbers-garden.fr" style={contactLink}>
+                  contact@cobbers-garden.fr
                 </Link>
               </Section>
-            )}
+              <Text style={signatureText}>
+                Mit freundlichen Grüßen,<br />
+                Ihr Cobbers Garden Team
+              </Text>
+            </Section>
           </Section>
 
           {/* Footer */}
@@ -179,7 +172,7 @@ export const BookingEmail = ({
   );
 };
 
-// Styles
+// Updated styles
 const main = {
   backgroundColor: '#f6f9fc',
   fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
@@ -187,12 +180,12 @@ const main = {
 
 const container = {
   margin: '0 auto',
-  padding: '20px 0 48px',
+  padding: '24px',
   maxWidth: '600px',
 };
 
 const header = {
-  padding: '20px 0',
+  padding: '24px 0',
   textAlign: 'center' as const,
 };
 
@@ -202,8 +195,8 @@ const logo = {
 
 const content = {
   backgroundColor: '#ffffff',
-  padding: '32px',
-  borderRadius: '12px',
+  padding: '40px',
+  borderRadius: '16px',
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
 };
 
@@ -212,7 +205,7 @@ const h1 = {
   fontSize: '24px',
   fontWeight: '600',
   textAlign: 'center' as const,
-  margin: '30px 0',
+  margin: '0 0 32px',
 };
 
 const greeting = {
@@ -222,43 +215,87 @@ const greeting = {
 };
 
 const text = {
-  color: '#333',
+  color: '#4b5563',
   fontSize: '16px',
   lineHeight: '24px',
   margin: '16px 0',
 };
 
-const card = {
-  backgroundColor: '#f8f9fa',
-  padding: '24px',
-  borderRadius: '8px',
+const serviceCard = {
+  padding: '20px',
+  borderRadius: '12px',
   margin: '24px 0',
+  border: '1px solid #e5e7eb',
+  textAlign: 'center' as const,
 };
 
-const messageCard = {
-  backgroundColor: '#f8f9fa',
-  padding: '24px',
-  borderRadius: '8px',
+const serviceBadge = {
+  backgroundColor: '#1a4d2e',
+  color: '#ffffff',
+  padding: '8px 16px',
+  borderRadius: '20px',
+  display: 'inline-block',
+  fontSize: '16px',
+  fontWeight: '500',
+  marginBottom: '12px',
+};
+
+const serviceDescription = {
+  fontSize: '14px',
+  color: '#4b5563',
+};
+
+const infoCard = {
+  backgroundColor: '#ffffff',
+  padding: '20px',
+  borderRadius: '12px',
   margin: '24px 0',
+  border: '1px solid #e5e7eb',
   borderLeft: '4px solid #1a4d2e',
 };
 
 const cardTitle = {
-  fontSize: '18px',
+  fontSize: '16px',
   fontWeight: '600',
   color: '#1a4d2e',
-  marginBottom: '16px',
+  marginBottom: '20px',
+  textTransform: 'uppercase' as const,
+  letterSpacing: '0.05em',
 };
 
-const detailItem = {
-  margin: '12px 0',
-  color: '#333',
+const infoList = {
+  display: 'flex',
+  flexDirection: 'column' as const,
+  gap: '4px',
+};
+
+const infoItem = {
+  padding: '8px 0',
+};
+
+const infoLabel = {
+  fontSize: '13px',
+  color: '#6b7280',
+  textTransform: 'uppercase' as const,
+  letterSpacing: '0.05em',
+  marginBottom: '2px',
+};
+
+const infoValue = {
   fontSize: '15px',
+  color: '#111827',
+  fontWeight: '500',
+};
+
+const infoSeparator = {
+  borderColor: '#e5e7eb',
+  margin: '0',
+  opacity: 0.5,
 };
 
 const messageText = {
-  color: '#333',
-  fontSize: '15px',
+  color: '#374151',
+  fontSize: '16px',
   lineHeight: '1.6',
   whiteSpace: 'pre-wrap' as const,
 };
@@ -279,7 +316,7 @@ const imageStyle = {
 };
 
 const hr = {
-  borderColor: '#e6ebf1',
+  borderColor: '#e5e7eb',
   margin: '32px 0',
 };
 
@@ -288,31 +325,39 @@ const ctaSection = {
   margin: '32px 0',
 };
 
-const contactInfo = {
-  backgroundColor: '#f8f9fa',
-  padding: '16px',
-  borderRadius: '8px',
-  margin: '16px 0',
+const contactCard = {
+  backgroundColor: '#f9fafb',
+  padding: '24px',
+  borderRadius: '12px',
+  margin: '24px 0',
+  textAlign: 'center' as const,
 };
 
-const contactItem = {
+const contactTitle = {
+  fontSize: '16px',
+  fontWeight: '600',
+  color: '#1a4d2e',
+  marginBottom: '16px',
+};
+
+const contactLink = {
+  color: '#1a4d2e',
+  textDecoration: 'none',
+  display: 'block',
   margin: '8px 0',
-  fontSize: '15px',
+  fontSize: '16px',
+  fontWeight: '500',
 };
 
 const button = {
   backgroundColor: '#1a4d2e',
   color: '#ffffff',
-  padding: '12px 24px',
-  borderRadius: '6px',
+  padding: '14px 28px',
+  borderRadius: '8px',
   textDecoration: 'none',
   fontSize: '16px',
   fontWeight: '500',
-};
-
-const link = {
-  color: '#1a4d2e',
-  textDecoration: 'underline',
+  display: 'inline-block',
 };
 
 const footer = {
@@ -322,7 +367,15 @@ const footer = {
 
 const footerText = {
   fontSize: '14px',
-  color: '#666',
+  color: '#6b7280',
+};
+
+const signatureText = {
+  color: '#374151',
+  fontSize: '16px',
+  lineHeight: '1.6',
+  margin: '24px 0 0',
+  textAlign: 'center' as const,
 };
 
 export default BookingEmail; 
