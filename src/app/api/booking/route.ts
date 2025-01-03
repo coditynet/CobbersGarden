@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { resend } from "@/lib/resend";
+import {resend} from "@/lib/mail";
 import BookingEmail from "@/components/emails/BookingEmail";
 
 const bookingSchema = z.object({
@@ -64,8 +64,8 @@ export async function POST(request: Request) {
 
     // Send confirmation email to customer
     await resend.emails.send({
-      from: "Cobbers Garden <noreply@cobbers-garden.de>",
-      replyTo: "info@cobbers-garden.de",
+      from: "Cobbers Garden <noreply@dev.codity.net>",
+      replyTo: "contact@eliasnau.dev",
       to: validatedData.email,
       subject: "Confirmation de votre demande - Cobbers Garden",
       react: BookingEmail({
@@ -76,9 +76,9 @@ export async function POST(request: Request) {
 
     // Send notification email to admin
     await resend.emails.send({
-      from: "Cobbers Garden <noreply@cobbers-garden.de>",
+      from: "Cobbers Garden <noreply@dev.codity.net>",
       replyTo: validatedData.email,
-      to: "info@cobbers-garden.de",
+      to: "contact@eliasnau.dev",
       subject: `Nouvelle demande de ${validatedData.name} - ${validatedData.category}`,
       react: BookingEmail({
         ...emailData,
