@@ -11,7 +11,7 @@ import {
 
 interface AdminNotificationEmailProps {
   name: string;
-  service: string;
+  category: string;
   email: string;
   phone?: string;
   message: string;
@@ -19,7 +19,7 @@ interface AdminNotificationEmailProps {
 
 export const AdminNotificationEmail = ({
   name,
-  service,
+  category,
   email,
   phone,
   message,
@@ -37,7 +37,7 @@ export const AdminNotificationEmail = ({
           
           <Section style={details}>
             <Text style={detailItem}>
-              <strong>Service:</strong> {service}
+              <strong>Service:</strong> {category}
             </Text>
             <Text style={detailItem}>
               <strong>Name:</strong> {name}

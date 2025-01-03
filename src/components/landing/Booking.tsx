@@ -23,6 +23,7 @@ import {
 import posthog from "posthog-js";
 import Image from "next/image";
 import validator from "validator";
+import CategorySelector from "../ui/CategorySelector";
 
 type ServiceOption = {
   value: string;
@@ -197,21 +198,40 @@ const Booking = () => {
     setIsLoading(true);
 
     try {
+      // Create FormData object
+      const submitFormData = new FormData();
+      submitFormData.append('category', selectedCategory);
+      submitFormData.append('service', selectedService);
+      submitFormData.append('name', formData.name);
+      submitFormData.append('email', formData.email);
+      if (formData.phone) submitFormData.append('phone', formData.phone);
+      submitFormData.append('message', formData.message);
+      
+      // Append images if they exist
+      if (images.length > 0) {
+        images.forEach((image) => {
+          submitFormData.append('images', image);
+        });
+      }
+
       const response = await fetch("/api/booking", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          service: selectedService,
-        }),
+        body: submitFormData,
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Ein Fehler ist aufgetreten");
+        if (data.errors) {
+          // Handle validation errors from the server
+          const newErrors: Partial<Record<keyof BookingFormData, string>> = {};
+          data.errors.forEach((error: { field: string; message: string }) => {
+            newErrors[error.field as keyof BookingFormData] = error.message;
+          });
+          setErrors(newErrors);
+          throw new Error("Veuillez corriger les erreurs dans le formulaire");
+        }
+        throw new Error(data.message || "Une erreur s'est produite");
       }
 
       // Calculate time spent
@@ -385,67 +405,16 @@ const Booking = () => {
               ) : (
                 <>
                   {step === 1 ? (
-                    <div className="space-y-6">
+                      <div className="space-y-6">
                       <div className="space-y-3">
                         <Label className="text-lg font-playfair text-garden-primary">
                           Catégorie
                         </Label>
-                        <Select
-                          value={selectedCategory}
-                          onValueChange={setSelectedCategory}>
-                          <SelectTrigger className="w-full text-lg p-6">
-                            <SelectValue placeholder="Choissisez une catégorie" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {serviceTypes.map((category) => (
-                              <SelectItem
-                                key={category.category}
-                                value={category.category}>
-                                {category.category}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <CategorySelector
+                          selectedCategory={selectedCategory}
+                          onSelectCategory={setSelectedCategory}
+                        />
                       </div>
-                      {selectedCategory &&
-                        (
-                          serviceTypes.find(
-                            (cat) => cat.category === selectedCategory
-                          )?.options ?? []
-                        ).length > 0 && (
-                          <div className="space-y-3">
-                            <Label className="text-lg font-playfair text-garden-primary">
-                              Service
-                            </Label>
-                            <div className="grid gap-4">
-                              {serviceTypes
-                                .find(
-                                  (cat) => cat.category === selectedCategory
-                                )
-                                ?.options.map((service: ServiceOption) => (
-                                  <div
-                                    key={service.value}
-                                    className={`p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                                      selectedService === service.value
-                                        ? "border-garden-primary bg-garden-primary/5"
-                                        : "border-transparent bg-gray-50 hover:bg-gray-100"
-                                    }`}
-                                    onClick={() =>
-                                      setSelectedService(service.value)
-                                    }>
-                                    <div className="flex justify-between items-center">
-                                      <span className="font-medium">
-                                        {service.label}
-                                      </span>
-                                      <span className="text-garden-primary font-medium">
-                                        {service.price}
-                                      </span>
-                                    </div>
-                                  </div>
-                                ))}
-                            </div>
-                          </div>
-                        )}
 
                       <Button
                         onClick={handleContinue}
