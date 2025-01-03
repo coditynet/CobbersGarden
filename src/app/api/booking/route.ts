@@ -74,8 +74,6 @@ export async function POST(request: Request) {
       }) as React.ReactElement,
     });
 
-    console.log(mail);
-
     // Send notification email to admin
     await resend.emails.send({
       from: "Cobbers Garden <noreply@cobbers-garden.de>",
