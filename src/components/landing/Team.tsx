@@ -6,8 +6,7 @@ const teamMembers = [
     name: "Jérémy Bels",
     role: "Arboriste grimpeur",
     image: "/assets/img/team/Jeremy.jpg",
-    description:
-      "Expert en aménagement paysager avec plus de 10 ans d'expérience.",
+    description: "Paysagiste avec plus de 10 ans d'expérience",
     social: {
       instagram:
         "https://www.instagram.com/cob_garden/?igsh=ejhwbmU3MXIzZTRt&utm_source=qr#",
@@ -17,12 +16,12 @@ const teamMembers = [
     name: "Jonathan Pruvost",
     role: "Arboriste grimpeur",
     image: "/assets/img/team/Jonathan.jpg",
-    description: "Expert en élagage",
+    description: "Expert cordiste",
     social: {},
   },
   {
     name: "Tristan Damie",
-    role: "Expert Cordiste",
+    role: "Aprenti élageur",
     image: "/assets/img/team/Tristan.jpg",
     description: "Homme de pied",
     social: {},
