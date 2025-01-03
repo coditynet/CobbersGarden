@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 
 import { Star } from "lucide-react";
@@ -31,7 +30,7 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
           <span className="relative">
-          Voici ce que disent nos clients
+            Voici ce que disent nos clients
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
           </span>
         </h2>
@@ -56,10 +55,10 @@ const Testimonials = () => {
                     {testimonial.name}
                   </h3>
                   <div className="flex text-yellow-400 mt-2">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-current" />
-                ))}
-              </div>
+                    {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-current" />
+                    ))}
+                  </div>
                 </div>
               </div>
 
