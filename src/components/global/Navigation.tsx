@@ -1,8 +1,13 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-//import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import posthog from "posthog-js";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
 
 const SECTIONS = [
   { id: "home", label: "Accueil" },
@@ -10,6 +15,17 @@ const SECTIONS = [
   { id: "booking", label: "Devis" },
   { id: "contact", label: "Contact" },
 ] as const;
+
+const socialMedia = [
+  {
+    icon: Instagram,
+    label: "Instagram",
+    link: "https://www.instagram.com/cob_garden/",
+  },
+  { icon: Facebook, label: "Facebook", link: "https://facebook.com" },
+  { icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com" },
+  { icon: Youtube, label: "Youtube", link: "https://youtube.com" },
+];
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -128,116 +144,139 @@ const Navigation = () => {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMobileMenuOpen
-          ? "bg-white shadow-md py-4"
-          : "bg-transparent py-6"
-      }`}>
-      {isScrolled && (
-        <div className="h-1 absolute bottom-0 left-0 w-full bg-gray-200/20">
-          <div
-            className="h-full bg-garden-accent transition-all duration-200"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      )}
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          <div className="transition-all duration-300 overflow-hidden">
-            <Image
-              src="/assets/img/cobbers_logo_full.png"
-              alt="Cobbers Garden Logo"
-              width={isScrolled || isMobileMenuOpen ? 220 : 280}
-              height={isScrolled || isMobileMenuOpen ? 48 : 72}
-              className={`${
-                isScrolled || isMobileMenuOpen
-                  ? "brightness-100"
-                  : "brightness-0 invert"
-              }`}
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled || isMobileMenuOpen
+            ? "bg-white shadow-md py-4"
+            : "bg-transparent py-6"
+        }`}>
+        {isScrolled && (
+          <div className="h-1 absolute bottom-0 left-0 w-full bg-gray-200/20">
+            <div
+              className="h-full bg-garden-accent transition-all duration-200"
+              style={{ width: `${progress}%` }}
             />
           </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            {SECTIONS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`font-medium font-opensans transition-all duration-300 relative py-1 
-                  ${isScrolled || isMobileMenuOpen ? "text-sm" : "text-base"} 
-                  ${
-                    isScrolled || isMobileMenuOpen
-                      ? "text-garden-primary hover:text-garden-accent"
-                      : "text-white hover:text-garden-accent"
-                  } 
-                  ${
-                    activeSection === item.id
-                      ? `after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 
-                         after:bg-garden-accent after:transition-transform after:duration-300 
-                         after:transform-gpu after:scale-x-100 
-                         ${isScrolled || isMobileMenuOpen ? "text-garden-accent" : "text-garden-accent brightness-125"}`
-                      : "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-garden-accent after:transition-transform after:duration-300 after:transform-gpu after:scale-x-0 hover:after:scale-x-100"
-                  }`}>
-                {item.label}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 relative w-10 h-10 flex items-center justify-center"
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
-            <div className="relative w-6 h-6">
-              <span
-                className={`absolute left-0 block w-full h-0.5 transform transition-all duration-300 
-                ${isMobileMenuOpen ? "rotate-45 top-3" : "top-1"}
-                ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
-              />
-              <span
-                className={`absolute left-0 block w-full h-0.5 top-3 transition-all duration-200
-                ${isMobileMenuOpen ? "opacity-0" : "opacity-100"}
-                ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
-              />
-              <span
-                className={`absolute left-0 block w-full h-0.5 transform transition-all duration-300
-                ${isMobileMenuOpen ? "-rotate-45 top-3" : "top-5"}
-                ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
+        )}
+        
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <div className="transition-all duration-300 overflow-hidden">
+              <Image
+                src="/assets/img/cobbers_logo_full.png"
+                alt="Cobbers Garden Logo"
+                width={isScrolled || isMobileMenuOpen ? 220 : 280}
+                height={isScrolled || isMobileMenuOpen ? 48 : 72}
+                className={`${
+                  isScrolled || isMobileMenuOpen
+                    ? "brightness-100"
+                    : "brightness-0 invert"
+                }`}
               />
             </div>
-          </button>
-        </div>
 
-        <div
-          ref={menuRef}
-          className={`md:hidden absolute left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out origin-top ${
-            isMobileMenuOpen
-              ? "opacity-100 scale-y-100"
-              : "opacity-0 scale-y-0 pointer-events-none"
-          }`}
-          style={{
-            top: "100%",
-            transformOrigin: "top",
-          }}>
-          <div className="container mx-auto px-4 py-4">
-            {SECTIONS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  scrollToSection(item.id);
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`block w-full text-left px-4 py-3 text-base font-medium transition-all duration-300 ${
-                  activeSection === item.id
-                    ? "text-garden-accent bg-garden-background scale-105"
-                    : "text-garden-primary hover:text-garden-accent hover:bg-garden-background hover:scale-105"
-                }`}>
-                {item.label}
-              </button>
-            ))}
+            <div className="hidden md:flex items-center gap-8">
+              {SECTIONS.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`font-medium font-opensans transition-all duration-300 relative py-1 
+                    ${isScrolled || isMobileMenuOpen ? "text-sm" : "text-base"} 
+                    ${
+                      isScrolled || isMobileMenuOpen
+                        ? "text-garden-primary hover:text-garden-accent"
+                        : "text-white hover:text-garden-accent"
+                    } 
+                    ${
+                      activeSection === item.id
+                        ? `after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 
+                           after:bg-garden-accent after:transition-transform after:duration-300 
+                           after:transform-gpu after:scale-x-100 
+                           ${isScrolled || isMobileMenuOpen ? "text-garden-accent" : "text-garden-accent brightness-125"}`
+                        : "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-garden-accent after:transition-transform after:duration-300 after:transform-gpu after:scale-x-0 hover:after:scale-x-100"
+                    }`}>
+                    {item.label}
+                  </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 relative w-10 h-10 flex items-center justify-center"
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
+              <div className="relative w-6 h-6">
+                <span
+                  className={`absolute left-0 block w-full h-0.5 transform transition-all duration-300 
+                  ${isMobileMenuOpen ? "rotate-45 top-3" : "top-1"}
+                  ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
+                />
+                <span
+                  className={`absolute left-0 block w-full h-0.5 top-3 transition-all duration-200
+                  ${isMobileMenuOpen ? "opacity-0" : "opacity-100"}
+                  ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
+                />
+                <span
+                  className={`absolute left-0 block w-full h-0.5 transform transition-all duration-300
+                  ${isMobileMenuOpen ? "-rotate-45 top-3" : "top-5"}
+                  ${!isScrolled && !isMobileMenuOpen ? "bg-white" : "bg-garden-primary"}`}
+                />
+              </div>
+            </button>
+          </div>
+
+          <div
+            ref={menuRef}
+            className={`md:hidden absolute left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out origin-top ${
+              isMobileMenuOpen
+                ? "opacity-100 scale-y-100"
+                : "opacity-0 scale-y-0 pointer-events-none"
+            }`}
+            style={{
+              top: "100%",
+              transformOrigin: "top",
+            }}>
+            <div className="container mx-auto px-4 py-4">
+              {SECTIONS.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    scrollToSection(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`block w-full text-left px-4 py-3 text-base font-medium transition-all duration-300 ${
+                    activeSection === item.id
+                      ? "text-garden-accent bg-garden-background scale-105"
+                      : "text-garden-primary hover:text-garden-accent hover:bg-garden-background hover:scale-105"
+                  }`}>
+                  {item.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
+      </nav>
+
+      {/* Social Media Icons */}
+      <div
+        className={`fixed bottom-8 right-8 z-40 flex gap-4 transition-all duration-300 ${
+          isScrolled ? "opacity-0 translate-y-10 pointer-events-none" : "opacity-100 translate-y-0"
+        }`}>
+        {socialMedia.map((social) => (
+          <a
+            key={social.label}
+            href={social.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group"
+            aria-label={social.label}>
+            <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+              <social.icon className="w-5 h-5 text-garden-primary group-hover:text-garden-accent transition-colors duration-300" />
+            </div>
+          </a>
+        ))}
       </div>
-    </nav>
+    </>
   );
 };
 

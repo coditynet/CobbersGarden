@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { resend } from '@/lib/resend';
+import { resend } from '@/lib/mail';
 
 const updateBookingSchema = z.object({
   status: z.enum(["approved", "declined"]),
