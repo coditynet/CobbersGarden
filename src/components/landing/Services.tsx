@@ -12,16 +12,13 @@ type Service = {
 };
 
 const services: Service[] = [
-
   {
     title: "Conseil & diagnostics",
     description:
       "Grâce à nos connaissances approfondies des arbres, nous assurons la santé et la longévité de votre patrimoine arboricole. Ainsi qu'un suivci sanitaire.",
     mediaFiles: [],
     fallbackImage: "/assets/img/FallbackImage.png",
-    features: [
-  
-    ],
+    features: [],
   },
   {
     title: "Taille de soin",
@@ -44,24 +41,18 @@ const services: Service[] = [
   },
   {
     title: "Rognage",
-    description: "Le rognage consiste à enlever la souche d'un arbre pour éviter la repousse et libérer de l'espace.",
-    mediaFiles: [
-
-    ],
+    description:
+      "Le rognage consiste à enlever la souche d'un arbre pour éviter la repousse et libérer de l'espace.",
+    mediaFiles: [],
     fallbackImage: "/assets/img/FallbackImage.png",
-    features: [
-      
-    ],
+    features: [],
   },
   {
     title: "Plantation",
-    description:
-      "Couper c'est bien, planter c'est mieux!",
+    description: "Couper c'est bien, planter c'est mieux!",
     mediaFiles: [],
     fallbackImage: "/assets/img/FallbackImage.png",
-    features: [
-
-    ],
+    features: [],
   },
   {
     title: "Entretien du jardin",
@@ -69,9 +60,7 @@ const services: Service[] = [
       "Pour tout vos travaux de petit jardinage profitez de 50% via notre coopérative.",
     mediaFiles: [],
     fallbackImage: "/assets/img/half_price.jpg",
-    features: [
-
-    ],
+    features: [],
   },
 ];
 
