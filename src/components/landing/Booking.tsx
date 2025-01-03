@@ -198,21 +198,40 @@ const Booking = () => {
     setIsLoading(true);
 
     try {
+      // Create FormData object
+      const submitFormData = new FormData();
+      submitFormData.append('category', selectedCategory);
+      submitFormData.append('service', selectedService);
+      submitFormData.append('name', formData.name);
+      submitFormData.append('email', formData.email);
+      if (formData.phone) submitFormData.append('phone', formData.phone);
+      submitFormData.append('message', formData.message);
+      
+      // Append images if they exist
+      if (images.length > 0) {
+        images.forEach((image) => {
+          submitFormData.append('images', image);
+        });
+      }
+
       const response = await fetch("/api/booking", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          service: selectedService,
-        }),
+        body: submitFormData,
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Ein Fehler ist aufgetreten");
+        if (data.errors) {
+          // Handle validation errors from the server
+          const newErrors: Partial<Record<keyof BookingFormData, string>> = {};
+          data.errors.forEach((error: { field: string; message: string }) => {
+            newErrors[error.field as keyof BookingFormData] = error.message;
+          });
+          setErrors(newErrors);
+          throw new Error("Veuillez corriger les erreurs dans le formulaire");
+        }
+        throw new Error(data.message || "Une erreur s'est produite");
       }
 
       // Calculate time spent

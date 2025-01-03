@@ -13,6 +13,7 @@ import {
 interface BookingConfirmationEmailProps {
   name: string;
   service: string;
+  category: string;
   email: string;
   phone?: string;
   message: string;
@@ -21,6 +22,7 @@ interface BookingConfirmationEmailProps {
 export const CustomerConfirmationEmail = ({
   name,
   service,
+  category,
   email,
   phone,
   message,
@@ -38,7 +40,7 @@ export const CustomerConfirmationEmail = ({
           
           <Section style={details}>
             <Text style={detailItem}>
-              <strong>Service:</strong> {service}
+              <strong>Service:</strong> {category}
             </Text>
             <Text style={detailItem}>
               <strong>Name:</strong> {name}
