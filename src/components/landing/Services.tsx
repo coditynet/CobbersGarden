@@ -13,9 +13,9 @@ type Service = {
 
 const services: Service[] = [
   {
-    title: "Conseil & diagnostics",
+    title: "Conseil & diagnostic",
     description:
-      "Grâce à nos connaissances approfondies des arbres, nous assurons la santé et la longévité de votre patrimoine arboricole. Ainsi qu'un suivci sanitaire.",
+      "Grâce à nos connaissances approfondies des arbres, nous assurons la santé et la longévité de votre patrimoine arboricole. Ainsi qu'un Suivi sanitaire.",
     mediaFiles: ["/assets/videos/working/Conseil.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
@@ -29,7 +29,7 @@ const services: Service[] = [
     features: [],
   },
   {
-    title: "Abattage ou demontage",
+    title: "Abattage ou Démontage",
     description:
       "Pour des raisons de sécurité, l'abattage peut être nécessaire si l'arbre présente des risques de chute, de maladies ou de dégradation.",
     mediaFiles: ["/assets/videos/working/Abattage.mp4"],
@@ -54,7 +54,7 @@ const services: Service[] = [
   {
     title: "Entretien du jardin",
     description:
-      "Taille de haies, débrousaillage, rabattage et contrat annuel de votre jardin!",
+      "Taille de haies, Débroussaillage, rabattage et contrat annuel de votre jardin.",
     mediaFiles: ["/assets/videos/working/Entretien.mp4"],
     fallbackImage: "/assets/img/FallBackImage.png",
     features: [],
@@ -67,9 +67,9 @@ const services: Service[] = [
     features: [],
   },
   {
-    title: "50% off",
+    title: "Ne payez que 50%",
     description:
-      "Pour tout vos travaux de petit jardinage profitez de 50% via notre coopérative.",
+      "Pour tous vos travaux de petit jardinage profitez de 50% via notre coopérative.",
     mediaFiles: [],
     fallbackImage: "/assets/img/half_price.jpg",
     features: [],
