@@ -3,26 +3,16 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Check, Upload, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
 import LoadingDots from "@/components/ui/LoadingDots";
 import {
-  saveToLocalStorage,
-  loadFromLocalStorage,
   clearSavedData,
 } from "@/hooks/useAutosave";
 import posthog from "posthog-js";
 import Image from "next/image";
-import validator from "validator";
 import CategorySelector from "../ui/CategorySelector";
 
 type ServiceOption = {
@@ -36,15 +26,9 @@ const bookingSchema = z.object({
   name: z
     .string()
     .min(2, "Le nom doit contenir au moins 2 caractères")
-    .max(50, "Le nom ne peut pas dépasser 50 caractères"),
+    .max(5000, "Le nom ne peut pas dépasser 5000 caractères"),
   email: z.string().email("Veuillez entrer une adresse e-mail valide"),
-  phone: z
-    .string()
-    .optional()
-    .refine(
-      (value) => !value || validator.isMobilePhone(value),
-      "Veuillez entrer un numéro de téléphone français valide"
-    ),
+  phone: z.string(),
   message: z
     .string()
     .min(10, "Le message doit contenir au moins 10 caractères")
@@ -98,39 +82,10 @@ const Booking = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [images, setImages] = useState<File[]>([]);
 
-  // Initialize form with saved data
   useEffect(() => {
-    const initializeForm = async () => {
-      const savedData = loadFromLocalStorage("booking-form");
-      if (savedData) {
-        setFormData(savedData);
-        if (savedData.service) {
-          setSelectedService(savedData.service);
-          setStep(2);
-        }
-
-        toast({
-          title: "Formulaire restauré.",
-          description: "Vos précédentes saisies ont été chargées.",
-        });
-      }
-      // Add small delay to ensure smooth transition
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      setIsInitializing(false);
-    };
-
-    initializeForm();
-  }, [toast]);
-
-  // Autosave form data
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      saveToLocalStorage("booking-form", formData);
-    }, 1000);
-
-    return () => clearTimeout(timeoutId);
-  }, [formData]);
-
+    setIsLoading(false)
+    setIsInitializing(false)
+  }, []);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleServiceSelect = (service: string) => {
     setSelectedService(service);
@@ -200,17 +155,17 @@ const Booking = () => {
     try {
       // Create FormData object
       const submitFormData = new FormData();
-      submitFormData.append('category', selectedCategory);
-      submitFormData.append('service', selectedService);
-      submitFormData.append('name', formData.name);
-      submitFormData.append('email', formData.email);
-      if (formData.phone) submitFormData.append('phone', formData.phone);
-      submitFormData.append('message', formData.message);
-      
+      submitFormData.append("category", selectedCategory);
+      submitFormData.append("service", selectedService);
+      submitFormData.append("name", formData.name);
+      submitFormData.append("email", formData.email);
+      if (formData.phone) submitFormData.append("phone", formData.phone);
+      submitFormData.append("message", formData.message);
+
       // Append images if they exist
       if (images.length > 0) {
         images.forEach((image) => {
-          submitFormData.append('images', image);
+          submitFormData.append("images", image);
         });
       }
 
@@ -260,7 +215,9 @@ const Booking = () => {
         timeToConvert: timeSpent,
       });
 
+      // Clear both form data and images on successful submission
       clearSavedData("booking-form");
+      clearSavedData("booking-form-images");
       setIsSubmitted(true);
       setStartTime(null);
 
@@ -405,7 +362,7 @@ const Booking = () => {
               ) : (
                 <>
                   {step === 1 ? (
-                      <div className="space-y-6">
+                    <div className="space-y-6">
                       <div className="space-y-3">
                         <Label className="text-lg font-playfair text-garden-primary">
                           Catégorie
@@ -502,10 +459,11 @@ const Booking = () => {
                         <Input
                           id="phone"
                           type="tel"
-                          value={formData.phone}
-                          onChange={(e) =>
-                            setFormData({ ...formData, phone: e.target.value })
-                          }
+                          value={formData.phone || ""}
+                          onChange={(e) => {
+                            setFormData({ ...formData, phone: e.target.value || "" });
+                            if (errors.phone) validateStep(2);
+                          }}
                           placeholder="06 12 34 56 78"
                           className="text-lg p-6"
                         />
@@ -560,9 +518,9 @@ const Booking = () => {
                                   images.length + newFiles.length;
                                 if (totalImages > 10) {
                                   toast({
-                                    title: "Zu viele Bilder",
+                                    title: "Trop d'images",
                                     description:
-                                      "Sie können maximal 10 Bilder hochladen",
+                                      "Vous pouvez télécharger jusqu'à 10 images maximum",
                                     variant: "destructive",
                                   });
                                   return;
@@ -651,7 +609,7 @@ const Booking = () => {
                       ) : (
                         <Button
                           onClick={handleSubmit}
-                          disabled={isLoading || Object.keys(errors).length > 0}
+                          disabled={isLoading}
                           className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed">
                           {isLoading ? (
                             <div className="flex items-center gap-2">

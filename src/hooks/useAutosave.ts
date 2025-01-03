@@ -1,42 +1,27 @@
 "use client";
 
-const AUTOSAVE_KEY_PREFIX = 'autosave_';
-
-export const saveToLocalStorage = (key: string, data: any) => {
+export const saveToLocalStorage = (key: string, data: unknown) => {
   try {
-    localStorage.setItem(`${AUTOSAVE_KEY_PREFIX}${key}`, JSON.stringify({
-      timestamp: new Date().getTime(),
-      data
-    }));
+    localStorage.setItem(key, JSON.stringify(data));
   } catch (error) {
-    console.error('Error saving to localStorage:', error);
+    console.error("Error saving to localStorage:", error);
   }
 };
 
 export const loadFromLocalStorage = (key: string) => {
   try {
-    const saved = localStorage.getItem(`${AUTOSAVE_KEY_PREFIX}${key}`);
-    if (!saved) return null;
-
-    const { timestamp, data } = JSON.parse(saved);
-    const hoursSinceLastSave = (new Date().getTime() - timestamp) / (1000 * 60 * 60);
-    
-    if (hoursSinceLastSave > 24) {
-      localStorage.removeItem(`${AUTOSAVE_KEY_PREFIX}${key}`);
-      return null;
-    }
-
-    return data;
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
   } catch (error) {
-    console.error('Error loading from localStorage:', error);
+    console.error("Error loading from localStorage:", error);
     return null;
   }
 };
 
 export const clearSavedData = (key: string) => {
   try {
-    localStorage.removeItem(`${AUTOSAVE_KEY_PREFIX}${key}`);
+    localStorage.removeItem(key);
   } catch (error) {
-    console.error('Error clearing localStorage:', error);
+    console.error("Error clearing localStorage:", error);
   }
-}; 
+};
