@@ -1,38 +1,32 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 
 const teamMembers = [
   {
-    name: "Max Cobbers",
-    role: "Geschäftsführer",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Timothee&backgroundColor=c7d2fe",
-    description: "Experte für Gartengestaltung mit über 10 Jahren Erfahrung",
+    name: "Jérémy Bels",
+    role: "Arboriste grimpeur",
+    image: "/assets/img/team/Jeremy.jpg",
+    description:
+      "Expert en aménagement paysager avec plus de 10 ans d'expérience.",
     social: {
-      facebook: "https://facebook.com",
-      instagram: "https://instagram.com",
-      linkedin: "https://linkedin.com"
-    }
+      instagram:
+        "https://www.instagram.com/cob_garden/?igsh=ejhwbmU3MXIzZTRt&utm_source=qr#",
+    },
   },
   {
-    name: "Lisa Weber",
-    role: "Garten- und Landschaftsbau",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Eliasnau&backgroundColor=c7d2fe",
-    description: "Spezialistin für nachhaltige Gartenkonzepte",
-    social: {
-      instagram: "https://instagram.com",
-      linkedin: "https://linkedin.com"
-    }
+    name: "Jonathan Pruvost",
+    role: "Arboriste grimpeur",
+    image: "/assets/img/team/jonathan.jpg",
+    description: "Expert en élagage",
+    social: {},
   },
   {
-    name: "Tom Schmidt",
-    role: "Baumpflege-Experte",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Valenti&backgroundColor=c7d2fe",
-    description: "Zertifizierter Baumpfleger mit Leidenschaft für Details",
-    social: {
-      facebook: "https://facebook.com",
-      instagram: "https://instagram.com"
-    }
-  }
+    name: "Tristan Damie",
+    role: "Expert Cordiste",
+    image: "/assets/img/team/tristan.jpg",
+    description: "Homme de pied",
+    social: {},
+  },
 ];
 
 const Team = () => {
@@ -41,17 +35,16 @@ const Team = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
           <span className="relative">
-            Unser Team
+            Notre Équipe
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
           </span>
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
           {teamMembers.map((member) => (
-            <div 
+            <div
               key={member.name}
-              className="group bg-garden-background rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-xl"
-            >
+              className="group bg-garden-background rounded-2xl p-8 text-center transition-all duration-300 hover:shadow-xl">
               <div className="relative w-48 h-48 mx-auto mb-6">
                 <div className="absolute inset-0 rounded-full bg-garden-primary/10" />
                 <img
@@ -60,13 +53,17 @@ const Team = () => {
                   className="rounded-full w-full h-full object-cover"
                 />
               </div>
-              
+
               <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-2">
                 {member.name}
               </h3>
-              <p className="text-garden-accent font-medium mb-3">{member.role}</p>
-              <p className="text-garden-secondary/80 mb-6">{member.description}</p>
-              
+              <p className="text-garden-accent font-medium mb-3">
+                {member.role}
+              </p>
+              <p className="text-garden-secondary/80 mb-6">
+                {member.description}
+              </p>
+
               <div className="flex justify-center gap-4">
                 {Object.entries(member.social).map(([platform, url]) => (
                   <a
@@ -74,11 +71,16 @@ const Team = () => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/icon"
-                  >
-                    {platform === 'facebook' && <Facebook className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />}
-                    {platform === 'instagram' && <Instagram className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />}
-                    {platform === 'linkedin' && <Linkedin className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />}
+                    className="group/icon">
+                    {platform === "facebook" && (
+                      <Facebook className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />
+                    )}
+                    {platform === "instagram" && (
+                      <Instagram className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />
+                    )}
+                    {platform === "linkedin" && (
+                      <Linkedin className="w-5 h-5 text-garden-primary hover:text-garden-accent transition-colors" />
+                    )}
                   </a>
                 ))}
               </div>
@@ -90,4 +92,4 @@ const Team = () => {
   );
 };
 
-export default Team; 
+export default Team;
