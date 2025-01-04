@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   applicationName: "Cobbers Garden",
   authors: [{ name: "Cobbers Garden", url: "https://cobbersgarden.fr/" }],
   generator: "Next.js",
-  keywords: ["Cobbers Garden", "Cobbersgarden", "Cobbers", "Garden", "Cobber", "Cobbergarden", "Cobbergarden", "Cobersgarden", "Cobergarden", "Cobbers"],
+  keywords: ["Cobbers Garden", "Cobbersgarden", "Cobbers", "Garden", "Cobber", "Cobbergarden", "Cobbergarden", "Cobersgarden", "Cobergarden", "Cobbers", "Cobber Garden"],
   referrer: "origin-when-cross-origin",
   creator: "Codity",
   publisher: "Cobbers Garden",
