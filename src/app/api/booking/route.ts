@@ -15,7 +15,7 @@ const bookingSchema = z.object({
     .min(2, "Le nom doit contenir au moins 2 caractères")
     .max(50, "Le nom ne peut pas dépasser 50 caractères"),
   email: z.string().email("Veuillez entrer une adresse e-mail valide"),
-  phone: z.string().optional(),
+  phone: z.string().optional().nullable(),
   message: z
     .string()
     .min(10, "Le message doit contenir au moins 10 caractères")
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       category: formData.get("category"),
       name: formData.get("name"),
       email: formData.get("email"),
-      phone: formData.get("phone"),
+      phone: formData.get("phone") || null,
       message: formData.get("message"),
     };
 
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     // Send confirmation email to customer
     await resend.emails.send({
       from: "Cobbers Garden <noreply@dev.codity.net>",
-      replyTo: "contact@eliasnau.dev",
+      replyTo: "contact@cobbersgarden.fr",
       to: validatedData.email,
       subject: "Confirmation de votre demande - Cobbers Garden",
       react: BookingEmail({
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     await resend.emails.send({
       from: "Cobbers Garden <noreply@dev.codity.net>",
       replyTo: validatedData.email,
-      to: "contact@eliasnau.dev",
+      to: "contact@cobbersgarden.fr",
       subject: `Nouvelle demande de ${validatedData.name} - ${validatedData.category}`,
       react: BookingEmail({
         ...emailData,

@@ -52,7 +52,7 @@ export async function PUT(
     if (validatedData.status === "approved") {
       // Send approval email to customer
       await resend.emails.send({
-        from: "Cobbers Garden <noreply@cobbers-garden.de>",
+        from: "Cobbers Garden <noreply@cobbers-garden.fr>",
         replyTo: "info@cobbers-garden.de",
         to: "eliasnau09@gmail.com", // You would get this from your database
         subject: "Ihre Buchung wurde bestätigt",
