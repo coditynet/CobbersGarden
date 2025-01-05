@@ -21,10 +21,6 @@ const Footer = () => {
               </div>
               <span className="text-2xl font-bold">Cobbers Garden</span>
             </Link>
-            <p className="text-lg text-white/90">
-              Entretien professionnel de jardin et tonte de pelouse dans votre
-              région.
-            </p>
           </div>
 
           {/* Quick Links */}

@@ -13,7 +13,7 @@ const contactInfo = [
     icon: Phone,
     title: "Appelez-nous",
     content: "06 60 33 53 99",
-    description: "Lun - Ven: 8:00-18:00",
+    description: "Lun - Ven: 9:00-19:00",
     action: "tel:+33660335399",
     color: "from-blue-500 to-blue-600",
   },

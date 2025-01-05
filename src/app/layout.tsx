@@ -1,39 +1,58 @@
 import type { Metadata } from "next";
 import { Open_Sans, Playfair_Display, Caveat } from "next/font/google";
 import "./globals.css";
-import { CSPostHogProvider } from '@/providers/posthog'
+import { CSPostHogProvider } from "@/providers/posthog";
 import { Toaster } from "@/components/ui/toaster";
-import JsonLd from "@/components/global/JsonLd";
-import { ErrorBoundary } from '@/components/global/ErrorBoundary';
-import { CookieBanner } from '@/components/global/CookieBanner';
+import { ErrorBoundary } from "@/components/global/ErrorBoundary";
+import { CookieBanner } from "@/components/global/CookieBanner";
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: "Cobbers Garden",
-  description: "Professionelle Gartenpflege",
-  metadataBase: new URL('https://cobbersgarden.de'),
+  title: {
+    template: "%s | Cobbers Garden",
+    default: "Cobbers Garden",
+  },
+  description:
+    "Arboristes grimpeurs qualifiés et les spécialistes pour l'entretien de vos arbres",
+  applicationName: "Cobbers Garden",
+  authors: [{ name: "Cobbers Garden", url: "https://cobbersgarden.fr/" }],
+  generator: "Next.js",
+  keywords: ["Cobbers Garden", "Cobbersgarden", "Cobbers", "Garden", "Cobber", "Cobbergarden", "Cobbergarden", "Cobersgarden", "Cobergarden", "Cobbers", "Cobber Garden"],
+  referrer: "origin-when-cross-origin",
+  creator: "Codity",
+  publisher: "Cobbers Garden",
+  metadataBase: new URL("https://cobbersgarden.fr/"),
   openGraph: {
-    title: 'Cobbers Garden',
-    description: 'Professionelle Gartenpflege',
-    url: 'https://cobbersgarden.de',
-    siteName: 'Cobbers Garden',
+    title: "Cobbers Garden",
+    description:
+      "Arboristes grimpeurs qualifiés et les spécialistes pour l'entretien de vos arbres",
+    url: "https://cobbersgarden.fr/",
+    siteName: "Cobbers Garden",
+    locale: "fr_FR",
+    type: "website",
     images: [
       {
-        url: 'https://cobbersgarden.de/assets/img/logo_full.png',
-        width: 1200,  
-        height: 630,
+        url: "/assets/images/hero_bg3.jpg",
+        width: 983,
+        height: 700,
+        alt: "Cobbers Garden",
       },
-      {
-        url: 'https://cobbersgarden.de/assets/img/hero_bg.jpg',
-        width: 1200,
-        height: 630,
-      }
     ],
-    locale: 'de_DE',
-    type: 'website',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 
@@ -44,10 +63,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
-      <head>
-        <JsonLd />
-      </head>
-      <body className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
+      <body
+        className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
         <ErrorBoundary>
           <CSPostHogProvider>
             <main>{children}</main>
