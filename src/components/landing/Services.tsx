@@ -40,7 +40,7 @@ const services: Service[] = [
     title: "Rognage",
     description:
       "Le rognage consiste à enlever la souche d'un arbre pour éviter la repousse et libérer de l'espace.",
-    mediaFiles: [],
+    mediaFiles: ["/assets/videos/working/Rognage.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
   },
