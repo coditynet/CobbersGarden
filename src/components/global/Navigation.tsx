@@ -2,12 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import posthog from "posthog-js";
-import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Youtube,
-} from "lucide-react";
+import { Instagram } from "lucide-react";
 
 const SECTIONS = [
   { id: "home", label: "Accueil" },
@@ -22,9 +17,9 @@ const socialMedia = [
     label: "Instagram",
     link: "https://www.instagram.com/cob_garden/",
   },
-  { icon: Facebook, label: "Facebook", link: "https://facebook.com" },
-  { icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com" },
-  { icon: Youtube, label: "Youtube", link: "https://youtube.com" },
+  //{ icon: Facebook, label: "Facebook", link: "https://facebook.com" },
+  //{ icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com" },
+  //{ icon: Youtube, label: "Youtube", link: "https://youtube.com" },
 ];
 
 const Navigation = () => {
@@ -150,7 +145,8 @@ const Navigation = () => {
           isScrolled || isMobileMenuOpen
             ? "bg-white shadow-md py-4"
             : "bg-transparent py-6"
-        }`}>
+        }`}
+      >
         {isScrolled && (
           <div className="h-1 absolute bottom-0 left-0 w-full bg-gray-200/20">
             <div
@@ -159,7 +155,7 @@ const Navigation = () => {
             />
           </div>
         )}
-        
+
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="transition-all duration-300 overflow-hidden">
@@ -195,16 +191,18 @@ const Navigation = () => {
                            after:transform-gpu after:scale-x-100 
                            ${isScrolled || isMobileMenuOpen ? "text-garden-accent" : "text-garden-accent brightness-125"}`
                         : "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-garden-accent after:transition-transform after:duration-300 after:transform-gpu after:scale-x-0 hover:after:scale-x-100"
-                    }`}>
-                    {item.label}
-                  </button>
+                    }`}
+                >
+                  {item.label}
+                </button>
               ))}
             </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 relative w-10 h-10 flex items-center justify-center"
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}>
+              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            >
               <div className="relative w-6 h-6">
                 <span
                   className={`absolute left-0 block w-full h-0.5 transform transition-all duration-300 
@@ -235,7 +233,8 @@ const Navigation = () => {
             style={{
               top: "100%",
               transformOrigin: "top",
-            }}>
+            }}
+          >
             <div className="container mx-auto px-4 py-4">
               {SECTIONS.map((item) => (
                 <button
@@ -248,7 +247,8 @@ const Navigation = () => {
                     activeSection === item.id
                       ? "text-garden-accent bg-garden-background scale-105"
                       : "text-garden-primary hover:text-garden-accent hover:bg-garden-background hover:scale-105"
-                  }`}>
+                  }`}
+                >
                   {item.label}
                 </button>
               ))}
@@ -260,8 +260,11 @@ const Navigation = () => {
       {/* Social Media Icons */}
       <div
         className={`fixed bottom-8 right-8 z-40 flex gap-4 transition-all duration-300 ${
-          isScrolled ? "opacity-0 translate-y-10 pointer-events-none" : "opacity-100 translate-y-0"
-        }`}>
+          isScrolled
+            ? "opacity-0 translate-y-10 pointer-events-none"
+            : "opacity-100 translate-y-0"
+        }`}
+      >
         {socialMedia.map((social) => (
           <a
             key={social.label}
@@ -269,7 +272,8 @@ const Navigation = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="group"
-            aria-label={social.label}>
+            aria-label={social.label}
+          >
             <div className="w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
               <social.icon className="w-5 h-5 text-garden-primary group-hover:text-garden-accent transition-colors duration-300" />
             </div>
