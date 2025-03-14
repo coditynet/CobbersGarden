@@ -1,12 +1,4 @@
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Youtube,
-} from "lucide-react";
+import { Phone, Mail, MapPin, Instagram } from "lucide-react";
 
 const contactInfo = [
   {
@@ -41,9 +33,9 @@ const socialMedia = [
     label: "Instagram",
     link: "https://www.instagram.com/cob_garden/",
   },
-  { icon: Facebook, label: "Facebook", link: "https://facebook.com" },
-  { icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com" },
-  { icon: Youtube, label: "Youtube", link: "https://youtube.com" },
+  //{ icon: Facebook, label: "Facebook", link: "https://facebook.com" },
+  //{ icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com" },
+  //{ icon: Youtube, label: "Youtube", link: "https://youtube.com" },
 ];
 
 const Contact = () => {
@@ -68,10 +60,12 @@ const Contact = () => {
                 {...(info.action && {
                   target: "_blank",
                   rel: "noopener noreferrer",
-                })}>
+                })}
+              >
                 <div className="bg-white rounded-2xl p-8 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                   <div
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${info.color} flex items-center justify-center mb-6 transform transition-transform duration-300 group-hover:scale-110`}>
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${info.color} flex items-center justify-center mb-6 transform transition-transform duration-300 group-hover:scale-110`}
+                  >
                     <info.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-2xl font-bold text-garden-primary mb-3">
@@ -89,7 +83,7 @@ const Contact = () => {
           {/* Social Media */}
           <div className="text-center bg-white rounded-2xl p-8 shadow-lg">
             <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-8">
-            Suivez-nous sur les réseaux
+              Suivez-nous sur Instagram
             </h3>
             <div className="flex justify-center gap-8">
               {socialMedia.map((social) => (
@@ -99,7 +93,8 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group"
-                  aria-label={social.label}>
+                  aria-label={social.label}
+                >
                   <div className="w-14 h-14 rounded-full bg-garden-background flex items-center justify-center transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
                     <social.icon className="w-7 h-7 text-garden-primary group-hover:text-garden-accent transition-colors duration-300" />
                   </div>
