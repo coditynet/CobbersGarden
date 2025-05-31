@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans, Playfair_Display, Caveat } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { CSPostHogProvider } from "@/providers/posthog";
 import { Toaster } from "@/components/ui/toaster";
@@ -82,11 +83,13 @@ export default function RootLayout({
       <body
         className={`${openSans.variable} ${playfair.variable} ${caveat.variable} font-opensans`}>
         <ErrorBoundary>
-          <CSPostHogProvider>
-            <main>{children}</main>
-            <Toaster />
-            <CookieBanner />
-          </CSPostHogProvider>
+          <ClerkProvider>
+            <CSPostHogProvider>
+              <main>{children}</main>
+              <Toaster />
+              <CookieBanner />
+            </CSPostHogProvider>
+          </ClerkProvider>
         </ErrorBoundary>
       </body>
     </html>
