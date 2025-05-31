@@ -13,6 +13,7 @@ import Navigation from "@/components/global/Navigation";
 import Footer from "@/components/global/Footer";
 import Testimonials from "@/components/landing/Testimonials";
 import Team from "@/components/landing/Team";
+import AdminBanner from "@/components/global/AdminBanner";
 
 export default function Home() {
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function Home() {
 
   return (
     <>
+      <AdminBanner />
       <Navigation />
       <div>
         <Hero />
