@@ -5,15 +5,25 @@ import db from "@/server/db";
 import { news } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
 import { eq, desc } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 async function deleteNews(formData: FormData) {
   "use server";
+  const {userId} = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
   const id = formData.get("id") as string;
   await db.delete(news).where(eq(news.id, parseInt(id)));
   revalidatePath("/admin/news");
 }
 
 async function NewsTable() {
+  const {userId} = await auth();
+  if (!userId) {
+    redirect("/");
+  }
   const allNews = await db.select().from(news).orderBy(desc(news.createdAt));
   return (
     <div className="overflow-x-auto">
