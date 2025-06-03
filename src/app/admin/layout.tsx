@@ -16,7 +16,7 @@ export default function AdminLayout({
       <div className="relative">
         <AdminNavbar />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-          {children}
+        {children}
         </main>
       </div>
     </div>
