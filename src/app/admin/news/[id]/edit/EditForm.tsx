@@ -61,48 +61,48 @@ export default function EditForm({ newsItem, updateNews }: EditFormProps) {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField control={form.control} name="title" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Title</FormLabel>
-            <FormControl>
-              <Input placeholder="News title" {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+              <FormItem>
+                <FormLabel>Title</FormLabel>
+                <FormControl>
+                  <Input placeholder="News title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
         )} />
         <FormField control={form.control} name="content" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Content</FormLabel>
-            <FormControl>
+              <FormItem>
+                <FormLabel>Content</FormLabel>
+                <FormControl>
               <Textarea 
                 placeholder="News content" 
                 rows={5} 
                 className="resize-none"
                 {...field} 
               />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
         )} />
         <FormField control={form.control} name="image" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Image URL</FormLabel>
-            <FormControl>
-              <Input placeholder="https://..." {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+              <FormItem>
+                <FormLabel>Image URL</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
         )} />
         <FormField control={form.control} name="link" render={({ field }) => (
-          <FormItem>
-            <FormLabel>Link (optional)</FormLabel>
-            <FormControl>
-              <Input placeholder="https://..." {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
+              <FormItem>
+                <FormLabel>Link (optional)</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
         )} />
         <div className="flex justify-end gap-3">
           <Button
@@ -114,7 +114,7 @@ export default function EditForm({ newsItem, updateNews }: EditFormProps) {
           </Button>
           <Button type="submit">Save Changes</Button>
         </div>
-      </form>
-    </Form>
+        </form>
+      </Form>
   );
 }

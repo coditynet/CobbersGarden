@@ -52,23 +52,23 @@ async function NewsTable() {
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div className="flex justify-end gap-2">
-                  <Link
-                    href={`/admin/news/${item.id}/edit`}
+                <Link
+                  href={`/admin/news/${item.id}/edit`}
                     className="text-gray-600 hover:text-gray-900"
-                    title="Edit"
-                  >
+                  title="Edit"
+                >
                     <Pencil className="w-5 h-5" />
-                  </Link>
+                </Link>
                   <form action={deleteNews} className="inline">
-                    <input type="hidden" name="id" value={item.id} />
-                    <button
-                      type="submit"
+                  <input type="hidden" name="id" value={item.id} />
+                  <button
+                    type="submit"
                       className="text-red-600 hover:text-red-900"
-                      title="Delete"
-                    >
+                    title="Delete"
+                  >
                       <Trash2 className="w-5 h-5" />
-                    </button>
-                  </form>
+                  </button>
+                </form>
                 </div>
               </td>
             </tr>
