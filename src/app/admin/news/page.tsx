@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { Trash2, Plus, Pencil } from "lucide-react";
+import { Trash2, Plus, Pencil, Eye } from "lucide-react";
 import db from "@/server/db";
 import { news } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
@@ -48,6 +48,12 @@ async function NewsTable() {
                   title="Edit"
                 >
                   <Pencil className="w-5 h-5 text-yellow-900" />
+                </Link>
+                <Link
+                  href={`/admin/news/${item.id}/view`}
+                  className="p-2 rounded hover:bg-yellow-200 transition-colors"
+                  title="Preview">
+                  <Eye className="w-5 h-5 text-yellow-900" />
                 </Link>
                 <form action={deleteNews}>
                   <input type="hidden" name="id" value={item.id} />
