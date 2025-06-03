@@ -26,49 +26,50 @@ async function NewsTable() {
   }
   const allNews = await db.select().from(news).orderBy(desc(news.createdAt));
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full border border-yellow-200 rounded-lg bg-white shadow-sm">
-        <thead className="bg-yellow-100">
+    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
           <tr>
-            <th className="px-4 py-2 text-left font-semibold text-yellow-900">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Title
             </th>
-            <th className="px-4 py-2 text-left font-semibold text-yellow-900">
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Created
             </th>
-            <th className="px-4 py-2"></th>
+            <th className="relative px-6 py-3">
+              <span className="sr-only">Actions</span>
+            </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-white divide-y divide-gray-200">
           {allNews.map((item) => (
-            <tr
-              key={item.id}
-              className="border-b last:border-b-0 hover:bg-yellow-50 transition-colors"
-            >
-              <td className="px-4 py-2 font-medium text-yellow-900">
+            <tr key={item.id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                 {item.title}
               </td>
-              <td className="px-4 py-2 text-yellow-700">
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {item.createdAt?.toLocaleString()}
               </td>
-              <td className="px-4 py-2 flex gap-2">
-                <Link
-                  href={`/admin/news/${item.id}/edit`}
-                  className="p-2 rounded hover:bg-yellow-200 transition-colors"
-                  title="Edit"
-                >
-                  <Pencil className="w-5 h-5 text-yellow-900" />
-                </Link>
-                <form action={deleteNews}>
-                  <input type="hidden" name="id" value={item.id} />
-                  <button
-                    type="submit"
-                    className="p-2 rounded hover:bg-red-100 transition-colors"
-                    title="Delete"
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div className="flex justify-end gap-2">
+                  <Link
+                    href={`/admin/news/${item.id}/edit`}
+                    className="text-gray-600 hover:text-gray-900"
+                    title="Edit"
                   >
-                    <Trash2 className="w-5 h-5 text-red-500" />
-                  </button>
-                </form>
+                    <Pencil className="w-5 h-5" />
+                  </Link>
+                  <form action={deleteNews} className="inline">
+                    <input type="hidden" name="id" value={item.id} />
+                    <button
+                      type="submit"
+                      className="text-red-600 hover:text-red-900"
+                      title="Delete"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
           ))}
@@ -82,17 +83,17 @@ export default function AdminNewsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-yellow-900">News</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">News</h1>
         <Link
           href="/admin/news/create"
-          className="flex items-center gap-2 px-4 py-2 bg-yellow-400 text-yellow-900 font-semibold rounded shadow hover:bg-yellow-300 transition-colors"
+          className="inline-flex items-center gap-2 rounded-md bg-garden-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-garden-primary/90 focus:outline-none focus:ring-2 focus:ring-garden-primary focus:ring-offset-2"
         >
           <Plus className="w-5 h-5" />
           Create News
         </Link>
       </div>
       <Suspense
-        fallback={<div className="text-yellow-700">Loading news...</div>}
+        fallback={<div className="text-gray-600">Loading news...</div>}
       >
         <NewsTable />
       </Suspense>
