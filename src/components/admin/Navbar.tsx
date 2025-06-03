@@ -3,76 +3,68 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { 
-  Newspaper, 
-  Calendar, 
-  Settings, 
-  LogOut 
-} from "lucide-react";
+import { Newspaper, Users, LogOut, User } from "lucide-react";
 import { SignOutButton } from "@clerk/nextjs";
 
-const navItems = [
-  {
-    name: "News",
-    href: "/admin/news",
-    icon: Newspaper,
-  },
-  {
-    name: "Bookings",
-    href: "/admin/bookings",
-    icon: Calendar,
-  },
-  {
-    name: "Settings",
-    href: "/admin/settings",
-    icon: Settings,
-  },
+interface NavItem {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+}
+
+const navItems: NavItem[] = [
+  { href: "/admin/news", label: "News", icon: Newspaper },
+  { href: "/admin/users", label: "Users", icon: Users },
 ];
 
 export default function AdminNavbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="border-b border-gray-200 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 justify-between">
-          <div className="flex">
-            <div className="flex flex-shrink-0 items-center">
-              <Link href="/admin" className="text-xl font-semibold text-gray-900">
-                Admin
+    <div className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 items-center">
+        <div className="mr-4 flex">
+          <Link href="/admin" className="mr-6 flex items-center space-x-2">
+            <span className="font-bold">Admin</span>
+          </Link>
+          <nav className="flex items-center space-x-6 text-sm font-medium">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "transition-colors hover:text-foreground/80",
+                  pathname === item.href
+                    ? "text-foreground"
+                    : "text-foreground/60"
+                )}
+              >
+                <div className="flex items-center">
+                  <item.icon className="mr-2 h-4 w-4" />
+                  {item.label}
+                </div>
               </Link>
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={cn(
-                      "inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium",
-                      isActive
-                        ? "border-garden-primary text-gray-900"
-                        : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    )}
-                  >
-                    <item.icon className="mr-2 h-4 w-4" />
-                    {item.name}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-          <div className="flex items-center">
+            ))}
+          </nav>
+        </div>
+        <div className="flex flex-1 items-center justify-end space-x-4">
+          <nav className="flex items-center space-x-2">
+            <Link
+              href="/account"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+            >
+              <User className="mr-2 h-4 w-4" />
+              Account
+            </Link>
             <SignOutButton>
-              <button className="inline-flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+              <button className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign out
               </button>
             </SignOutButton>
-          </div>
+          </nav>
         </div>
       </div>
-    </nav>
+    </div>
   );
 } 
