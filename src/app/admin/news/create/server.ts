@@ -1,6 +1,7 @@
 "use server";
 import db from "@/server/db";
 import { news } from "@/server/db/schema";
+import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 
 const formSchema = z.object({
@@ -11,6 +12,10 @@ const formSchema = z.object({
 });
 
 export async function createNews(values: any) {
+  const {userId} = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
   const parsed = formSchema.safeParse(values);
   if (!parsed.success) return false;
   await db.insert(news).values({

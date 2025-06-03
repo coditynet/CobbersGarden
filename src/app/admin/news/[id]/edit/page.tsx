@@ -5,6 +5,7 @@ import db from "@/server/db";
 import { news } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import EditForm from "./EditForm";
+import { auth } from "@clerk/nextjs/server";
 
 const formSchema = z.object({
   title: z.string().min(2, { message: "Title is required" }),
@@ -23,6 +24,10 @@ const formSchema = z.object({
 
 async function updateNews(formData: FormData) {
   "use server";
+  const {userId} = await auth();
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
   const id = Number(formData.get("id"));
   const values = {
     title: formData.get("title") as string,
