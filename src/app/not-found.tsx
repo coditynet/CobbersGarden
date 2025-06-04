@@ -17,7 +17,7 @@ export default function NotFound() {
           La page que vous recherchez n'existe malheureusement pas. Elle a peut-être été déplacée ou supprimée.
         </p>
         <Link href="/">
-          <Button className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-6 rounded-xl transition-all duration-300 gap-2">
+          <Button className="inline-flex items-center bg-garden-primary hover:bg-garden-accent text-white px-8 py-6 rounded-xl transition-all duration-300 gap-2">
             <ArrowLeft className="w-5 h-5" />
             Retour à la page d'accueil
           </Button>
