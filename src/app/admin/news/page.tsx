@@ -1,12 +1,13 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { Trash2, Plus, Pencil } from "lucide-react";
+import { Trash2, Plus, Pencil,} from "lucide-react";
 import db from "@/server/db";
 import { news } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
 import { eq, desc } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { Preview } from "./sheet";
 
 async function deleteNews(formData: FormData) {
   "use server";
@@ -56,10 +57,16 @@ async function NewsTable() {
                   href={`/admin/news/${item.id}/edit`}
                     className="text-gray-600 hover:text-gray-900"
                   title="Edit"
-                >
-                    <Pencil className="w-5 h-5" />
+                > 
+                  <Pencil className="w-5 h-5 text-yellow-900" />
                 </Link>
-                  <form action={deleteNews} className="inline">
+                <Preview 
+                title={item.title ?? "error"}
+                content={item.content ?? "error"}
+                createdAt={item.createdAt}
+                image={item.image}
+                />
+                <form action={deleteNews}>
                   <input type="hidden" name="id" value={item.id} />
                   <button
                     type="submit"
