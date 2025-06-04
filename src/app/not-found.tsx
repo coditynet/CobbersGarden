@@ -11,15 +11,15 @@ export default function NotFound() {
         </h1>
         <div className="w-32 h-1 bg-garden-accent mx-auto mb-8" />
         <h2 className="text-3xl md:text-4xl font-playfair font-bold text-garden-primary mb-4">
-          Baum konnte nicht gefällt werden
+          L'arbre n'a pas pu être trouvé
         </h2>
         <p className="text-garden-secondary mb-8 max-w-md mx-auto">
-          Die gesuchte Seite existiert leider nicht. Vielleicht wurde sie verschoben oder gelöscht.
+          La page que vous recherchez n'existe malheureusement pas. Elle a peut-être été déplacée ou supprimée.
         </p>
         <Link href="/">
-          <Button className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-6 rounded-xl transition-all duration-300 flex items-center gap-2">
+          <Button className="inline-flex items-center bg-garden-primary hover:bg-garden-accent text-white px-8 py-6 rounded-xl transition-all duration-300 gap-2">
             <ArrowLeft className="w-5 h-5" />
-            Zurück zur Startseite
+            Retour à la page d'accueil
           </Button>
         </Link>
       </div>
