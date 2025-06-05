@@ -16,9 +16,10 @@ interface NewsViewSheetProps {
   content: string;
   createdAt: Date | null;
   image: string | null;
+  link: string | null,
 }
 
-export function Preview({ title, content, createdAt, image }: NewsViewSheetProps) {
+export function Preview({ title, content, createdAt, image, link }: NewsViewSheetProps) {
   return (
     <Sheet>
       <SheetTrigger>
@@ -36,6 +37,9 @@ export function Preview({ title, content, createdAt, image }: NewsViewSheetProps
         <div className="py-4">{content}</div>
         <div className="py-4">
           {image && <img src={image} alt={title} />}
+        </div>
+        <div>
+          {link}
         </div>
         <SheetFooter>
         </SheetFooter>

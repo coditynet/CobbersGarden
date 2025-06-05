@@ -65,6 +65,7 @@ async function NewsTable() {
                 content={item.content ?? "error"}
                 createdAt={item.createdAt}
                 image={item.image}
+                link={item.link ?? ""}
                 />
                 <form action={deleteNews}>
                   <input type="hidden" name="id" value={item.id} />
