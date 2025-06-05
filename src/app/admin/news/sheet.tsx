@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Link from "next/link";
 
 interface NewsViewSheetProps {
   title: string;
@@ -39,7 +40,7 @@ export function Preview({ title, content, createdAt, image, link }: NewsViewShee
           {image && <img src={image} alt={title} />}
         </div>
         <div>
-          {link}
+          <Link href={link ?? ""}>{<Button className={""}>Click</Button>}</Link>
         </div>
         <SheetFooter>
         </SheetFooter>
