@@ -1,3 +1,5 @@
+"use client";
+
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { useState } from "react";
 
 interface NewsViewSheetProps {
   title: string;
@@ -21,6 +24,8 @@ interface NewsViewSheetProps {
 }
 
 export function Preview({ title, content, createdAt, image, link }: NewsViewSheetProps) {
+  const [Lin, setLink] = useState("");
+  
   return (
     <Sheet>
       <SheetTrigger>
@@ -40,7 +45,7 @@ export function Preview({ title, content, createdAt, image, link }: NewsViewShee
           {image && <img src={image} alt={title} />}
         </div>
         <div>
-          <Link href={link ?? ""}>{<Button className={""}>Click</Button>}</Link>
+          <Link href={link ?? ""}><Button className={`${link ? "block" : "hidden"}`}>Click</Button></Link>
         </div>
         <SheetFooter>
         </SheetFooter>
