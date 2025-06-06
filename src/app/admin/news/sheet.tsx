@@ -1,5 +1,3 @@
-"use client";
-
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +11,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import { useState } from "react";
 
 interface NewsViewSheetProps {
   title: string;
@@ -24,13 +21,12 @@ interface NewsViewSheetProps {
 }
 
 export function Preview({ title, content, createdAt, image, link }: NewsViewSheetProps) {
-  const [Lin, setLink] = useState("");
   
   return (
     <Sheet>
       <SheetTrigger>
-        <Button className="p-2 rounded hover:bg-yellow-200 transition-colors" title="View" variant={"ghost"}>
-          <Eye className="w-5 h-5 text-yellow-900" />
+        <Button className="p-2 rounded transition-colors" title="View" variant={"ghost"}>
+          <Eye className="text-yellow-600 mb-4 hover:text-yellow-900"/>
         </Button>
       </SheetTrigger>
       <SheetContent>
