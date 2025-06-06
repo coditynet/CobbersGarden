@@ -17,6 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { createNews } from "./server";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { DatePicker } from "@/components/ui/DatePicker";
 
 const formSchema = z.object({
   title: z.string().min(2, { message: "Title is required" }),
@@ -94,6 +95,16 @@ export default function NewsCreatePage() {
                 <Input placeholder="https://..." {...field} />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )} />
+          <FormField control={form.control} name="content" render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date</FormLabel>
+              <FormControl>
+                    {/* <DatePicker
+                      selected={field.value ? new Date(field.value) : null} />
+                      */}
+                      </FormControl>
             </FormItem>
           )} />
               <div className="flex justify-end gap-3">

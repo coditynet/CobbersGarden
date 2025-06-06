@@ -18,9 +18,10 @@ interface NewsViewSheetProps {
   createdAt: Date | null;
   image: string | null;
   link: string | null,
+  date: Date | null;
 }
 
-export function Preview({ title, content, createdAt, image, link }: NewsViewSheetProps) {
+export function Preview({ title, content, createdAt, image, link, date }: NewsViewSheetProps) {
   
   return (
     <Sheet>
