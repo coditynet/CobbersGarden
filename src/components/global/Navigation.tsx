@@ -28,6 +28,7 @@ const Navigation = () => {
   const [progress, setProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<number | null>(null); // To store requestAnimationFrame ID
 
   // Handle body scroll locking
   useEffect(() => {
@@ -60,16 +61,19 @@ const Navigation = () => {
     };
   }, [isMobileMenuOpen]);
 
-  // Initial scroll check
+  // Scroll event handling with requestAnimationFrame
   useEffect(() => {
-    const checkInitialScroll = () => {
+    const updateScrollProgress = () => {
       setIsScrolled(window.scrollY > 2);
 
-      // Calculate initial scroll progress
       const totalHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setProgress(progress);
+      let newProgress = (window.scrollY / totalHeight) * 100;
+
+      // Clamp progress between 0 and 100
+      newProgress = Math.max(0, Math.min(100, newProgress));
+
+      setProgress(newProgress);
 
       // Find initial active section
       const currentPosition = window.scrollY + 100;
@@ -87,38 +91,26 @@ const Navigation = () => {
           }
         }
       }
+      scrollRef.current = null; // Reset for the next frame
     };
 
-    checkInitialScroll();
-
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 2);
-
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setProgress(progress);
-
-      const currentPosition = window.scrollY + 100;
-
-      for (const section of SECTIONS) {
-        const element = document.getElementById(section.id);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (
-            currentPosition >= offsetTop &&
-            currentPosition < offsetTop + offsetHeight
-          ) {
-            setActiveSection(section.id);
-            break;
-          }
-        }
+      if (!scrollRef.current) {
+        scrollRef.current = requestAnimationFrame(updateScrollProgress);
       }
     };
 
+    // Initial check on mount
+    updateScrollProgress(); // Call immediately on mount for initial state
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollRef.current) {
+        cancelAnimationFrame(scrollRef.current);
+      }
+    };
+  }, []); // Empty dependency array means this runs once on mount and cleans up on unmount
 
   const scrollToSection = (sectionId: string) => {
     posthog.capture("navigation_clicked", { section: sectionId });
