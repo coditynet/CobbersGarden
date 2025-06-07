@@ -15,6 +15,7 @@ import Testimonials from "@/components/landing/Testimonials";
 import Team from "@/components/landing/Team";
 import AdminBanner from "@/components/global/AdminBanner";
 import News from "@/components/landing/News";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Home() {
   useEffect(() => {
@@ -39,7 +40,9 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-        <News />
+        <SignedIn>
+          <News />
+        </SignedIn>
         <Booking />
         <Team />
         <Testimonials />
