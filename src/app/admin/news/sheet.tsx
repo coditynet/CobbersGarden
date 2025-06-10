@@ -25,7 +25,7 @@ export function Preview({ title, content, createdAt, image, link }: NewsViewShee
   return (
     <Sheet>
       <SheetTrigger>
-        <Button className="p-2 rounded transition-colors" title="View" variant={"ghost"}>
+        <Button className="p-2 rounded transition-colors" title="Voir" variant={"ghost"}>
           <Eye className="text-yellow-600 mb-4 hover:text-yellow-900"/>
         </Button>
       </SheetTrigger>
@@ -33,7 +33,7 @@ export function Preview({ title, content, createdAt, image, link }: NewsViewShee
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
           <SheetDescription>
-            Created: {createdAt?.toLocaleString()}
+            Créé: {createdAt?.toLocaleString()}
           </SheetDescription>
         </SheetHeader>
         <div className="py-4">{content}</div>
@@ -41,7 +41,7 @@ export function Preview({ title, content, createdAt, image, link }: NewsViewShee
           {image && <img src={image} alt={title} />}
         </div>
         <div>
-          <Link href={link ?? ""}><Button className={`${link ? "block" : "hidden"}`}>Click</Button></Link>
+          <Link href={link ?? ""}><Button className={`${link ? "block" : "hidden"}`}>Appuyer</Button></Link>
         </div>
         <SheetFooter>
         </SheetFooter>
