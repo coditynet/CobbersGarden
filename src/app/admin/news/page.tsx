@@ -32,13 +32,13 @@ async function NewsTable() {
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Title
+              Titre
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Created
+              Créé 
             </th>
             <th className="relative px-6 py-3">
-              <span className="sr-only">Actions</span>
+              <span className="sr-only">Actes</span>
             </th>
           </tr>
         </thead>
@@ -56,7 +56,7 @@ async function NewsTable() {
                 <Link
                   href={`/admin/news/${item.id}/edit`}
                     className="text-gray-600 hover:text-gray-900"
-                  title="Edit"
+                  title="Modifier"
                 > 
                   <Pencil className="w-5 h-5 text-yellow-900" />
                 </Link>
@@ -72,7 +72,7 @@ async function NewsTable() {
                   <button
                     type="submit"
                       className="text-red-600 hover:text-red-900"
-                    title="Delete"
+                    title="Supprimer"
                   >
                       <Trash2 className="w-5 h-5" />
                   </button>
@@ -91,17 +91,17 @@ export default function AdminNewsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">News</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">Actualités</h1>
         <Link
           href="/admin/news/create"
           className="inline-flex items-center gap-2 rounded-md bg-garden-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-garden-primary/90 focus:outline-none focus:ring-2 focus:ring-garden-primary focus:ring-offset-2"
         >
           <Plus className="w-5 h-5" />
-          Create News
+          Créer une actualité
         </Link>
       </div>
       <Suspense
-        fallback={<div className="text-gray-600">Loading news...</div>}
+        fallback={<div className="text-gray-600">Chargement des nouvelles...</div>}
       >
         <NewsTable />
       </Suspense>
