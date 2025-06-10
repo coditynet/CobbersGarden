@@ -36,7 +36,9 @@ export default function NewsList() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {newsItems.map((item) => (
+      {
+        !newsItems || newsItems.length == 0 ?
+      newsItems.map((item) => (
         <div key={item.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
           <div className="relative w-full h-48 overflow-hidden bg-garden-background/20">
             <img
@@ -62,7 +64,8 @@ export default function NewsList() {
             </a>
           </div>
         </div>
-      ))}
+      )): <p>Il n'y a pas de nouvelles pour le moment</p>
+      }
     </div>
   );
 } 

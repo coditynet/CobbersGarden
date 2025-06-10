@@ -40,9 +40,7 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-        <SignedIn>
           <News />
-        </SignedIn>
         <Booking />
         <Team />
         <Testimonials />

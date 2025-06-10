@@ -8,12 +8,12 @@ export default function News() {
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
           <span className="relative">
-            Latest News & Updates
+            Dernières nouvelles et mises à jour
             <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-garden-accent hidden md:block" />
           </span>
         </h2>
         {/* <p className="text-garden-secondary/80 text-center max-w-2xl mx-auto mb-12">
-          Stay informed about the latest gardening trends, tips, and company updates.
+          Restez informé des dernières tendances en matière de jardinage, des conseils et des mises à jour de l'entreprise.
         </p> */}
         <NewsList />
       </div>
