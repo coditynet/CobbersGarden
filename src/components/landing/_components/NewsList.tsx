@@ -64,7 +64,7 @@ export default function NewsList() {
             </a>
           </div>
         </div>
-      )): <p>Il n'y a pas de nouvelles pour le moment</p>
+      )): <p className="flex justify-center items-center text-md rounded-md">Il n'y a pas de nouvelles pour le moment</p>
       }
     </div>
   );
