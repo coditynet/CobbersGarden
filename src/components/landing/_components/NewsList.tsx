@@ -37,9 +37,10 @@ export default function NewsList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
       {
-        !newsItems || newsItems.length == 0 ?
-      newsItems.map((item) => (
-        <div key={item.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+      newsItems && newsItems.length > 0 ? (
+
+        newsItems.map((item) => (
+          <div key={item.id} className="group bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
           <div className="relative w-full h-48 overflow-hidden bg-garden-background/20">
             <img
               src={item.image || "/assets/img/placeholder.jpg"}
@@ -59,15 +60,16 @@ export default function NewsList() {
             <a
               href={item.link || "#"}
               className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-garden-accent  bg-transparent text-garden-accent hover:bg-garden-accent hover:text-white h-10 px-4 py-2 w-full"
-            >
+              >
               Read More
             </a>
           </div>
         </div>
-      )): <div className="flex justify-center items-center">
-  <p className="text-md rounded-md">Il n'y a pas de nouvelles pour le moment</p>
-</div>
-      }
+      ))): (
+      <div className="flex justify-center ">
+      <p className="text-md rounded-md">Il n'y a pas de nouvelles pour le moment</p>
     </div>
-  );
-} 
+          )}
+          </div>
+        );
+      }
