@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getNews } from "@/app/actions/news";
 import type { InferSelectModel } from "drizzle-orm";
 import { news } from "@/server/db/schema";
+import NewsPopup from '@/components/ui/news-popup';
 
 type NewsItem = InferSelectModel<typeof news>;
 
@@ -57,12 +58,10 @@ export default function NewsList() {
             <p className="text-garden-secondary/80 mb-4 text-sm leading-relaxed">
               {item.content || "No content available"}
             </p>
-            <a
-              href={item.link || "#"}
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-garden-accent  bg-transparent text-garden-accent hover:bg-garden-accent hover:text-white h-10 px-4 py-2 w-full"
-              >
-              Read More
-            </a>
+            <div
+                  >
+                    <NewsPopup/>
+            </div>
           </div>
         </div>
       ))): (
