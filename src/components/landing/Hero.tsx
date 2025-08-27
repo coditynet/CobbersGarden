@@ -17,7 +17,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-scroll md:bg-fixed"
+      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-scroll bg-fixed"
       style={{
         backgroundImage:
           "url('https://utfs.io/f/kMIk3iLGS9Lg8es1hFw3jRwMFNolU8ZpaSyhT2uYtIVHifc9')",
@@ -29,7 +29,7 @@ const Hero = () => {
             Arboristes grimpeurs qualifiés
           </h1>
           <p className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
-            Les spécialistes pour l&apos;entretien de vos arbres <br />
+            Services professionnels d'élagage et d'entretien d'arbres à Lille.<br />
           </p>
           <Button
             onClick={scrollToBooking}
