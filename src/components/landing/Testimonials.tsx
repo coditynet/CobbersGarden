@@ -164,24 +164,6 @@ const Testimonials = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-16"
         >
-          <p className="text-garden-secondary/80 text-lg mb-6">
-            Rejoignez nos clients satisfaits
-          </p>
-          <div className="flex justify-center items-center gap-2 text-garden-primary">
-            <div className="flex -space-x-2">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="relative w-10 h-10">
-                  <Image
-                    src={testimonial.image}
-                    alt=""
-                    fill
-                    className="rounded-full object-cover ring-2 ring-white"
-                  />
-                </div>
-              ))}
-            </div>
-            <span className="ml-4 font-semibold text-lg">+100 clients satisfaits</span>
-          </div>
         </motion.div>
       </div>
     </section>
