@@ -43,7 +43,7 @@ export default function Advice() {
                     <li>un <strong>service complet</strong> allant de la taille à l’abattage d’arbres, en passant par le dessouchage, l’évacuation et le broyage.</li>
                 </ul>
                 <div className="mt-10 text-center">
-                    <a href="/contact" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-green-700 transition">Contactez-nous pour un devis ou un conseil personnalisé</a>
+                    <a href="/#contact" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-green-700 transition">Contactez-nous pour un devis ou un conseil personnalisé</a>
                 </div>
             </section>
         </main>
