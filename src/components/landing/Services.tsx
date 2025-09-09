@@ -176,7 +176,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
         </div>
 
         {/* Content section */}
-        <a href={service.link} className="absolute inset-0" >
+        <a href={service.link} className="cursor-pointer" >
         <div className="p-6 sm:w-2/3">
           <div className="flex items-start gap-4">
             <div>
