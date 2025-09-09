@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Élagage Fromelles",
+  description: "Service d’élagage professionnel à Fromelles – Cobbers Garden.",
+};
+
 export default function Advice() {
     return (
         <main className="bg-green-50 min-h-screen py-10 px-4 md:px-16">

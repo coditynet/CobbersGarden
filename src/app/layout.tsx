@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     default: "Cobbers Garden",
   },
   description:
-    "Arboristes grimpeurs qualifiés et les spécialistes pour l'entretien de vos arbres",
+    "Elagage professionnel a Fromelles, Weppes. Forte experience.",
   applicationName: "Cobbers Garden",
   authors: [{ name: "Cobbers Garden", url: "https://cobbersgarden.fr/" }],
   generator: "Next.js",
