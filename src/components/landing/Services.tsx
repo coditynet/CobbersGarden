@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 // Define the service type
 type Service = {
@@ -139,9 +140,8 @@ const ServiceCard = ({ service }: { service: Service }) => {
                 muted
                 playsInline
                 onEnded={handleVideoEnd}
-                className={`absolute inset-0 w-full h-full object-cover ${
-                  isHighQualityLoaded ? "opacity-0" : "opacity-100"
-                } transition-opacity duration-300`}>
+                className={`absolute inset-0 w-full h-full object-cover ${isHighQualityLoaded ? "opacity-0" : "opacity-100"
+                  } transition-opacity duration-300`}>
                 <source
                   src={service.mediaFiles[currentMediaIndex]}
                   type="video/mp4"
@@ -160,9 +160,8 @@ const ServiceCard = ({ service }: { service: Service }) => {
                   setIsHighQualityLoaded(true);
                   setIsMediaLoaded(true);
                 }}
-                className={`absolute inset-0 w-full h-full object-cover ${
-                  isHighQualityLoaded ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-300`}>
+                className={`absolute inset-0 w-full h-full object-cover ${isHighQualityLoaded ? "opacity-100" : "opacity-0"
+                  } transition-opacity duration-300`}>
                 <source
                   src={service.mediaFiles[currentMediaIndex]}
                   type="video/mp4"
@@ -176,30 +175,30 @@ const ServiceCard = ({ service }: { service: Service }) => {
         </div>
 
         {/* Content section */}
-        <a href={service.link} className="cursor-pointer" >
         <div className="p-6 sm:w-2/3">
-          <div className="flex items-start gap-4">
-            <div>
-              <h3 className="text-xl font-playfair font-bold text-garden-primary mb-2">
-                {service.title}
-              </h3>
-              <p className="text-garden-secondary/80 mb-4 text-sm leading-relaxed">
-                {service.description}
-              </p>
-              <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li
-                  key={feature}
-                  className="flex items-center gap-2 text-garden-secondary text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-garden-accent" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+          <Link href={service.link || "#"} className="cursor-pointer" >
+            <div className="flex items-start gap-4">
+              <div>
+                <h3 className="text-xl font-playfair font-bold text-garden-primary mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-garden-secondary/80 mb-4 text-sm leading-relaxed">
+                  {service.description}
+                </p>
+                <ul className="space-y-2">
+                  {service.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className="flex items-center gap-2 text-garden-secondary text-sm">
+                      <div className="w-1.5 h-1.5 rounded-full bg-garden-accent" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
-                </a>
       </div>
     </div>
   );
