@@ -215,26 +215,6 @@ const Team = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-16 text-center"
         >
-          <div className="max-w-4xl mx-auto">
-            <h3 className="text-2xl font-playfair font-bold text-garden-primary mb-8">
-              Une équipe unie par la passion du jardinage
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-garden-accent mb-2">20+</div>
-                <div className="text-garden-secondary/80">Années d'expérience combinées</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-garden-accent mb-2">100+</div>
-                <div className="text-garden-secondary/80">Projets réalisés</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-garden-accent mb-2">3</div>
-                <div className="text-garden-secondary/80">Experts certifiés</div>
-              </div>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>

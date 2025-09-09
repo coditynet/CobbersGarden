@@ -9,6 +9,7 @@ type Service = {
   mediaFiles: string[];
   fallbackImage: string;
   features: string[];
+  link?: string;
 };
 
 const services: Service[] = [
@@ -43,6 +44,7 @@ const services: Service[] = [
     mediaFiles: ["/assets/videos/working/Rognage.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
+    link: "/elagage"
   },
   {
     title: "Plantation",
@@ -174,6 +176,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
         </div>
 
         {/* Content section */}
+        <a href={service.link} className="absolute inset-0" >
         <div className="p-6 sm:w-2/3">
           <div className="flex items-start gap-4">
             <div>
@@ -186,8 +189,8 @@ const ServiceCard = ({ service }: { service: Service }) => {
               <ul className="space-y-2">
                 {service.features.map((feature) => (
                   <li
-                    key={feature}
-                    className="flex items-center gap-2 text-garden-secondary text-sm">
+                  key={feature}
+                  className="flex items-center gap-2 text-garden-secondary text-sm">
                     <div className="w-1.5 h-1.5 rounded-full bg-garden-accent" />
                     {feature}
                   </li>
@@ -196,6 +199,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
             </div>
           </div>
         </div>
+                </a>
       </div>
     </div>
   );
