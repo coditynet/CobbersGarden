@@ -26,11 +26,11 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl backdrop-blur-sm bg-white/10 p-8 rounded-lg mr-4 sm:mr-0">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#F2FCE2] mb-6 ">
-            Arboristes grimpeurs qualifiés
+            Jardinier elagueur au coeur des Weppes 
           </h1>
-          <p className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
+          <h2 className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
             Services professionnels d'élagage et d'entretien d'arbres à Lille.<br />
-          </p>
+          </h2>
           <Button
             onClick={scrollToBooking}
             className="bg-garden-primary hover:bg-garden-accent text-white text-lg px-8 py-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
