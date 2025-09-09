@@ -21,6 +21,7 @@ const services: Service[] = [
     mediaFiles: ["/assets/videos/working/Conseil.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
+    link: "#",
   },
   {
     title: "Taille de soin",
@@ -45,7 +46,7 @@ const services: Service[] = [
     mediaFiles: ["/assets/videos/working/Rognage.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
-    link: "/elagage"
+    link: "/rognage"
   },
   {
     title: "Plantation",
