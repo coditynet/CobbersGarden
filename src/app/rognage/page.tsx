@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Élagage Fromelles",
-  description: "Service d’élagage professionnel à Fromelles – Cobbers Garden.",
+  description: "Service d’élagage professionnel à Fromelles et alentours.",
 };
 
 export default function Advice() {
