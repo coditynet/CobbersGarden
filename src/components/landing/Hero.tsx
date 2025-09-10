@@ -26,7 +26,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl backdrop-blur-sm bg-white/10 p-8 rounded-lg mr-4 sm:mr-0">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#F2FCE2] mb-6 ">
-            Jardinier elagueur au coeur des Weppes 
+            Paysagiste Elagueur au coeur des Weppes 
           </h1>
           <h2 className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
             Services professionnels d'élagage et d'entretien d'arbres à Lille.<br />

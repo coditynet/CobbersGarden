@@ -19,7 +19,17 @@ const Footer = () => {
                   className="[filter:drop-shadow(0_100px_0_rgb(255,255,255))] -translate-y-[100px]"
                 />
               </div>
-              <span className="text-2xl font-bold">Cobbers Garden</span>
+              <span className="text-2xl font-bold mb-6">Cobbers Garden</span>
+              <ul className="space-y-4">
+                <li>
+                  <Link
+                    href="/blogs"
+                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                  >
+                    Blogs
+                  </Link>
+                </li>
+              </ul>
             </Link>
           </div>
 

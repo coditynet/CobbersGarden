@@ -1,75 +1,18 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { User } from "lucide-react";
+import Help from "@/components/Help";
 import { Metadata } from "next";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 
 
-const metadata: Metadata = {
+
+export const metadata: Metadata = {
   title: "Comment planter un arbre.",
   description: "Guide étape par étape pour planter un arbre.",
 };
 
-export function useScrollTrigger(threshold = 50) {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > threshold);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [threshold]);
-
-  return isScrolled;
-}
 
 export default function Advice() {
-    const isScrolled = useScrollTrigger(50);
     return (
         <div>
-        <motion.div
-      initial={false}
-      animate={isScrolled ? "collapsed" : "expanded"}
-      variants={{
-        expanded: { width: "auto", borderRadius: "8px" },
-        collapsed: { width: 50, borderRadius: "9999px" },
-      }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="fixed bottom-20 right-5 z-40 bg-green-500 overflow-hidden"
-    >
-      <Link
-        href="/"
-        className="flex items-center justify-center px-4 py-2 text-white"
-      >
-        {/* Icon stays, but fades between center/side */}
-        <motion.div 
-          variants={{
-            expanded: { opacity: 0, x: 0 }, // still visible left of text
-            collapsed: { opacity: 1, x: 0 }, // centered when shrunk
-          }}
-          className="flex-shrink-0 z-50"
-        >
-          <User size={20} />
-        </motion.div>
-
-        {/* Text disappears on collapse */}
-        <motion.span
-          className="ml-2 whitespace-nowrap"
-          variants={{
-            expanded: { opacity: 1, x: 0 },
-            collapsed: { opacity: 0, x: 20 },
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          Demander à des pros
-        </motion.span>
-      </Link>
-    </motion.div>
-  
+          <Help />
         <main className="bg-green-50 min-h-screen py-10 px-4 md:px-16">
             <section className="max-w-4xl mx-auto">
                 <h1 className="text-5xl md:text-6xl font-bold text-green-900 mb-6 border-b-4 border-green-300 pb-2">
