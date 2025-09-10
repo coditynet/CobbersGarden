@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Élagage Fromelles",
+  description: "Service d’élagage professionnel à Fromelles – Cobbers Garden.",
+};
+
 export default function Advice() {
     return (
         <main className="bg-green-50 min-h-screen py-10 px-4 md:px-16">
@@ -43,7 +50,7 @@ export default function Advice() {
                     <li>un <strong>service complet</strong> allant de la taille à l’abattage d’arbres, en passant par le dessouchage, l’évacuation et le broyage.</li>
                 </ul>
                 <div className="mt-10 text-center">
-                    <a href="/contact" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-green-700 transition">Contactez-nous pour un devis ou un conseil personnalisé</a>
+                    <a href="/#contact" className="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow hover:bg-green-700 transition">Contactez-nous pour un devis ou un conseil personnalisé</a>
                 </div>
             </section>
         </main>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import posthog from 'posthog-js';
 import { v4 as uuidv4 } from 'uuid';
 import Benefits from "@/components/landing/Benefits";
@@ -17,19 +17,38 @@ import AdminBanner from "@/components/global/AdminBanner";
 import News from "@/components/landing/News";
 
 export default function Home() {
+  const [isPageReady, setIsPageReady] = useState(false);
+
   useEffect(() => {
-    // Generate a unique ID for the visitor if they don't have one
     const visitorId = localStorage.getItem('visitorId') || uuidv4();
     localStorage.setItem('visitorId', visitorId);
 
-    // Identify the user in PostHog
     posthog.identify(visitorId, {
       first_visit: new Date().toISOString(),
       source: document.referrer || 'direct',
       userAgent: navigator.userAgent,
       language: navigator.language,
     });
+    
+    // The initial render is now complete, so we can mark the page as "ready".
+    setIsPageReady(true);
   }, []);
+
+  useEffect(() => {
+    // This effect will only run when isPageReady becomes true.
+    if (isPageReady) {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }
+    }
+  }, [isPageReady]); // The dependency array makes this effect wait for isPageReady.
 
   return (
     <>
@@ -39,7 +58,7 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-          <News />
+        <News />
         <Booking />
         <Team />
         <Testimonials />
