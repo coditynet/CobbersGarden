@@ -8,29 +8,20 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Company Info */}
-          <div className="space-y-6">
-            <Link href="/" className="flex items-center space-x-3">
+          <div>
               <div className="overflow-hidden">
-                <Image
-                  src="/assets/img/logo.png"
-                  alt="Cobbers Garden Logo"
-                  width={48}
-                  height={48}
-                  className="[filter:drop-shadow(0_100px_0_rgb(255,255,255))] -translate-y-[100px]"
-                />
               </div>
-              <span className="text-2xl font-bold mb-6">Cobbers Garden</span>
+            <h3 className="text-2xl font-bold mb-6">Cobbers Garden</h3>
               <ul className="space-y-4">
                 <li>
                   <Link
                     href="/blogs"
-                  className="text-white/90 hover:text-garden-accent transition-colors text-lg"
+                  className="text-white/90 hover:text-garden-accent text-lg underline"
                   >
                     Blogs
                   </Link>
                 </li>
               </ul>
-            </Link>
           </div>
 
           {/* Quick Links */}

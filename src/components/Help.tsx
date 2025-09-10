@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, px } from "framer-motion";
-import { User } from "lucide-react";
+import { HeartHandshake, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -60,7 +60,7 @@ export default function Advice() {
           }}
           className="flex-shrink-0"
         >
-          <User size={30} />
+          <HeartHandshake size={30} />
         </motion.div>
 
 
