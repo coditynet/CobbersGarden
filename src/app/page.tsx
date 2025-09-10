@@ -30,12 +30,10 @@ export default function Home() {
       language: navigator.language,
     });
     
-    // The initial render is now complete, so we can mark the page as "ready".
     setIsPageReady(true);
   }, []);
 
   useEffect(() => {
-    // This effect will only run when isPageReady becomes true.
     if (isPageReady) {
       const hash = window.location.hash;
       if (hash) {
@@ -48,7 +46,7 @@ export default function Home() {
         }
       }
     }
-  }, [isPageReady]); // The dependency array makes this effect wait for isPageReady.
+  }, [isPageReady]); 
 
   return (
     <>

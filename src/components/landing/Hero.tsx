@@ -17,7 +17,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-scroll bg-fixed"
+      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-fixed"
       style={{
         backgroundImage:
           "url('https://utfs.io/f/kMIk3iLGS9Lg8es1hFw3jRwMFNolU8ZpaSyhT2uYtIVHifc9')",
