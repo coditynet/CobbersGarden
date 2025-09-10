@@ -16,17 +16,17 @@ const Hero = () => {
 
   return (
     <section
-      id="home"
-      className="pt-24 pb-16 min-h-screen flex items-center relative bg-cover bg-center bg-scroll bg-fixed"
-      style={{
-        backgroundImage:
-          "url('https://utfs.io/f/kMIk3iLGS9Lg8es1hFw3jRwMFNolU8ZpaSyhT2uYtIVHifc9')",
-      }}>
+  id="home"
+  className="pt-24 pb-16 min-h-screen flex items-center relative bg-center bg-cover"
+  style={{
+    backgroundImage:
+      "url('https://utfs.io/f/kMIk3iLGS9Lg8es1hFw3jRwMFNolU8ZpaSyhT2uYtIVHifc9')",
+  }}>
       <div className="absolute inset-0 bg-black/40" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl backdrop-blur-sm bg-white/10 p-8 rounded-lg mr-4 sm:mr-0">
           <h1 className="text-5xl md:text-6xl font-serif font-bold text-[#F2FCE2] mb-6 ">
-            Jardinier elagueur au coeur des Weppes 
+            Paysagiste Elagueur au coeur des Weppes 
           </h1>
           <h2 className="text-xl md:text-2xl text-[#F2FCE2] mb-8 font-inter">
             Services professionnels d'élagage et d'entretien d'arbres à Lille.<br />

@@ -85,3 +85,15 @@ html, body {
   padding: 0; 
   height: 100%;
 }
+
+.p {
+  color: #065f46;
+  margin-bottom: 1rem;
+}
+
+.h3 {
+  font-size: large;
+  font-weight: bold;
+  color: #2aa112;
+  margin-bottom: 2rem;
+}
