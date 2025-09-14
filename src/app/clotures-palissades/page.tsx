@@ -1,3 +1,5 @@
+import { testimonials } from "@/components/landing/ListTestimonial";
+import { Star } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -207,20 +209,26 @@ export default function CloturesPalissades() {
 
                 <h2 className="text-3xl font-bold text-green-700 mb-4">Témoignages clients - Clôtures Fromelles</h2>
                 
-                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+                {testimonials.map((testimonial) => (
+                  <div key={testimonial.name}>
+                        <div className="bg-white p-6 rounded-lg shadow-md mb-6">
                     <p className="text-green-900 italic mb-4">
-                        "Excellent travail de l'équipe Cobbers Garden pour l'installation de notre <strong>clôture en bois</strong> à Fromelles. Très professionnels, respectueux des délais et un résultat magnifique qui s'intègre parfaitement dans notre jardin."
+                        {testimonial.text}
                     </p>
-                    <p className="text-green-700 font-semibold">- Famille Dupont, Fromelles</p>
-                </div>
-
-                <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-                    <p className="text-green-900 italic mb-4">
-                        "Nous recommandons vivement Cobbers Garden pour tous vos projets de <strong>clôtures</strong>. Leur expertise et leur sérieux nous ont convaincus. Notre <strong>palissade composite</strong> est parfaite !"
-                    </p>
-                    <p className="text-green-700 font-semibold">- M. et Mme Martin, Aubers</p>
-                </div>
-
+                    <p className="text-green-700 font-semibold mb-4">{testimonial.name}</p>
+                        <div className="flex text-yellow-400">
+                        {Array.from({ length: testimonial.rating }).map((_, i) => (
+                            <div
+                            key={i}
+                            >
+                          <Star className=" fill-current drop-shadow-sm" size={25} />
+                        </div>
+                      ))}
+                      </div>
+                      </div>
+                  </div>
+                ))}
+                
                 <div className="mt-12 text-center">
                     <h3 className="text-2xl font-bold text-green-700 mb-4">Prêt à transformer votre propriété ?</h3>
                     <p className="text-green-900 mb-6">
