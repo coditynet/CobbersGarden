@@ -54,7 +54,6 @@ const services: Service[] = [
     mediaFiles: ["/assets/videos/working/Plantation.mp4"],
     fallbackImage: "/assets/img/FallbackImage.png",
     features: [],
-    link: "/clotures-palissades"
   },
   {
     title: "Entretien du jardin",
@@ -78,6 +77,15 @@ const services: Service[] = [
     mediaFiles: [],
     fallbackImage: "/assets/img/half_price.jpg",
     features: [],
+  },
+  {
+    title: "Clôtures & Palissades",
+    description:
+      "Installation de clôtures et palissades pour sécuriser et embellir votre jardin.",
+    mediaFiles: ["/assets/videos/working/Cloture.mp4"],
+    fallbackImage: "/assets/img/FallbackImage.png",
+    features: [],
+    link: "/clotures-palissades"
   },
 ];
 
