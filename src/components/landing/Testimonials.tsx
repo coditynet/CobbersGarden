@@ -58,7 +58,7 @@ const cardVariants = {
 
 const Testimonials = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-garden-background/30">
+    <section className="py-24 bg-gradient-to-b from-white to-garden-background/30" id="testimonials">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
