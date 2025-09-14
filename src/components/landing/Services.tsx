@@ -40,6 +40,15 @@ const services: Service[] = [
     features: [],
     link: "/rognage"
   },
+   {
+    title: "Clôtures & Palissades",
+    description:
+      "Installation de clôtures et palissades pour sécuriser et embellir votre jardin.",
+    mediaFiles: ["/assets/videos/working/Cloture.mp4"],
+    fallbackImage: "/assets/img/Cloture_palissade.jpg",
+    features: [],
+    link: "/clotures-palissades"
+  },
   {
     title: "Rognage",
     description:
@@ -69,23 +78,6 @@ const services: Service[] = [
     mediaFiles: ["/assets/videos/working/Urgence.mp4"],
     fallbackImage: "/assets/img/FallBackImage.png",
     features: [],
-  },
-  {
-    title: "Ne payez que 50%",
-    description:
-      "Pour tous vos travaux de petit jardinage profitez de 50% via notre coopérative.",
-    mediaFiles: [],
-    fallbackImage: "/assets/img/half_price.jpg",
-    features: [],
-  },
-  {
-    title: "Clôtures & Palissades",
-    description:
-      "Installation de clôtures et palissades pour sécuriser et embellir votre jardin.",
-    mediaFiles: ["/assets/videos/working/Cloture.mp4"],
-    fallbackImage: "/assets/img/FallbackImage.png",
-    features: [],
-    link: "/clotures-palissades"
   },
 ];
 
@@ -126,7 +118,7 @@ const ServiceCard = ({ service }: { service: Service }) => {
       <div className="flex flex-col sm:flex-row">
         {/* Media container with portrait aspect ratio */}
         <div
-          className="relative w-full sm:w-1/3 overflow-hidden bg-garden-background/20"
+          className="relative w-full sm:w-1/3 overflow-hidden bg-garden-background/20 select-none"
           style={{ aspectRatio: "3/4" }}>
           {/* Always show fallback image first */}
           {service.fallbackImage && (
@@ -253,6 +245,17 @@ const Services = () => {
             <ServiceCard key={service.title} service={service} />
           ))}
         </div>
+          <div className="bg-white shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl align-middle flex rounded-full pointer-events-none select-none" style={{height: "200px", maxWidth: "200px", margin: "0 auto", marginTop: "40px"}}>
+            <Image
+              src="/assets/img/half_price.jpg"
+              alt="50% de réduction"
+              width={300}
+              height={50}
+              className="object-fill"
+              draggable={false}
+              priority
+            />
+          </div>
       </div>
     </section>
   );
