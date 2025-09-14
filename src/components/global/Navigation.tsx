@@ -114,20 +114,36 @@ const Navigation = () => {
 
   const scrollToSection = (sectionId: string) => {
     posthog.capture("navigation_clicked", { section: sectionId });
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const offset = 100;
-      const sectionTop = section.offsetTop - offset;
+    
+    const scrollWithRetry = (retryCount = 0) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = 120; // Increased offset for better spacing
+        const sectionTop = section.offsetTop - offset;
 
-      window.scrollTo({
-        top: sectionTop,
-        behavior: "smooth",
-      });
+        window.scrollTo({
+          top: sectionTop,
+          behavior: "smooth",
+        });
 
-      setTimeout(() => {
-        setIsMobileMenuOpen(false);
-      }, 500);
-    }
+        // If this is a section that might have dynamic content loading, retry after a delay
+        if ((sectionId === 'news' || sectionId === 'booking') && retryCount < 3) {
+          setTimeout(() => {
+            const newSection = document.getElementById(sectionId);
+            if (newSection && Math.abs(newSection.offsetTop - section.offsetTop) > 50) {
+              // Content height changed significantly, retry scroll
+              scrollWithRetry(retryCount + 1);
+            }
+          }, 800); // Wait for potential content loading
+        }
+      }
+    };
+
+    scrollWithRetry();
+
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 500);
   };
 
   return (

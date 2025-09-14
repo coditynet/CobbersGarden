@@ -28,8 +28,20 @@ export default function NewsList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-garden-primary"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Loading skeleton with consistent height */}
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="w-full h-48 bg-garden-background/20 animate-pulse"></div>
+            <div className="p-6">
+              <div className="h-6 bg-garden-background/20 rounded animate-pulse mb-2"></div>
+              <div className="h-4 bg-garden-background/20 rounded animate-pulse mb-4 w-1/2"></div>
+              <div className="h-4 bg-garden-background/20 rounded animate-pulse mb-2"></div>
+              <div className="h-4 bg-garden-background/20 rounded animate-pulse mb-4 w-3/4"></div>
+              <div className="h-10 bg-garden-background/20 rounded animate-pulse"></div>
+            </div>
+          </div>
+        ))}
       </div>
     );
   }

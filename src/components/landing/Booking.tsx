@@ -74,7 +74,9 @@ const Booking = () => {
 
   if (isInitializing) {
     return (
-      <section className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
+      <section 
+        id="booking"
+        className="py-24 bg-gradient-to-br from-garden-background via-white to-garden-background">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-playfair font-bold text-garden-primary text-center mb-16">
