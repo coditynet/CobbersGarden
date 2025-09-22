@@ -27,13 +27,13 @@ export const BookingConfirmationEmail = ({
 }: BookingConfirmationEmailProps) => {
   return (
     <Html>
-      <Preview>Ihre Buchungsanfrage bei Cobbers Garden</Preview>
+      <Preview>Votre demande de réservation à Cobbers Garden a été reçue</Preview>
       <Body style={main}>
         <Container style={container}>
           <Heading style={h1}>Buchungsbestätigung</Heading>
           <Text style={text}>Hallo {name},</Text>
           <Text style={text}>
-            vielen Dank für Ihre Anfrage bei Cobbers Garden. Wir haben folgende Details erhalten:
+            Merci de votre demande auprès de Cobbers Garden. Nous avons reçu les informations suivantes.
           </Text>
           
           <Section style={details}>
@@ -41,41 +41,41 @@ export const BookingConfirmationEmail = ({
               <strong>Service:</strong> {service}
             </Text>
             <Text style={detailItem}>
-              <strong>Name:</strong> {name}
+              <strong>Nom:</strong> {name}
             </Text>
             <Text style={detailItem}>
-              <strong>E-Mail:</strong> {email}
+              <strong>Adresse mail:</strong> {email}
             </Text>
             {phone && (
               <Text style={detailItem}>
-                <strong>Telefon:</strong> {phone}
+                <strong>numero de téléphone:</strong> {phone}
               </Text>
             )}
             <Text style={detailItem}>
-              <strong>Nachricht:</strong> {message}
+              <strong>message:</strong> {message}
             </Text>
           </Section>
 
           <Hr style={hr} />
           
           <Text style={text}>
-            Wir werden uns innerhalb der nächsten 24 Stunden bei Ihnen melden, um einen passenden Termin zu vereinbaren.
+            Nous vous contacterons dans les prochaines 24 heures pour convenir d'un rendez-vous approprié
           </Text>
           
           <Text style={text}>
-            Bei Fragen erreichen Sie uns unter{' '}
+            Si vous avez des questions, veuillez nous contacter à{' '}
             <Link href="tel:+49123456789" style={link}>
               +49 123 456789
             </Link>{' '}
-            oder per E-Mail an{' '}
+            ou per mail{' '}
             <Link href="mailto:info@cobbers-garden.de" style={link}>
               info@cobbers-garden.de
             </Link>
           </Text>
 
           <Text style={footer}>
-            Mit freundlichen Grüßen,<br />
-            Ihr Cobbers Garden Team
+            Cordialement<br />
+            Votre équipe Cobbers Garden
           </Text>
         </Container>
       </Body>
