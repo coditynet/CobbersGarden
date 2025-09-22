@@ -154,8 +154,8 @@ export const BookingEmail = ({
                 </Link>
               </Section>
               <Text style={signatureText}>
-                Mit freundlichen Grüßen,<br />
-                Ihr Cobbers Garden Team
+                Cordialement,<br />
+                votre équipe Cobbers Garden
               </Text>
             </Section>
           </Section>
