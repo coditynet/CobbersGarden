@@ -26,13 +26,13 @@ export const AdminNotificationEmail = ({
 }: AdminNotificationEmailProps) => {
   return (
     <Html>
-      <Preview>Neue Buchungsanfrage von {name}</Preview>
+      <Preview>Nouvelle demande de {name}</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={h1}>Neue Buchungsanfrage</Heading>
+          <Heading style={h1}>Nouvelle demande de réservation</Heading>
           
           <Text style={text}>
-            Eine neue Buchungsanfrage ist eingegangen:
+            Une nouvelle demande de réservation a été reçue
           </Text>
           
           <Section style={details}>
@@ -40,29 +40,29 @@ export const AdminNotificationEmail = ({
               <strong>Service:</strong> {category}
             </Text>
             <Text style={detailItem}>
-              <strong>Name:</strong> {name}
+              <strong>Nom:</strong> {name}
             </Text>
             <Text style={detailItem}>
               <strong>E-Mail:</strong> {email}
             </Text>
             {phone && (
               <Text style={detailItem}>
-                <strong>Telefon:</strong> {phone}
+                <strong>numero de téléphone:</strong> {phone}
               </Text>
             )}
             <Text style={detailItem}>
-              <strong>Nachricht:</strong> {message}
+              <strong>message:</strong> {message}
             </Text>
           </Section>
 
           <Hr style={hr} />
           
           <Text style={text}>
-            Bitte kontaktiere den Kunden innerhalb der nächsten 24 Stunden.
+            Veuillez contacter le client dans les prochaines 24 heures
           </Text>
 
           <Text style={footer}>
-            Diese E-Mail wurde automatisch generiert.
+Ce courrier a été généré automatiquement
           </Text>
         </Container>
       </Body>
