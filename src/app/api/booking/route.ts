@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
     // Send confirmation email to customer
     await resend.emails.send({
-      from: "Cobbers Garden <noreply@dev.codity.net>",
+      from: "Cobbers Garden <bookings@cobbersgarden.fr>",
       replyTo: "contact@cobbersgarden.fr",
       to: validatedData.email,
       subject: "Confirmation de votre demande - Cobbers Garden",
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
 
     // Send notification email to admin
     await resend.emails.send({
-      from: "Cobbers Garden <noreply@dev.codity.net>",
+      from: "Cobbers Garden <bookings@cobbersgarden.fr>",
       replyTo: validatedData.email,
       to: "contact@cobbersgarden.fr",
       subject: `Nouvelle demande de ${validatedData.name} - ${validatedData.category}`,
