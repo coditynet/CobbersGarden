@@ -1,13 +1,18 @@
 import {
-  Html,
   Body,
+  Button,
+  Column,
   Container,
-  Text,
+  Head,
+  Heading,
+  Hr,
+  Html,
   Link,
   Preview,
-  Heading,
+  Row,
   Section,
-  Hr,
+  Tailwind,
+  Text,
 } from '@react-email/components';
 
 interface BookingConfirmationEmailProps {
@@ -27,114 +32,76 @@ export const BookingConfirmationEmail = ({
 }: BookingConfirmationEmailProps) => {
   return (
     <Html>
-      <Preview>Votre demande de réservation à Cobbers Garden a été reçue</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Heading style={h1}>Confirmation de réservation</Heading>
-          <Text style={text}>Bonjour {name},</Text>
-          <Text style={text}>
-            Merci de votre demande auprès de Cobbers Garden. Nous avons reçu les informations suivantes.
-          </Text>
-          
-          <Section style={details}>
-            <Text style={detailItem}>
-              <strong>Service:</strong> {service}
+      <Head />
+      <Tailwind>
+        <Body className="mx-auto my-auto bg-[#f6f9fc] px-2 font-sans">
+          <Preview>Votre demande de réservation à Cobbers Garden a été reçue</Preview>
+          <Container className="mx-auto my-[40px] max-w-[600px] rounded border border-[#e6ebf1] border-solid bg-white p-[40px]">
+            <Heading className="mx-0 my-[20px] p-0 text-left font-bold text-[32px] text-[#1a4d2e]">
+              Confirmation de réservation
+            </Heading>
+            <Text className="text-[16px] text-[#333] leading-[24px]">
+              Bonjour {name},
             </Text>
-            <Text style={detailItem}>
-              <strong>Nom:</strong> {name}
+            <Text className="text-[16px] text-[#333] leading-[24px]">
+              Merci de votre demande auprès de Cobbers Garden. Nous avons reçu les informations suivantes.
             </Text>
-            <Text style={detailItem}>
-              <strong>Adresse mail:</strong> {email}
-            </Text>
-            {phone && (
-              <Text style={detailItem}>
-                <strong>numero de téléphone:</strong> {phone}
+            
+            <Section className="mt-[20px] rounded-[5px] bg-[#f8f9fa] p-[20px]">
+              <Text className="mb-[8px] text-[16px] text-[#333] leading-[24px]">
+                <strong>Service:</strong> {service}
               </Text>
-            )}
-            <Text style={detailItem}>
-              <strong>message:</strong> {message}
+              <Text className="mb-[8px] text-[16px] text-[#333] leading-[24px]">
+                <strong>Nom:</strong> {name}
+              </Text>
+              <Text className="mb-[8px] text-[16px] text-[#333] leading-[24px]">
+                <strong>Adresse mail:</strong> {email}
+              </Text>
+              {phone && (
+                <Text className="mb-[8px] text-[16px] text-[#333] leading-[24px]">
+                  <strong>Numéro de téléphone:</strong> {phone}
+                </Text>
+              )}
+              <Text className="text-[16px] text-[#333] leading-[24px]">
+                <strong>Message:</strong> {message}
+              </Text>
+            </Section>
+
+            <Hr className="mx-0 my-[20px] w-full border border-[#e6ebf1] border-solid" />
+            
+            <Text className="text-[16px] text-[#333] leading-[24px]">
+              Nous vous contacterons dans les prochaines 24 heures pour convenir d'un rendez-vous approprié.
             </Text>
-          </Section>
+            
+            <Text className="text-[16px] text-[#333] leading-[24px]">
+              Si vous avez des questions, veuillez nous contacter à{' '}
+              <Link href="tel:+49123456789" className="text-[#1a4d2e] underline">
+                +49 123 456789
+              </Link>{' '}
+              ou par mail{' '}
+              <Link href="mailto:info@cobbers-garden.de" className="text-[#1a4d2e] underline">
+                info@cobbers-garden.de
+              </Link>
+              .
+            </Text>
 
-          <Hr style={hr} />
-          
-          <Text style={text}>
-            Nous vous contacterons dans les prochaines 24 heures pour convenir d'un rendez-vous approprié
-          </Text>
-          
-          <Text style={text}>
-            Si vous avez des questions, veuillez nous contacter à{' '}
-            <Link href="tel:+49123456789" style={link}>
-              +49 123 456789
-            </Link>{' '}
-            ou per mail{' '}
-            <Link href="mailto:info@cobbers-garden.de" style={link}>
-              info@cobbers-garden.de
-            </Link>
-          </Text>
-
-          <Text style={footer}>
-            Cordialement<br />
-            Votre équipe Cobbers Garden
-          </Text>
-        </Container>
-      </Body>
+            <Text className="mt-[32px] text-[14px] text-[#666] leading-[24px]">
+              Cordialement<br />
+              Votre équipe Cobbers Garden
+            </Text>
+          </Container>
+        </Body>
+      </Tailwind>
     </Html>
   );
 };
 
-const main = {
-  backgroundColor: '#f6f9fc',
-  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-};
+BookingConfirmationEmail.PreviewProps = {
+  name: 'John Doe',
+  service: 'Jardinage',
+  email: 'john@example.com',
+  phone: '+49 987 654321',
+  message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
+} as BookingConfirmationEmailProps;
 
-const container = {
-  backgroundColor: '#ffffff',
-  margin: '0 auto',
-  padding: '40px 20px',
-  borderRadius: '10px',
-  maxWidth: '600px',
-};
-
-const h1 = {
-  color: '#1a4d2e',
-  fontSize: '32px',
-  fontWeight: '700',
-  margin: '0 0 20px',
-};
-
-const text = {
-  color: '#333',
-  fontSize: '16px',
-  lineHeight: '24px',
-  margin: '16px 0',
-};
-
-const details = {
-  backgroundColor: '#f8f9fa',
-  padding: '20px',
-  borderRadius: '5px',
-  margin: '20px 0',
-};
-
-const detailItem = {
-  margin: '8px 0',
-};
-
-const link = {
-  color: '#1a4d2e',
-  textDecoration: 'underline',
-};
-
-const hr = {
-  borderColor: '#e6ebf1',
-  margin: '20px 0',
-};
-
-const footer = {
-  color: '#666',
-  fontSize: '14px',
-  margin: '32px 0 0',
-};
-
-export default BookingConfirmationEmail; 
+export default BookingConfirmationEmail;
