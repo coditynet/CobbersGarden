@@ -30,8 +30,8 @@ export const BookingConfirmationEmail = ({
       <Preview>Votre demande de réservation à Cobbers Garden a été reçue</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={h1}>Buchungsbestätigung</Heading>
-          <Text style={text}>Hallo {name},</Text>
+          <Heading style={h1}>Confirmation de réservation</Heading>
+          <Text style={text}>Bonjour {name},</Text>
           <Text style={text}>
             Merci de votre demande auprès de Cobbers Garden. Nous avons reçu les informations suivantes.
           </Text>
