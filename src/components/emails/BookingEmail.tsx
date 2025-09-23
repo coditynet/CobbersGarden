@@ -94,20 +94,17 @@ export const BookingEmail = ({
               <Text style={cardTitle}>Informations de contact</Text>
               <div style={infoList}>
                 <div style={infoItem}>
-                  <Text style={infoLabel}>Nom</Text>
-                  <Text style={infoValue}>{name}</Text>
+                  <Text style={infoLabel}>Nom: <strong>{name}</strong></Text>
                 </div>
                 <Hr style={infoSeparator} />
                 <div style={infoItem}>
-                  <Text style={infoLabel}>Email</Text>
-                  <Text style={infoValue}>{email}</Text>
+                  <Text style={infoLabel}>Email: <strong>{email}</strong></Text>
                 </div>
                 {phone && (
                   <>
                     <Hr style={infoSeparator} />
                     <div style={infoItem}>
-                      <Text style={infoLabel}>Téléphone</Text>
-                      <Text style={infoValue}>{phone}</Text>
+                      <Text style={infoLabel}>Téléphone: <strong>{phone}</strong></Text>
                     </div>
                   </>
                 )}
@@ -140,7 +137,9 @@ export const BookingEmail = ({
             <Hr style={hr} />
 
             {/* Updated Footer Section */}
-            <Section style={ctaSection}>
+            {isCustomer ? (
+
+              <Section style={ctaSection}>
               <Text style={text}>
                 Notre équipe vous contactera dans les 24 heures pour discuter des détails et planifier une intervention.
               </Text>
@@ -158,6 +157,7 @@ export const BookingEmail = ({
                 votre équipe Cobbers Garden
               </Text>
             </Section>
+        ): null}
           </Section>
 
           {/* Footer */}
