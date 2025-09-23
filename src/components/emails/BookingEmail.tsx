@@ -55,7 +55,7 @@ export const BookingEmail = ({
           {/* Header */}
           <Section style={header}>
             <Img
-              src="https://cobbers-garden.de/logo.png"
+              src="https://cobbersgarden.fr/logo.png"
               width="140"
               height="60"
               alt="Cobbers Garden"
