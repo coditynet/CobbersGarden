@@ -123,8 +123,8 @@ export const BookingEmail = ({
                       key={index}
                       src={url}
                       alt={`Image ${index + 1}`}
-                      width="120"
-                      height="120"
+                      width="auto"
+                      height="auto"
                       style={imageStyle}
                     />
                   ))}
@@ -411,7 +411,7 @@ BookingEmail.PreviewProps = {
   email: 'john@example.com',
   phone: '+33 1 23 45 67 89',
   message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
-  imageUrls: [],
+  imageUrls: ["https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg",],
   submittedAt: new Date().toISOString(),
   isCustomer: true,
 } as BookingEmailProps;

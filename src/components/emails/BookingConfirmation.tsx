@@ -75,12 +75,12 @@ export const BookingConfirmationEmail = ({
             
             <Text className="text-[16px] text-[#333] leading-[24px]">
               Si vous avez des questions, veuillez nous contacter à{' '}
-              <Link href="tel:+49123456789" className="text-[#1a4d2e] underline">
-                +49 123 456789
+              <Link href="tel:+33660335399" className="text-[#1a4d2e] underline">
+                +33 66 03 35 399
               </Link>{' '}
               ou par mail{' '}
               <Link href="mailto:info@cobbers-garden.de" className="text-[#1a4d2e] underline">
-                info@cobbers-garden.de
+                contact@cobbersgarden.fr
               </Link>
               .
             </Text>
