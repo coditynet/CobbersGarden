@@ -10,6 +10,7 @@
     "db:studio": "drizzle-kit studio",
     "lint": "next lint",
     "prepare": "husky",
+    "dev:email": "email dev --port 3001 --dir src/components/emails",
     "type-check-staged": "tsc --noEmit"
   },
   "dependencies": {
@@ -24,7 +25,8 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-switch": "^1.2.5",
     "@radix-ui/react-toast": "^1.2.14",
-    "@react-email/components": "^0.0.31",
+    "@react-email/components": "^0.2.0",
+    "@react-email/tailwind": "1.2.2",
     "@sentry/nextjs": "^8.55.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -53,6 +55,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
+    "@react-email/preview-server": "^4.2.11",
     "@types/node": "^20.17.57",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
@@ -63,6 +66,7 @@
     "eslint-config-next": "15.1.3",
     "husky": "^9.1.7",
     "postcss": "^8.5.4",
+    "react-email": "4.2.11",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3"
   },
