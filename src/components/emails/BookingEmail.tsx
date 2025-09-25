@@ -1,3 +1,4 @@
+import { ScrollArea } from '@radix-ui/react-scroll-area';
 import {
   Html,
   Body,
@@ -9,6 +10,7 @@ import {
   Section,
   Hr,
   Img,
+  Column,
 } from '@react-email/components';
 
 interface BookingEmailProps {
@@ -118,8 +120,8 @@ export const BookingEmail = ({
               <Section style={infoCard}>
                 <Text style={cardTitle}>Photos jointes ({imageUrls.length})</Text>
                 <Section style={imageGrid}>
-                  {imageUrls.slice(0, 4).map((url, index) => (  // Limit to 4 images for email layout
-                    <Img
+                  {imageUrls.map((url, index) => ( 
+                    <img
                       key={index}
                       src={url}
                       alt={`Image ${index + 1}`}
@@ -128,9 +130,6 @@ export const BookingEmail = ({
                       style={imageStyle}
                     />
                   ))}
-                  {imageUrls.length > 4 && (
-                    <Text style={text}>Et {imageUrls.length - 4} image(s) supplémentaire(s)</Text>
-                  )}
                 </Section>
               </Section>
             )}
@@ -145,7 +144,7 @@ export const BookingEmail = ({
                 </Text>
                 <Section style={contactCard}>
                   <Text style={contactTitle}>Besoin d'aide ?</Text>
-                  <Link href="tel:+33123456789" style={contactLink}>
+                  <Link href="tel:+33660335399" style={contactLink}>
                     +33 66 03 35 399
                   </Link>
                   <Text style={text}>ou</Text>
@@ -223,6 +222,13 @@ const logo = {
   height: 'auto' as const,
   maxWidth: '200px',
 };
+
+const imageGrid = {
+  display: 'flex' as const,
+  justifyContent: 'center' as const,
+  maxWidth: '100%',
+};
+
 
 const content = {
   padding: '40px',
@@ -316,32 +322,13 @@ const infoSeparator = {
   opacity: 0.5,
 };
 
-const messageText = {
-  color: '#374151',
-  fontSize: '16px',
-  lineHeight: '1.6',
-  whiteSpace: 'pre-wrap' as const,
-  padding: '12px',
-  backgroundColor: '#f9fafb',
-  borderRadius: '8px',
-  // Removed borderLeft to eliminate the side border
-  border: 'none',
-};
-
-const imageGrid = {
-  display: 'flex' as const,
-  flexWrap: 'wrap' as const,
-  gap: '16px',
-  justifyContent: 'center' as const,
-  margin: '16px 0',
-};
-
 const imageStyle = {
-  width: '120px',
-  height: '120px',
+  width: '200px',
+  height: "200px",
   objectFit: 'cover' as const,
   borderRadius: '8px',
   border: '1px solid #e5e7eb',
+  overflow: 'hidden',
 };
 
 const hr = {
@@ -411,7 +398,7 @@ BookingEmail.PreviewProps = {
   email: 'john@example.com',
   phone: '+33 1 23 45 67 89',
   message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
-  imageUrls: ["https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg",],
+  imageUrls: ["https://53.fs1.hubspotusercontent-na1.net/hubfs/53/image8-2.jpg", "https://static.allovoisins.com/uploads/u/galleries/0/8/8/088ffe5648_1076133_s.jpg", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShMGA50-OmHzqcISYSQzVjcLjulBeWEAfc9A&s", "https://pousse.fr/cdn/shop/articles/7_1f432535-7861-4699-9431-5bca4767b429_800x800.jpg?v=1690794600", ],
   submittedAt: new Date().toISOString(),
   isCustomer: true,
 } as BookingEmailProps;
