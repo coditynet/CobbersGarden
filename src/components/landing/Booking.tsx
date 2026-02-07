@@ -445,6 +445,7 @@ const Booking = () => {
                     <Button
                       onClick={step === 1 ? handleContinue : undefined}
                       type={step === 1 ? "button" : "submit"}
+                      data-umami-event={step === 2 ? "booking_submitted" : undefined}
                       disabled={isLoading || (step === 1 && !form.watch("category"))}
                       className="w-full mt-8 bg-garden-primary hover:bg-garden-accent text-white text-lg p-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2">
                       {isLoading ? (
