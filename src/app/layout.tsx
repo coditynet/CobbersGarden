@@ -6,6 +6,7 @@ import { CSPostHogProvider } from "@/providers/posthog";
 import { Toaster } from "@/components/ui/toaster";
 import { ErrorBoundary } from "@/components/global/ErrorBoundary";
 import { CookieBanner } from "@/components/global/CookieBanner";
+import Script from "next/script";
 
 const openSans = Open_Sans({ subsets: ["latin"], variable: "--font-opensans" });
 const playfair = Playfair_Display({
@@ -94,6 +95,11 @@ export default function RootLayout({
             </CSPostHogProvider>
           </ClerkProvider>
         </ErrorBoundary>
+        <Script
+          src="https://r01.codity.app/script.js"
+          data-website-id="73c83e57-25d5-4298-8958-fb77ec59a597"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
