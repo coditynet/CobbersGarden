@@ -18,7 +18,8 @@ interface BookingEmailProps {
   email: string;
   phone?: string | null;
   message: string;
-  imageUrls?: string[];
+  attachmentNames?: string[];
+  imageCount?: number;
   submittedAt: string;
   isCustomer: boolean;
 }
@@ -30,7 +31,8 @@ export const BookingEmail = ({
   email,
   phone,
   message,
-  imageUrls,
+  attachmentNames,
+  imageCount = 0,
   submittedAt,
   isCustomer,
 }: BookingEmailProps) => {
@@ -42,6 +44,8 @@ export const BookingEmail = ({
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  const serviceLabel = service.trim() ? `${service} - ${category}` : category;
 
   return (
     <Html>
@@ -87,7 +91,7 @@ export const BookingEmail = ({
 
             {/* Service Type Section */}
             <Section style={serviceCard}>
-              <Text style={serviceBadge}>{service} - {category}</Text>
+              <Text style={serviceBadge}>{serviceLabel}</Text>
               <Text style={serviceDescription}>
                 Demande envoyée le {date}
               </Text>
@@ -110,28 +114,29 @@ export const BookingEmail = ({
             {/* Message Section */}
             <Section style={infoCard}>
               <Text style={cardTitle}>Message</Text>
-              <Text>{message}</Text>
+              <Text style={messageText}>{message}</Text>
             </Section>
 
             {/* Images Section */}
-            {imageUrls && imageUrls.length > 0 && (
+            {imageCount > 0 && (
               <Section style={infoCard}>
-                <Text style={cardTitle}>Photos jointes ({imageUrls.length})</Text>
-                <Section style={imageGrid}>
-                  {imageUrls.slice(0, 4).map((url, index) => (  // Limit to 4 images for email layout
-                    <Img
-                      key={index}
-                      src={url}
-                      alt={`Image ${index + 1}`}
-                      width="120"
-                      height="120"
-                      style={imageStyle}
-                    />
-                  ))}
-                  {imageUrls.length > 4 && (
-                    <Text style={text}>Et {imageUrls.length - 4} image(s) supplémentaire(s)</Text>
-                  )}
-                </Section>
+                <Text style={cardTitle}>
+                  {isCustomer ? `Photos recues (${imageCount})` : `Photos jointes (${imageCount})`}
+                </Text>
+                <Text style={text}>
+                  {isCustomer
+                    ? "Vos images ont bien ete recues avec votre demande."
+                    : "Les images sont jointes a cet email pour consultation."}
+                </Text>
+                {attachmentNames && attachmentNames.length > 0 && (
+                  <Section style={attachmentList}>
+                    {attachmentNames.map((fileName) => (
+                      <Text key={fileName} style={attachmentItem}>
+                        {fileName}
+                      </Text>
+                    ))}
+                  </Section>
+                )}
               </Section>
             )}
 
@@ -328,20 +333,15 @@ const messageText = {
   border: 'none',
 };
 
-const imageGrid = {
-  display: 'flex' as const,
-  flexWrap: 'wrap' as const,
-  gap: '16px',
-  justifyContent: 'center' as const,
-  margin: '16px 0',
+const attachmentList = {
+  marginTop: '12px',
 };
 
-const imageStyle = {
-  width: '120px',
-  height: '120px',
-  objectFit: 'cover' as const,
-  borderRadius: '8px',
-  border: '1px solid #e5e7eb',
+const attachmentItem = {
+  color: '#374151',
+  fontSize: '14px',
+  lineHeight: '20px',
+  margin: '6px 0',
 };
 
 const hr = {
@@ -411,7 +411,8 @@ BookingEmail.PreviewProps = {
   email: 'john@example.com',
   phone: '+33 1 23 45 67 89',
   message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
-  imageUrls: [],
+  attachmentNames: ['haie-avant.jpg', 'jardin-arriere.png'],
+  imageCount: 2,
   submittedAt: new Date().toISOString(),
   isCustomer: true,
 } as BookingEmailProps;
