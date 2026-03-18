@@ -27,6 +27,10 @@ const bookingSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    if (!resend) {
+      throw new Error("Missing RESEND_API_KEY environment variable");
+    }
+
     const formData = await request.formData();
 
     const bookingData = {

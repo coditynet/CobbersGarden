@@ -245,7 +245,17 @@ const Booking = () => {
         body: submitFormData,
       });
 
-      const responseData = await response.json();
+      const responseContentType = response.headers.get("content-type") || "";
+      let responseData: { message?: string } = {};
+
+      if (responseContentType.includes("application/json")) {
+        responseData = (await response.json()) as { message?: string };
+      } else {
+        const responseText = await response.text();
+        responseData = {
+          message: responseText.trim() || "Une erreur s'est produite",
+        };
+      }
 
       if (!response.ok) {
         throw new Error(responseData.message || "Une erreur s'est produite");

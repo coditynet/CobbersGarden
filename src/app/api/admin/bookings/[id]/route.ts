@@ -42,6 +42,10 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    if (!resend) {
+      throw new Error("Missing RESEND_API_KEY environment variable");
+    }
+
     const body = await request.json();
     const validatedData = updateBookingSchema.parse(body);
 
