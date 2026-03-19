@@ -54,6 +54,7 @@ export async function POST(request: Request) {
       ...validatedData,
       service,
       attachmentNames: preparedImages.attachmentNames,
+      inlineImageSources: preparedImages.inlineImageSources,
       imageCount: preparedImages.attachmentNames.length,
       submittedAt: new Date().toISOString(),
     };

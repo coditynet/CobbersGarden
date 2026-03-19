@@ -19,6 +19,7 @@ interface BookingEmailProps {
   phone?: string | null;
   message: string;
   attachmentNames?: string[];
+  inlineImageSources?: string[];
   imageCount?: number;
   submittedAt: string;
   isCustomer: boolean;
@@ -32,6 +33,7 @@ export const BookingEmail = ({
   phone,
   message,
   attachmentNames,
+  inlineImageSources,
   imageCount = 0,
   submittedAt,
   isCustomer,
@@ -126,14 +128,33 @@ export const BookingEmail = ({
                 <Text style={text}>
                   {isCustomer
                     ? "Vos images ont bien ete recues avec votre demande."
-                    : "Les images sont jointes a cet email pour consultation."}
+                    : "Les images sont integrees ci-dessous et jointes a cet email pour consultation."}
                 </Text>
-                {attachmentNames && attachmentNames.length > 0 && (
+                {isCustomer && attachmentNames && attachmentNames.length > 0 && (
                   <Section style={attachmentList}>
                     {attachmentNames.map((fileName) => (
                       <Text key={fileName} style={attachmentItem}>
                         {fileName}
                       </Text>
+                    ))}
+                  </Section>
+                )}
+                {!isCustomer && inlineImageSources && inlineImageSources.length > 0 && (
+                  <Section style={imagePreviewList}>
+                    {inlineImageSources.map((inlineImageSource, index) => (
+                      <Section
+                        key={`${attachmentNames?.[index] ?? "image"}-${index}`}
+                        style={imagePreviewCard}
+                      >
+                        <Img
+                          src={inlineImageSource}
+                          alt={attachmentNames?.[index] ?? `Photo ${index + 1}`}
+                          style={imagePreview}
+                        />
+                        {attachmentNames?.[index] && (
+                          <Text style={imagePreviewCaption}>{attachmentNames[index]}</Text>
+                        )}
+                      </Section>
                     ))}
                   </Section>
                 )}
@@ -344,6 +365,30 @@ const attachmentItem = {
   margin: '6px 0',
 };
 
+const imagePreviewList = {
+  marginTop: '20px',
+};
+
+const imagePreviewCard = {
+  marginBottom: '20px',
+};
+
+const imagePreview = {
+  display: 'block' as const,
+  width: '100%',
+  maxWidth: '440px',
+  height: 'auto',
+  borderRadius: '12px',
+  border: '1px solid #d1d5db',
+};
+
+const imagePreviewCaption = {
+  color: '#4b5563',
+  fontSize: '13px',
+  lineHeight: '18px',
+  margin: '8px 0 0',
+};
+
 const hr = {
   borderColor: '#e5e7eb',
   margin: '32px 0',
@@ -412,6 +457,7 @@ BookingEmail.PreviewProps = {
   phone: '+33 1 23 45 67 89',
   message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
   attachmentNames: ['haie-avant.jpg', 'jardin-arriere.png'],
+  inlineImageSources: ['cid:booking-image-1-haie-avant.jpg', 'cid:booking-image-2-jardin-arriere.png'],
   imageCount: 2,
   submittedAt: new Date().toISOString(),
   isCustomer: true,

@@ -11,9 +11,14 @@ const ALLOWED_BOOKING_IMAGE_TYPES = new Set([
   "image/gif",
 ]);
 
+export interface BookingImageAttachment extends Attachment {
+  contentId: string;
+}
+
 export interface PreparedBookingImages {
-  attachments: Attachment[];
+  attachments: BookingImageAttachment[];
   attachmentNames: string[];
+  inlineImageSources: string[];
   totalSizeBytes: number;
 }
 
@@ -74,19 +79,34 @@ export async function prepareBookingImageAttachments(
     );
   }
 
-  const attachments = await Promise.all(
-    files.map(async (file, index) => ({
-      filename: sanitizeFileName(file.name, index),
-      content: Buffer.from(await file.arrayBuffer()).toString("base64"),
-      contentType: file.type,
-    })),
+  const preparedFiles = await Promise.all(
+    files.map(async (file, index) => {
+      const content = Buffer.from(await file.arrayBuffer()).toString("base64");
+      const fileName = sanitizeFileName(file.name, index);
+      const contentId = `booking-image-${index + 1}-${fileName}`;
+
+      return {
+        filename: fileName,
+        content,
+        contentType: file.type,
+        contentId,
+      };
+    }),
   );
+
+  const attachments = preparedFiles.map(({ filename, content, contentType, contentId }) => ({
+    filename,
+    content,
+    contentType,
+    contentId,
+  }));
 
   return {
     attachments,
     attachmentNames: attachments
       .map((attachment) => attachment.filename)
       .filter((fileName): fileName is string => typeof fileName === "string"),
+    inlineImageSources: preparedFiles.map((file) => `cid:${file.contentId}`),
     totalSizeBytes,
   };
 }

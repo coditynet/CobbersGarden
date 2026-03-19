@@ -56,7 +56,7 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-        <News />
+        {/* <News /> */}
         <Booking />
         <Team />
         <Testimonials />
