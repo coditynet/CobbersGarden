@@ -14,7 +14,6 @@ import Footer from "@/components/global/Footer";
 import Testimonials from "@/components/landing/Testimonials";
 import Team from "@/components/landing/Team";
 import AdminBanner from "@/components/global/AdminBanner";
-import News from "@/components/landing/News";
 
 const getSafeHashTarget = (hash: string) => {
   const normalizedHash = hash.startsWith("#") ? hash.slice(1) : hash;
