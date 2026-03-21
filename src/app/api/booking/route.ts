@@ -44,11 +44,13 @@ export async function POST(request: Request) {
 
     const imageFiles = formData
       .getAll("images")
-      .filter((value): value is File => value instanceof File && value.size > 0);
+      .filter(
+        (value): value is File => value instanceof File && value.size > 0,
+      );
 
     const validatedData = bookingSchema.parse(bookingData);
     const preparedImages = await prepareBookingImageAttachments(imageFiles);
-    const service = validatedData.service.trim() || validatedData.category;
+    const service = validatedData.service.trim();
 
     const emailData = {
       ...validatedData,
@@ -107,16 +109,6 @@ export async function POST(request: Request) {
           })),
         },
         { status: 400 },
-      );
-    }
-
-    if (error instanceof Error) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Une erreur s'est produite lors de l'envoi de votre demande",
-        },
-        { status: 500 },
       );
     }
 
