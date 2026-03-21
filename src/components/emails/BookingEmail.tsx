@@ -123,12 +123,12 @@ export const BookingEmail = ({
             {imageCount > 0 && (
               <Section style={infoCard}>
                 <Text style={cardTitle}>
-                  {isCustomer ? `Photos recues (${imageCount})` : `Photos jointes (${imageCount})`}
+                  {isCustomer ? `Photos reçues (${imageCount})` : `Photos jointes (${imageCount})`}
                 </Text>
                 <Text style={text}>
                   {isCustomer
-                    ? "Vos images ont bien ete recues avec votre demande."
-                    : "Les images sont integrees ci-dessous et jointes a cet email pour consultation."}
+                    ? "Vos images ont bien été reçues avec votre demande."
+                    : "Les images sont intégrées ci-dessous et jointes à cet email pour consultation."}
                 </Text>
                 {isCustomer && attachmentNames && attachmentNames.length > 0 && (
                   <Section style={attachmentList}>

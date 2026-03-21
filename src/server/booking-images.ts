@@ -44,7 +44,7 @@ export async function prepareBookingImageAttachments(
 ): Promise<PreparedBookingImages> {
   if (files.length > BOOKING_IMAGE_MAX_COUNT) {
     throw new Error(
-      `Vous pouvez envoyer jusqu'a ${BOOKING_IMAGE_MAX_COUNT} images maximum.`,
+      `Vous pouvez envoyer jusqu'à ${BOOKING_IMAGE_MAX_COUNT} images maximum.`,
     );
   }
 
@@ -53,7 +53,7 @@ export async function prepareBookingImageAttachments(
   files.forEach((file) => {
     if (!ALLOWED_BOOKING_IMAGE_TYPES.has(file.type)) {
       throw new Error(
-        "Formats d'image acceptes: JPG, PNG, WEBP et GIF.",
+        "Formats d'image acceptés: JPG, PNG, WEBP et GIF.",
       );
     }
 
