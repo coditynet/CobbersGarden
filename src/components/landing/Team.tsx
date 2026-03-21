@@ -1,6 +1,6 @@
 "use client";
 
-import { Facebook, Instagram, Linkedin, MapPin, Award } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
