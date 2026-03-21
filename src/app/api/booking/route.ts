@@ -114,7 +114,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          message: error.message,
+          message: "Une erreur s'est produite lors de l'envoi de votre demande",
         },
         { status: 500 },
       );
