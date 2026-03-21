@@ -1,15 +1,12 @@
 import type { Attachment } from "resend";
+import {
+  BOOKING_IMAGE_MAX_COUNT,
+  BOOKING_IMAGE_MAX_FILE_SIZE_BYTES,
+  BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES,
+  BOOKING_ALLOWED_IMAGE_TYPES,
+} from "@/lib/booking-image-config";
 
-export const BOOKING_IMAGE_MAX_COUNT = 10;
-export const BOOKING_IMAGE_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-export const BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES = 20 * 1024 * 1024;
-
-const ALLOWED_BOOKING_IMAGE_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-]);
+const ALLOWED_BOOKING_IMAGE_TYPES = new Set(BOOKING_ALLOWED_IMAGE_TYPES);
 
 export interface BookingImageAttachment extends Attachment {
   contentId: string;

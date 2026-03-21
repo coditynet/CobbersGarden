@@ -23,16 +23,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
-const BOOKING_IMAGE_MAX_COUNT = 10;
-const BOOKING_IMAGE_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-const BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES = 20 * 1024 * 1024;
-const BOOKING_ALLOWED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-];
+import {
+  BOOKING_IMAGE_MAX_COUNT,
+  BOOKING_IMAGE_MAX_FILE_SIZE_BYTES,
+  BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES,
+  BOOKING_ALLOWED_IMAGE_TYPES,
+} from "@/lib/booking-image-config";
 
 const bookingSchema = z.object({
   category: z.string({
@@ -507,7 +503,7 @@ const Booking = () => {
                                   )}
                                 </p>
                                 <p className="text-xs text-garden-secondary mt-1">
-                                  JPG, PNG, WEBP ou GIF. 10 images max, 5 Mo par image, 20 Mo au total.
+                                  JPG, PNG, WEBP ou GIF. {BOOKING_IMAGE_MAX_COUNT} images max, {Math.floor(BOOKING_IMAGE_MAX_FILE_SIZE_BYTES / (1024 * 1024))} Mo par image, {Math.floor(BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES / (1024 * 1024))} Mo au total.
                                 </p>
                               </div>
                             </label>
