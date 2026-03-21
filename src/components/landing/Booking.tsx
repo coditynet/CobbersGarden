@@ -23,16 +23,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
-const BOOKING_IMAGE_MAX_COUNT = 10;
-const BOOKING_IMAGE_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-const BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES = 20 * 1024 * 1024;
-const BOOKING_ALLOWED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-];
+import {
+  BOOKING_IMAGE_MAX_COUNT,
+  BOOKING_IMAGE_MAX_FILE_SIZE_BYTES,
+  BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES,
+  BOOKING_ALLOWED_IMAGE_TYPES,
+} from "@/lib/booking-image-config";
 
 const bookingSchema = z.object({
   category: z.string({
