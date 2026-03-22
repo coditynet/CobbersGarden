@@ -1,6 +1,6 @@
 "use client";
 
-import { Facebook, Instagram, Linkedin, MapPin, Award } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
@@ -117,13 +117,12 @@ const Team = () => {
               className="group bg-white rounded-3xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 border border-garden-background/50 relative overflow-hidden"
             >
               {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-garden-accent/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
+              {/* <div className="absolute top-0 right-0 w-32 h-32 bg-garden-accent/5 rounded-full -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-garden-primary/5 rounded-full translate-y-12 -translate-x-12 group-hover:scale-125 transition-transform duration-500" />
-              
+               */}
               {/* Award icon decoration */}
-              <div className="absolute top-6 right-6 text-garden-accent/20 group-hover:text-garden-accent/40 transition-colors duration-300">
-                <Award className="h-6 w-6" />
-              </div>
+              {/* <div className="absolute top-6 right-6 text-garden-accent/20 group-hover:text-garden-accent/40 transition-colors duration-300">
+              </div> */}
 
               {/* Content */}
               <div className="relative z-10">
@@ -144,9 +143,10 @@ const Team = () => {
                   </div>
                   
                   {/* Experience badge */}
-                  <div className="absolute -bottom-2 -right-2 bg-garden-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg group-hover:bg-garden-accent transition-colors duration-300">
+                  {/* <div className="absolute -bottom-2 -right-2 bg-garden-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg group-hover:bg-garden-accent transition-colors duration-300">
                     {member.experience}
                   </div>
+                  */}
                 </motion.div>
 
                 {/* Member Info */}
@@ -160,10 +160,10 @@ const Team = () => {
                       {member.role}
                     </p>
                     
-                    <div className="flex items-center justify-center gap-2 text-garden-secondary/70 text-sm">
+                    {/* <div className="flex items-center justify-center gap-2 text-garden-secondary/70 text-sm">
                       <MapPin className="h-4 w-4" />
                       <span>{member.specialty}</span>
-                    </div>
+                    </div> */}
                   </div>
                   
                   <p className="text-garden-secondary/80 leading-relaxed px-2">
@@ -202,7 +202,7 @@ const Team = () => {
               </div>
 
               {/* Bottom accent */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-garden-accent to-garden-primary/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              {/* <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-garden-accent to-garden-primary/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" /> */}
             </motion.div>
           ))}
         </motion.div>

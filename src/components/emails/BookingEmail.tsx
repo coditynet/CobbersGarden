@@ -18,7 +18,9 @@ interface BookingEmailProps {
   email: string;
   phone?: string | null;
   message: string;
-  imageUrls?: string[];
+  attachmentNames?: string[];
+  inlineImageSources?: string[];
+  imageCount?: number;
   submittedAt: string;
   isCustomer: boolean;
 }
@@ -30,7 +32,9 @@ export const BookingEmail = ({
   email,
   phone,
   message,
-  imageUrls,
+  attachmentNames,
+  inlineImageSources,
+  imageCount = 0,
   submittedAt,
   isCustomer,
 }: BookingEmailProps) => {
@@ -42,6 +46,8 @@ export const BookingEmail = ({
     hour: '2-digit',
     minute: '2-digit',
   });
+
+  const serviceLabel = service.trim() ? `${service} - ${category}` : category;
 
   return (
     <Html>
@@ -87,7 +93,7 @@ export const BookingEmail = ({
 
             {/* Service Type Section */}
             <Section style={serviceCard}>
-              <Text style={serviceBadge}>{service} - {category}</Text>
+              <Text style={serviceBadge}>{serviceLabel}</Text>
               <Text style={serviceDescription}>
                 Demande envoyée le {date}
               </Text>
@@ -110,28 +116,48 @@ export const BookingEmail = ({
             {/* Message Section */}
             <Section style={infoCard}>
               <Text style={cardTitle}>Message</Text>
-              <Text>{message}</Text>
+              <Text style={messageText}>{message}</Text>
             </Section>
 
             {/* Images Section */}
-            {imageUrls && imageUrls.length > 0 && (
+            {imageCount > 0 && (
               <Section style={infoCard}>
-                <Text style={cardTitle}>Photos jointes ({imageUrls.length})</Text>
-                <Section style={imageGrid}>
-                  {imageUrls.slice(0, 4).map((url, index) => (  // Limit to 4 images for email layout
-                    <Img
-                      key={index}
-                      src={url}
-                      alt={`Image ${index + 1}`}
-                      width="120"
-                      height="120"
-                      style={imageStyle}
-                    />
-                  ))}
-                  {imageUrls.length > 4 && (
-                    <Text style={text}>Et {imageUrls.length - 4} image(s) supplémentaire(s)</Text>
-                  )}
-                </Section>
+                <Text style={cardTitle}>
+                  {isCustomer ? `Photos reçues (${imageCount})` : `Photos jointes (${imageCount})`}
+                </Text>
+                <Text style={text}>
+                  {isCustomer
+                    ? "Vos images ont bien été reçues avec votre demande."
+                    : "Les images sont intégrées ci-dessous et jointes à cet email pour consultation."}
+                </Text>
+                {isCustomer && attachmentNames && attachmentNames.length > 0 && (
+                  <Section style={attachmentList}>
+                    {attachmentNames.map((fileName) => (
+                      <Text key={fileName} style={attachmentItem}>
+                        {fileName}
+                      </Text>
+                    ))}
+                  </Section>
+                )}
+                {!isCustomer && inlineImageSources && inlineImageSources.length > 0 && (
+                  <Section style={imagePreviewList}>
+                    {inlineImageSources.map((inlineImageSource, index) => (
+                      <Section
+                        key={`${attachmentNames?.[index] ?? "image"}-${index}`}
+                        style={imagePreviewCard}
+                      >
+                        <Img
+                          src={inlineImageSource}
+                          alt={attachmentNames?.[index] ?? `Photo ${index + 1}`}
+                          style={imagePreview}
+                        />
+                        {attachmentNames?.[index] && (
+                          <Text style={imagePreviewCaption}>{attachmentNames[index]}</Text>
+                        )}
+                      </Section>
+                    ))}
+                  </Section>
+                )}
               </Section>
             )}
 
@@ -328,20 +354,39 @@ const messageText = {
   border: 'none',
 };
 
-const imageGrid = {
-  display: 'flex' as const,
-  flexWrap: 'wrap' as const,
-  gap: '16px',
-  justifyContent: 'center' as const,
-  margin: '16px 0',
+const attachmentList = {
+  marginTop: '12px',
 };
 
-const imageStyle = {
-  width: '120px',
-  height: '120px',
-  objectFit: 'cover' as const,
-  borderRadius: '8px',
-  border: '1px solid #e5e7eb',
+const attachmentItem = {
+  color: '#374151',
+  fontSize: '14px',
+  lineHeight: '20px',
+  margin: '6px 0',
+};
+
+const imagePreviewList = {
+  marginTop: '20px',
+};
+
+const imagePreviewCard = {
+  marginBottom: '20px',
+};
+
+const imagePreview = {
+  display: 'block' as const,
+  width: '100%',
+  maxWidth: '440px',
+  height: 'auto',
+  borderRadius: '12px',
+  border: '1px solid #d1d5db',
+};
+
+const imagePreviewCaption = {
+  color: '#4b5563',
+  fontSize: '13px',
+  lineHeight: '18px',
+  margin: '8px 0 0',
 };
 
 const hr = {
@@ -411,7 +456,9 @@ BookingEmail.PreviewProps = {
   email: 'john@example.com',
   phone: '+33 1 23 45 67 89',
   message: 'Je souhaite un rendez-vous pour tondre la pelouse.',
-  imageUrls: [],
+  attachmentNames: ['haie-avant.jpg', 'jardin-arriere.png'],
+  inlineImageSources: ['cid:booking-image-1-haie-avant.jpg', 'cid:booking-image-2-jardin-arriere.png'],
+  imageCount: 2,
   submittedAt: new Date().toISOString(),
   isCustomer: true,
 } as BookingEmailProps;

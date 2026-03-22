@@ -14,7 +14,16 @@ import Footer from "@/components/global/Footer";
 import Testimonials from "@/components/landing/Testimonials";
 import Team from "@/components/landing/Team";
 import AdminBanner from "@/components/global/AdminBanner";
-import News from "@/components/landing/News";
+
+const getSafeHashTarget = (hash: string) => {
+  const normalizedHash = hash.startsWith("#") ? hash.slice(1) : hash;
+
+  if (!normalizedHash || !/^[A-Za-z0-9_-]+$/.test(normalizedHash)) {
+    return null;
+  }
+
+  return document.getElementById(normalizedHash);
+};
 
 export default function Home() {
   const [isPageReady, setIsPageReady] = useState(false);
@@ -37,7 +46,7 @@ export default function Home() {
     if (isPageReady) {
       const hash = window.location.hash;
       if (hash) {
-        const element = document.querySelector(hash);
+        const element = getSafeHashTarget(hash);
         if (element) {
           element.scrollIntoView({
             behavior: 'smooth',
@@ -56,7 +65,7 @@ export default function Home() {
         <Hero />
         <Benefits />
         <Services />
-        <News />
+        {/* <News /> */}
         <Booking />
         <Team />
         <Testimonials />

@@ -1,3 +1,4 @@
+import { forwardRef, type ElementType } from "react";
 import {
   TreePine,
   Axe,
@@ -8,7 +9,7 @@ import {
 
 type CategoryOption = {
   category: string;
-  icon: React.ElementType;
+  icon: ElementType;
   description: string;
 };
 
@@ -45,17 +46,18 @@ interface CategorySelectorProps {
   onSelectCategory: (category: string) => void;
 }
 
-const CategorySelector = ({
-  selectedCategory,
-  onSelectCategory,
-}: CategorySelectorProps) => {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+const CategorySelector = forwardRef<HTMLDivElement, CategorySelectorProps>(
+  ({ selectedCategory, onSelectCategory }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {categories.map((cat) => {
         const Icon = cat.icon;
         return (
           <button
             key={cat.category}
+            type="button"
             onClick={() => onSelectCategory(cat.category)}
             className={`group p-6 rounded-xl transition-all duration-300 ${
               selectedCategory === cat.category
@@ -99,8 +101,11 @@ const CategorySelector = ({
           </button>
         );
       })}
-    </div>
-  );
-};
+      </div>
+    );
+  },
+);
+
+CategorySelector.displayName = "CategorySelector";
 
 export default CategorySelector;

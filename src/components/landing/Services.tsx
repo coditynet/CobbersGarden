@@ -45,7 +45,7 @@ const services: Service[] = [
     description:
       "Installation de clôtures et palissades pour sécuriser et embellir votre jardin.",
     mediaFiles: ["/assets/videos/working/Cloture.mp4"],
-    fallbackImage: "/assets/img/Cloture_palissade.jpg",
+    fallbackImage: "/assets/img/Cloture_Palissade.jpg",
     features: [],
     link: "/clotures-palissades"
   },

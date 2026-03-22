@@ -1,6 +1,6 @@
 "use client";
 
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { testimonials } from "./ListTestimonial";
@@ -73,12 +73,12 @@ const Testimonials = () => {
               className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-garden-background/50 relative overflow-hidden group"
             >
               {/* Background decoration */}
-              <div className="absolute top-0 right-0 w-20 h-20 bg-garden-accent/5 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500" />
+              {/* <div className="absolute top-0 right-0 w-20 h-20 bg-garden-accent/5 rounded-full -translate-y-10 translate-x-10 group-hover:scale-150 transition-transform duration-500" /> */}
               
               {/* Quote icon */}
-              <div className="absolute top-6 right-6 text-garden-accent/20 group-hover:text-garden-accent/40 transition-colors duration-300">
+              {/* <div className="absolute top-6 right-6 text-garden-accent/20 group-hover:text-garden-accent/40 transition-colors duration-300">
                 <Quote className="h-8 w-8" />
-              </div>
+              </div> */}
 
               {/* Content */}
               <div className="relative z-10">
@@ -128,7 +128,7 @@ const Testimonials = () => {
               </div>
 
               {/* Bottom accent */}
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-garden-accent to-garden-primary/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              {/* <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-garden-accent to-garden-primary/30 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" /> */}
             </motion.div>
           ))}
         </motion.div>

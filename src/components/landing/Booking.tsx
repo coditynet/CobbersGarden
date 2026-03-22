@@ -10,7 +10,6 @@ import { ArrowRight, Check, Upload, X } from "lucide-react";
 import LoadingDots from "@/components/ui/LoadingDots";
 import { clearSavedData } from "@/hooks/useAutosave";
 import posthog from "posthog-js";
-import Image from "next/image";
 
 import CategorySelector from "../ui/CategorySelector";
 import {
@@ -22,7 +21,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  BOOKING_IMAGE_MAX_COUNT,
+  BOOKING_IMAGE_MAX_FILE_SIZE_BYTES,
+  BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES,
+  BOOKING_ALLOWED_IMAGE_TYPES,
+} from "@/lib/booking-image-config";
 
 const bookingSchema = z.object({
   category: z.string({
@@ -51,6 +57,7 @@ const Booking = () => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [images, setImages] = useState<File[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const { toast } = useToast();
 
   const form = useForm<BookingFormValues>({
@@ -71,6 +78,100 @@ const Booking = () => {
     setIsInitializing(false);
     if (!startTime) setStartTime(Date.now());
   }, [startTime]);
+
+  useEffect(() => {
+    const previewUrls = images.map((image) => URL.createObjectURL(image));
+    setImagePreviewUrls(previewUrls);
+
+    return () => {
+      previewUrls.forEach((previewUrl) => URL.revokeObjectURL(previewUrl));
+    };
+  }, [images]);
+
+  const syncImages = (nextImages: File[]) => {
+    setImages(nextImages);
+    form.setValue("images", nextImages, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+    form.clearErrors("images");
+  };
+
+  const handleImageSelection = (fileList: FileList | null) => {
+    if (!fileList) {
+      return;
+    }
+
+    const newFiles = Array.from(fileList);
+    const totalImages = images.length + newFiles.length;
+
+    if (totalImages > BOOKING_IMAGE_MAX_COUNT) {
+      form.setError("images", {
+        type: "manual",
+        message: `Vous pouvez telecharger jusqu'a ${BOOKING_IMAGE_MAX_COUNT} images maximum.`,
+      });
+      toast({
+        title: "Trop d'images",
+        description: `Vous pouvez telecharger jusqu'a ${BOOKING_IMAGE_MAX_COUNT} images maximum.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const invalidFile = newFiles.find(
+      (file) => !BOOKING_ALLOWED_IMAGE_TYPES.includes(file.type),
+    );
+
+    if (invalidFile) {
+      form.setError("images", {
+        type: "manual",
+        message: "Formats acceptes: JPG, PNG, WEBP et GIF.",
+      });
+      toast({
+        title: "Format invalide",
+        description: "Formats acceptes: JPG, PNG, WEBP et GIF.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const oversizedFile = newFiles.find(
+      (file) => file.size > BOOKING_IMAGE_MAX_FILE_SIZE_BYTES,
+    );
+
+    if (oversizedFile) {
+      form.setError("images", {
+        type: "manual",
+        message: "Chaque image doit faire moins de 5 Mo.",
+      });
+      toast({
+        title: "Image trop lourde",
+        description: "Chaque image doit faire moins de 5 Mo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const totalSize = [...images, ...newFiles].reduce(
+      (sum, file) => sum + file.size,
+      0,
+    );
+
+    if (totalSize > BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES) {
+      form.setError("images", {
+        type: "manual",
+        message: "La taille totale des images doit rester sous 20 Mo.",
+      });
+      toast({
+        title: "Taille totale depassee",
+        description: "La taille totale des images doit rester sous 20 Mo.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    syncImages([...images, ...newFiles]);
+  };
 
   if (isInitializing) {
     return (
@@ -140,7 +241,17 @@ const Booking = () => {
         body: submitFormData,
       });
 
-      const responseData = await response.json();
+      const responseContentType = response.headers.get("content-type") || "";
+      let responseData: { message?: string } = {};
+
+      if (responseContentType.includes("application/json")) {
+        responseData = (await response.json()) as { message?: string };
+      } else {
+        const responseText = await response.text();
+        responseData = {
+          message: responseText.trim() || "Une erreur s'est produite",
+        };
+      }
 
       if (!response.ok) {
         throw new Error(responseData.message || "Une erreur s'est produite");
@@ -242,7 +353,7 @@ const Booking = () => {
                       setStep(1);
                       form.reset();
                       setIsSubmitted(false);
-                      setImages([]);
+                      syncImages([]);
                     }}
                     className="bg-garden-primary hover:bg-garden-accent text-white px-8 py-4 rounded-xl transition-all duration-300">
                     Nouvelle demande
@@ -355,32 +466,20 @@ const Booking = () => {
                         />
 
                         <div className="space-y-3">
-                          <FormLabel className="block">Images (optional)</FormLabel>
+                          <Label className="block">Images (optionnel)</Label>
                           <div
                             className={`border-2 border-dashed rounded-xl p-6 transition-colors
-                            ${images.length < 10 ? "cursor-pointer hover:border-garden-accent" : ""}
+                            ${images.length < BOOKING_IMAGE_MAX_COUNT ? "cursor-pointer hover:border-garden-accent" : ""}
                             ${form.formState.errors.images ? "border-red-500" : "border-gray-300"}`}>
                             <input
                               type="file"
-                              accept="image/*"
+                              accept={BOOKING_ALLOWED_IMAGE_TYPES.join(",")}
                               multiple
                               className="hidden"
                               id="image-upload"
                               onChange={(e) => {
-                                if (e.target.files) {
-                                  const newFiles = Array.from(e.target.files);
-                                  const totalImages = images.length + newFiles.length;
-                                  if (totalImages > 10) {
-                                    toast({
-                                      title: "Trop d'images",
-                                      description:
-                                        "Vous pouvez télécharger jusqu'à 10 images maximum",
-                                      variant: "destructive",
-                                    });
-                                    return;
-                                  }
-                                  setImages((prev) => [...prev, ...newFiles]);
-                                }
+                                handleImageSelection(e.target.files);
+                                e.target.value = "";
                               }}
                             />
                             <label
@@ -388,14 +487,14 @@ const Booking = () => {
                               className="flex flex-col items-center gap-2">
                               <Upload
                                 className={`w-8 h-8 ${
-                                  images.length < 10
+                                  images.length < BOOKING_IMAGE_MAX_COUNT
                                     ? "text-garden-primary"
                                     : "text-gray-400"
                                 }`}
                               />
                               <div className="text-center">
                                 <p className="text-sm font-medium text-garden-primary">
-                                  {images.length < 10 ? (
+                                  {images.length < BOOKING_IMAGE_MAX_COUNT ? (
                                     <>Cliquez ici pour importer des images.</>
                                   ) : (
                                     <span className="text-gray-400">
@@ -404,37 +503,43 @@ const Booking = () => {
                                   )}
                                 </p>
                                 <p className="text-xs text-garden-secondary mt-1">
-                                  JPG, PNG ou GIF (max. 10 images)
+                                  {`JPG, PNG, WEBP ou GIF. ${BOOKING_IMAGE_MAX_COUNT} images max, ${BOOKING_IMAGE_MAX_FILE_SIZE_BYTES / (1024 * 1024)} Mo par image, ${BOOKING_IMAGE_MAX_TOTAL_SIZE_BYTES / (1024 * 1024)} Mo au total.`}
                                 </p>
                               </div>
                             </label>
                           </div>
+                          {form.formState.errors.images?.message && (
+                            <p className="text-sm font-medium text-red-500">
+                              {form.formState.errors.images.message}
+                            </p>
+                          )}
 
                           {images.length > 0 && (
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
                               {images.map((image, index) => (
-                                <div
-                                  key={index}
-                                  className="relative aspect-square group">
-                                  <div className="w-full h-full rounded-lg overflow-hidden border border-gray-200">
-                                    <Image
-                                      src={URL.createObjectURL(image)}
-                                      alt={`Preview ${index + 1}`}
-                                      fill
-                                      className="object-cover"
-                                    />
+                                imagePreviewUrls[index] ? (
+                                  <div
+                                    key={`${image.name}-${image.size}-${index}`}
+                                    className="relative aspect-square group">
+                                    <div className="w-full h-full rounded-lg overflow-hidden border border-gray-200">
+                                      <img
+                                        src={imagePreviewUrls[index]}
+                                        alt={`Preview ${index + 1}`}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        syncImages(
+                                          images.filter((_, imageIndex) => imageIndex !== index),
+                                        );
+                                      }}
+                                      className="absolute -top-2 -right-2 bg-white rounded-full p-1.5 shadow-md hover:bg-red-50 transition-colors">
+                                      <X className="w-4 h-4 text-red-500" />
+                                    </button>
                                   </div>
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      setImages((prev) =>
-                                        prev.filter((_, i) => i !== index)
-                                      );
-                                    }}
-                                    className="absolute -top-2 -right-2 bg-white rounded-full p-1.5 shadow-md hover:bg-red-50 transition-colors">
-                                    <X className="w-4 h-4 text-red-500" />
-                                  </button>
-                                </div>
+                                ) : null
                               ))}
                             </div>
                           )}

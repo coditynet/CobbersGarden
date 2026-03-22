@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import {resend} from "@/lib/mail";
+import { resend } from "@/lib/mail";
 import BookingEmail from "@/components/emails/BookingEmail";
+import { prepareBookingImageAttachments } from "@/server/booking-images";
+
+export const runtime = "nodejs";
 
 const bookingSchema = z.object({
   service: z.string({
@@ -20,15 +23,16 @@ const bookingSchema = z.object({
     .string()
     .min(10, "Le message doit contenir au moins 10 caractères")
     .max(1000, "Le message ne peut pas dépasser 1000 caractères"),
-  images: z.array(z.any()).optional(), // We'll handle image validation separately
 });
 
 export async function POST(request: Request) {
   try {
-    // Get the form data
+    if (!resend) {
+      throw new Error("Missing RESEND_API_KEY environment variable");
+    }
+
     const formData = await request.formData();
 
-    // Extract the basic fields
     const bookingData = {
       service: formData.get("service"),
       category: formData.get("category"),
@@ -38,32 +42,26 @@ export async function POST(request: Request) {
       message: formData.get("message"),
     };
 
-    // Handle images separately
-    const imageFiles = formData.getAll("images");
+    const imageFiles = formData
+      .getAll("images")
+      .filter(
+        (value): value is File => value instanceof File && value.size > 0,
+      );
 
-    // Validate the data
-    const validatedData = bookingSchema.parse({
-      ...bookingData,
-      images: imageFiles,
-    });
+    const validatedData = bookingSchema.parse(bookingData);
+    const preparedImages = await prepareBookingImageAttachments(imageFiles);
+    const service = validatedData.service.trim();
 
-    // Upload images if present
-    let uploadedImageUrls: string[] = [];
-    if (imageFiles && imageFiles.length > 0) {
-      // Here you would implement your image upload logic
-      // For example, using uploadthing, AWS S3, or similar
-      // uploadedImageUrls = await Promise.all(imageFiles.map(file => uploadImage(file)));
-    }
-
-    // Prepare email data
     const emailData = {
       ...validatedData,
-      imageUrls: uploadedImageUrls,
+      service,
+      attachmentNames: preparedImages.attachmentNames,
+      inlineImageSources: preparedImages.inlineImageSources,
+      imageCount: preparedImages.attachmentNames.length,
       submittedAt: new Date().toISOString(),
     };
 
-    // Send confirmation email to customer
-    await resend.emails.send({
+    const customerEmailResult = await resend.emails.send({
       from: "Cobbers Garden <bookings@cobbersgarden.fr>",
       replyTo: "contact@cobbersgarden.fr",
       to: validatedData.email,
@@ -74,17 +72,25 @@ export async function POST(request: Request) {
       }) as React.ReactElement,
     });
 
-    // Send notification email to admin
-    await resend.emails.send({
+    if (customerEmailResult.error) {
+      throw new Error(customerEmailResult.error.message);
+    }
+
+    const adminEmailResult = await resend.emails.send({
       from: "Cobbers Garden <bookings@cobbersgarden.fr>",
       replyTo: validatedData.email,
       to: "contact@cobbersgarden.fr",
       subject: `Nouvelle demande de ${validatedData.name} - ${validatedData.category}`,
+      attachments: preparedImages.attachments,
       react: BookingEmail({
         ...emailData,
         isCustomer: false,
       }) as React.ReactElement,
     });
+
+    if (adminEmailResult.error) {
+      throw new Error(adminEmailResult.error.message);
+    }
 
     return NextResponse.json({
       success: true,
